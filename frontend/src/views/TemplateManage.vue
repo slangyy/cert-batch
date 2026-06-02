@@ -95,7 +95,7 @@ const loadTemplates = async () => {
       templates.value = res.data || []
     }
   } catch (e) {
-    ElMessage.error('加载模板列表失败')
+    // 后端可能还没启动，静默处理，不弹错误提示
   } finally {
     loading.value = false
   }

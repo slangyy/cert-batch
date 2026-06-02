@@ -33,18 +33,4 @@ const router = createRouter({
   routes
 })
 
-// 路由守卫：未授权时跳转到激活页
-router.beforeEach((to, from, next) => {
-  if (to.meta.public) {
-    next()
-    return
-  }
-  const licenseStr = localStorage.getItem('license_info')
-  if (!licenseStr) {
-    next('/activate')
-  } else {
-    next()
-  }
-})
-
 export default router

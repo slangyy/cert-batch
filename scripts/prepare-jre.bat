@@ -27,7 +27,7 @@ echo.
 
 "%JAVA_HOME%\bin\jlink" ^
     --module-path "%JAVA_HOME%\jmods" ^
-    --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.net.http,java.security.jgss,java.sql,java.xml,jdk.unsupported,jdk.crypto.ec ^
+    --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.net.http,java.security.jgss,java.sql,java.xml,jdk.unsupported,jdk.crypto.ec,java.instrument ^
     --output "%OUTPUT_DIR%" ^
     --strip-debug ^
     --compress=2 ^

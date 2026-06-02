@@ -70,4 +70,12 @@ public class LicenseController {
     public R<Void> unbind(@PathVariable Long id) {
         return licenseService.unbind(id);
     }
+
+    /**
+     * 获取公钥（开发者构建客户端时使用）
+     */
+    @GetMapping("/public-key")
+    public R<String> publicKey() {
+        return R.ok(licenseService.getPublicKeyBase64());
+    }
 }

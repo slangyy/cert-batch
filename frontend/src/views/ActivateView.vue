@@ -4,7 +4,7 @@
       <div class="card-header">
         <el-icon :size="40" color="#409EFF"><Stamp /></el-icon>
         <h2>证书批量生成工具</h2>
-        <p class="subtitle">请输入授权码激活软件</p>
+        <p class="subtitle">请输入授权码激活软件（激活需联网）</p>
       </div>
 
       <div class="card-body">
@@ -55,7 +55,9 @@ const errorMsg = ref('')
 const machineId = ref('')
 
 onMounted(async () => {
-  machineId.value = await window.electronAPI.getMachineId()
+  if (window.electronAPI?.getMachineId) {
+    machineId.value = await window.electronAPI.getMachineId()
+  }
 })
 
 const handleActivate = async () => {
@@ -75,21 +77,29 @@ const handleActivate = async () => {
   try {
     const { data: res } = await activateLicense(key, machineId.value)
     if (res.code === 200 && res.data) {
-      // 保存授权信息到本地
-      await window.electronAPI.saveLicense({
-        token: res.data.token,
+      // 保存完整授权信息（含签名），供离线验证使用
+      const licenseData = {
         machineId: machineId.value,
         licenseKey: key,
-        expireAt: res.data.expireAt
-      })
+        token: res.data.token,
+        expireAt: res.data.expireAt,
+        issuedAt: res.data.activatedAt,
+        signature: res.data.licenseSignature
+      }
+      if (window.electronAPI?.saveLicense) {
+        await window.electronAPI.saveLicense(licenseData)
+      }
       ElMessage.success('激活成功！')
-      // 通知主进程刷新页面
-      window.electronAPI.onLicenseActivated()
+      window.electronAPI?.onLicenseActivated()
     } else {
       errorMsg.value = res.msg || '激活失败'
     }
   } catch (e) {
-    errorMsg.value = '网络连接失败，请检查网络后重试'
+    if (e.code === 'ERR_NETWORK' || e.message?.includes('Network Error')) {
+      errorMsg.value = '网络连接失败，激活需联网，请检查网络后重试'
+    } else {
+      errorMsg.value = '激活失败: ' + (e.message || '未知错误')
+    }
   } finally {
     activating.value = false
   }

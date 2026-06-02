@@ -1,9 +1,25 @@
 <template>
-  <el-container class="app-container" v-if="licensed">
+  <!-- 加载中：等待后端服务就绪 -->
+  <div v-if="backendLoading" class="loading-screen">
+    <div class="loading-content">
+      <el-icon :size="48" color="#409EFF" class="loading-spin"><Loading /></el-icon>
+      <h2>证书批量生成工具</h2>
+      <p>正在启动服务，请稍候...</p>
+    </div>
+  </div>
+
+  <!-- 主界面 -->
+  <el-container class="app-container" v-else-if="licensed">
     <el-header class="app-header">
       <div class="header-left">
         <el-icon :size="28" color="#409EFF"><Stamp /></el-icon>
         <span class="app-title">证书批量生成工具</span>
+      </div>
+      <div class="header-right">
+        <el-button text size="small" @click="openLogDir">
+          <el-icon><FolderOpened /></el-icon>
+          日志目录
+        </el-button>
       </div>
     </el-header>
     <el-container>
@@ -28,52 +44,71 @@
       </el-main>
     </el-container>
   </el-container>
+
+  <!-- 激活页 -->
   <router-view v-else />
 </template>
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { validateLicense } from '@/api'
+import { validateLicenseOnline, waitForBackend } from '@/api'
 
 const route = useRoute()
 const router = useRouter()
 const currentRoute = computed(() => route.path)
 const licensed = ref(false)
+const backendLoading = ref(true)
+
+const openLogDir = () => {
+  if (window.electronAPI?.openLogDir) {
+    window.electronAPI.openLogDir()
+  }
+}
 
 onMounted(async () => {
-  // 从 Electron 本地文件读取授权信息
-  let licenseInfo = null
-  if (window.electronAPI?.readLicense) {
-    licenseInfo = await window.electronAPI.readLicense()
-  }
-
-  if (!licenseInfo || !licenseInfo.token) {
-    // 无本地授权，跳转激活页
-    licensed.value = false
-    router.replace('/activate')
+  // 1. 本地验签
+  if (window.electronAPI?.verifyLicenseLocal) {
+    const result = await window.electronAPI.verifyLicenseLocal()
+    if (!result.valid) {
+      licensed.value = false
+      backendLoading.value = false
+      router.replace('/activate')
+      return
+    }
+  } else {
+    // 非 Electron 环境（浏览器开发），直接放行
+    licensed.value = true
+    backendLoading.value = false
+    router.replace('/template')
     return
   }
 
-  // 同步到 localStorage（供 axios 拦截器使用）
-  localStorage.setItem('license_info', JSON.stringify(licenseInfo))
-
-  // 向服务端验证授权有效性
+  // 2. 等待本地后端就绪（轮询 API 直到可访问）
   try {
-    const { data: res } = await validateLicense(licenseInfo.token, licenseInfo.machineId)
-    if (res.code === 200) {
-      licensed.value = true
-      router.replace('/template')
-    } else {
-      // 授权无效
-      localStorage.removeItem('license_info')
-      licensed.value = false
-      router.replace('/activate')
+    await waitForBackend()
+  } catch (e) {
+    // 超时也放行，让页面自行处理请求失败
+  }
+
+  // 3. 后端就绪，显示主界面
+  licensed.value = true
+  backendLoading.value = false
+  router.replace('/template')
+
+  // 4. 后台在线验证（不阻塞用户）
+  try {
+    const licenseInfo = await window.electronAPI.readLicense()
+    if (licenseInfo?.token) {
+      const { data: res } = await validateLicenseOnline(licenseInfo.token, licenseInfo.machineId)
+      if (res.code !== 200) {
+        await window.electronAPI.saveLicense(null)
+        licensed.value = false
+        router.replace('/activate')
+      }
     }
   } catch (e) {
-    // 网络不通时，如果有本地授权则允许使用（离线容忍）
-    licensed.value = true
-    router.replace('/template')
+    // 网络不通，离线容忍
   }
 })
 </script>
@@ -88,6 +123,38 @@ onMounted(async () => {
 html, body, #app {
   height: 100%;
   width: 100%;
+}
+
+.loading-screen {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5f7fa;
+}
+
+.loading-content {
+  text-align: center;
+}
+
+.loading-content h2 {
+  margin: 16px 0 8px;
+  font-size: 22px;
+  color: #303133;
+}
+
+.loading-content p {
+  color: #909399;
+  font-size: 14px;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.loading-spin {
+  animation: spin 1.5s linear infinite;
 }
 
 .app-container {
@@ -107,6 +174,10 @@ html, body, #app {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.header-right {
+  margin-left: auto;
 }
 
 .app-title {

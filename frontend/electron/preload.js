@@ -5,5 +5,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
   getMachineId: () => ipcRenderer.invoke('get-machine-id'),
   saveLicense: (data) => ipcRenderer.invoke('save-license', data),
   readLicense: () => ipcRenderer.invoke('read-license'),
-  onLicenseActivated: () => ipcRenderer.invoke('on-license-activated')
+  verifyLicenseLocal: () => ipcRenderer.invoke('verify-license-local'),
+  onLicenseActivated: () => ipcRenderer.invoke('on-license-activated'),
+  openLogDir: () => ipcRenderer.invoke('open-log-dir'),
+  openPath: (targetPath) => ipcRenderer.invoke('open-path', targetPath)
 })

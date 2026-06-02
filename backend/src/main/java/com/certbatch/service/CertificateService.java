@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.*;
+import java.util.function.Consumer;
 
 @Slf4j
 @Service
@@ -87,17 +88,11 @@ public class CertificateService {
     }
 
     /**
-     * 批量生成证书
-     *
-     * @param templateId 模板ID
-     * @param rows       数据行列表
-     * @param outputDir  输出目录
-     * @param format     输出格式: png / pdf / both
-     * @param fileNameField 用于文件命名的字段名
-     * @return 生成结果
+     * 批量生成证书（带进度回调）
      */
     public Map<String, Object> batchGenerate(Long templateId, List<Map<String, String>> rows,
-                                              String outputDir, String format, String fileNameField) throws IOException {
+                                              String outputDir, String format, String fileNameField,
+                                              Consumer<Map<String, Object>> progressCallback) throws IOException {
         Template template = templateService.getById(templateId);
         if (template == null) {
             throw new IllegalArgumentException("模板不存在");
@@ -109,7 +104,6 @@ public class CertificateService {
             throw new IllegalArgumentException("模板图片不存在");
         }
 
-        // 读取模板图片
         BufferedImage templateImage = ImageIO.read(templateImagePath.toFile());
 
         Path outPath = Paths.get(outputDir);
@@ -117,6 +111,7 @@ public class CertificateService {
             Files.createDirectories(outPath);
         }
 
+        int total = rows.size();
         int success = 0;
         int fail = 0;
         List<String> errors = new ArrayList<>();
@@ -124,19 +119,14 @@ public class CertificateService {
         for (int i = 0; i < rows.size(); i++) {
             Map<String, String> rowData = rows.get(i);
             try {
-                // 生成证书图片
                 BufferedImage certImage = renderCertificate(templateImage, placeholders, rowData);
-
-                // 确定文件名
                 String baseName = getFileName(rowData, fileNameField, i + 1);
 
-                // 输出PNG
                 if ("png".equals(format) || "both".equals(format)) {
                     Path pngPath = outPath.resolve(baseName + ".png");
                     ImageIO.write(certImage, "png", pngPath.toFile());
                 }
 
-                // 输出PDF
                 if ("pdf".equals(format) || "both".equals(format)) {
                     Path pdfPath = outPath.resolve(baseName + ".pdf");
                     imageToPdf(certImage, pdfPath);
@@ -148,14 +138,33 @@ public class CertificateService {
                 errors.add("第" + (i + 1) + "行生成失败: " + e.getMessage());
                 log.error("生成证书失败，第{}行", i + 1, e);
             }
+
+            // 每生成一条，回调进度
+            if (progressCallback != null) {
+                Map<String, Object> progress = new LinkedHashMap<>();
+                progress.put("current", i + 1);
+                progress.put("total", total);
+                progress.put("success", success);
+                progress.put("fail", fail);
+                progress.put("percent", Math.round((i + 1) * 100.0 / total));
+                progressCallback.accept(progress);
+            }
         }
 
         Map<String, Object> result = new LinkedHashMap<>();
-        result.put("total", rows.size());
+        result.put("total", total);
         result.put("success", success);
         result.put("fail", fail);
         result.put("errors", errors);
         return result;
+    }
+
+    /**
+     * 批量生成证书（无进度回调，兼容旧接口）
+     */
+    public Map<String, Object> batchGenerate(Long templateId, List<Map<String, String>> rows,
+                                              String outputDir, String format, String fileNameField) throws IOException {
+        return batchGenerate(templateId, rows, outputDir, format, fileNameField, null);
     }
 
     /**

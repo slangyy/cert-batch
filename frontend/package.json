@@ -45,6 +45,16 @@
     "nsis": {
       "oneClick": false,
       "allowToChangeInstallationDirectory": true
-    }
+    },
+    "extraResources": [
+      {
+        "from": "../backend/target/cert-batch-backend-1.0.0.jar",
+        "to": "backend/cert-batch-backend.jar"
+      },
+      {
+        "from": "../jre",
+        "to": "jre"
+      }
+    ]
   }
 }

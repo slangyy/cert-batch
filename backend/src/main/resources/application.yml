@@ -20,3 +20,4 @@ mybatis-plus:
 
 app:
   data-dir: ./cert-batch-data
+  license-check: true

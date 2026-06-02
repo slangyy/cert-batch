@@ -1,63 +1,63 @@
 import axios from 'axios'
 
-// 统一使用远程后端服务器地址
-const REMOTE_BASE = 'http://8.152.161.203:18080'
-const BASE_URL = `${REMOTE_BASE}/api`
-
-const api = axios.create({
-  baseURL: BASE_URL,
+// 业务 API：本地后端
+const LOCAL_BASE = 'http://localhost:18080'
+const LOCAL_API = axios.create({
+  baseURL: `${LOCAL_BASE}/api`,
   timeout: 60000
 })
 
-// 请求拦截：自动携带授权 token 和机器码
-api.interceptors.request.use(config => {
-  // 从 localStorage 读取授权信息（渲染进程可访问）
-  const licenseStr = localStorage.getItem('license_info')
-  if (licenseStr) {
-    try {
-      const license = JSON.parse(licenseStr)
-      if (license.token) config.headers['X-License-Token'] = license.token
-      if (license.machineId) config.headers['X-Machine-Id'] = license.machineId
-    } catch (e) { /* ignore */ }
-  }
-  return config
+// 授权 API：远程服务器（仅激活/验证时使用）
+const REMOTE_BASE = 'http://8.152.161.203:18080'
+const LICENSE_API = axios.create({
+  baseURL: `${REMOTE_BASE}/api`,
+  timeout: 30000
 })
 
-// 响应拦截：401 时跳转激活页
-api.interceptors.response.use(
-  res => res,
-  err => {
-    if (err.response && err.response.status === 401) {
-      // 授权失效，清除本地授权并跳转激活页
-      localStorage.removeItem('license_info')
-      window.location.hash = '#/activate'
-    }
-    return Promise.reject(err)
-  }
-)
-
-// ===== 授权相关 =====
+// ===== 授权相关（走远程服务器） =====
 
 /** 激活授权码 */
 export function activateLicense(licenseKey, machineId) {
-  return api.post('/license/activate', { licenseKey, machineId })
+  return LICENSE_API.post('/license/activate', { licenseKey, machineId })
 }
 
-/** 验证授权 */
-export function validateLicense(token, machineId) {
-  return api.post('/license/validate', { token, machineId })
+/** 在线验证授权（检查是否被禁用） */
+export function validateLicenseOnline(token, machineId) {
+  return LICENSE_API.post('/license/validate', { token, machineId })
 }
 
-// ===== 模板相关 =====
+// ===== 后端就绪检测 =====
+
+/** 等待本地后端就绪（轮询直到 /api/template/list 返回成功） */
+export function waitForBackend(maxRetries = 60, interval = 1000) {
+  return new Promise((resolve, reject) => {
+    let retries = 0
+    const check = () => {
+      LOCAL_API.get('/template/list').then(res => {
+        resolve(true)
+      }).catch(() => {
+        retries++
+        if (retries >= maxRetries) {
+          reject(new Error('后端服务启动超时'))
+        } else {
+          setTimeout(check, interval)
+        }
+      })
+    }
+    check()
+  })
+}
+
+// ===== 模板相关（走本地后端） =====
 
 /** 获取模板列表 */
 export function getTemplateList() {
-  return api.get('/template/list')
+  return LOCAL_API.get('/template/list')
 }
 
 /** 获取模板详情 */
 export function getTemplateDetail(id) {
-  return api.get(`/template/${id}`)
+  return LOCAL_API.get(`/template/${id}`)
 }
 
 /** 创建模板 */
@@ -65,23 +65,49 @@ export function createTemplate(name, imageFile) {
   const formData = new FormData()
   formData.append('name', name)
   formData.append('image', imageFile)
-  return api.post('/template/create', formData, {
+  return LOCAL_API.post('/template/create', formData, {
     headers: { 'Content-Type': 'multipart/form-data' }
   })
 }
 
 /** 更新模板名称 */
 export function updateTemplateName(id, name) {
-  return api.put(`/template/${id}/name`, null, { params: { name } })
+  return LOCAL_API.put(`/template/${id}/name`, null, { params: { name } })
 }
 
 /** 删除模板 */
 export function deleteTemplate(id) {
-  return api.delete(`/template/${id}`)
+  return LOCAL_API.delete(`/template/${id}`)
 }
 
 /** 获取模板图片URL */
 export function getTemplateImageUrl(id) {
+  return `${LOCAL_BASE}/api/template/${id}/image`
+}
+
+/** 获取模板占位符 */
+export function getPlaceholders(templateId) {
+  return LOCAL_API.get(`/template/${templateId}/placeholders`)
+}
+
+/** 保存模板占位符 */
+export function savePlaceholders(templateId, placeholders) {
+  return LOCAL_API.post(`/template/${templateId}/placeholders`, placeholders)
+}
+
+// ===== 证书生成相关（走本地后端） =====
+
+/** 解析Excel文件 */
+export function parseExcel(file) {
+  const formData = new FormData()
+  formData.append('file', file)
+  return LOCAL_API.post('/certificate/parse-excel', formData, {
+    headers: { 'Content-Type': 'multipart/form-data' }
+  })
+}
+
+/** 批量生成证书（SSE 流式进度） */
+export function batchGenerateSSE(params, onProgress, onComplete, onError) {
   const token = (() => {
     try {
       const l = JSON.parse(localStorage.getItem('license_info') || '{}')
@@ -94,42 +120,69 @@ export function getTemplateImageUrl(id) {
       return l.machineId || ''
     } catch { return '' }
   })()
-  return `${REMOTE_BASE}/api/template/${id}/image?token=${encodeURIComponent(token)}&machineId=${encodeURIComponent(machineId)}`
-}
 
-/** 获取模板占位符 */
-export function getPlaceholders(templateId) {
-  return api.get(`/template/${templateId}/placeholders`)
-}
+  const fetchOptions = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'X-License-Token': token,
+      'X-Machine-Id': machineId
+    },
+    body: JSON.stringify(params)
+  }
 
-/** 保存模板占位符 */
-export function savePlaceholders(templateId, placeholders) {
-  return api.post(`/template/${templateId}/placeholders`, placeholders)
-}
+  fetch(`${LOCAL_BASE}/api/certificate/batch-generate`, fetchOptions)
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
 
-// ===== 证书生成相关 =====
+      function read() {
+        reader.read().then(({ done, value }) => {
+          if (done) return
+          buffer += decoder.decode(value, { stream: true })
+          const lines = buffer.split('\n')
+          buffer = lines.pop() || ''
 
-/** 解析Excel文件 */
-export function parseExcel(file) {
-  const formData = new FormData()
-  formData.append('file', file)
-  return api.post('/certificate/parse-excel', formData, {
-    headers: { 'Content-Type': 'multipart/form-data' }
-  })
-}
-
-/** 批量生成证书 */
-export function batchGenerate(params) {
-  return api.post('/certificate/batch-generate', params, {
-    timeout: 300000 // 5分钟超时
-  })
+          for (const line of lines) {
+            if (line.startsWith('event:progress')) continue
+            if (line.startsWith('event:complete')) continue
+            if (line.startsWith('event:error')) continue
+            if (line.startsWith('data:')) {
+              const data = line.slice(5).trim()
+              if (!data) continue
+              try {
+                const parsed = JSON.parse(data)
+                // 判断事件类型需看上一个 event 行，简化处理：
+                // progress 有 current/total/percent 字段
+                if (parsed.current !== undefined) {
+                  onProgress?.(parsed)
+                } else if (parsed.total !== undefined && parsed.success !== undefined && parsed.current === undefined) {
+                  onComplete?.(parsed)
+                } else if (parsed.code !== undefined) {
+                  onError?.(parsed.msg || '生成失败')
+                }
+              } catch (e) { /* ignore */ }
+            }
+          }
+          read()
+        })
+      }
+      read()
+    })
+    .catch(err => {
+      onError?.(err.message || '网络错误')
+    })
 }
 
 /** 预览证书 */
 export function previewCertificate(templateId, data) {
-  return api.post('/certificate/preview', { templateId, data }, {
+  return LOCAL_API.post('/certificate/preview', { templateId, data }, {
     responseType: 'blob'
   })
 }
 
-export default api
+export default LOCAL_API

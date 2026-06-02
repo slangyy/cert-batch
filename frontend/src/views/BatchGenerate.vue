@@ -119,11 +119,31 @@
         </el-descriptions-item>
       </el-descriptions>
 
+      <!-- 生成进度 -->
+      <div v-if="generating" class="generate-progress">
+        <div class="progress-header">
+          <el-icon class="progress-spin" :size="20" color="#409EFF"><Loading /></el-icon>
+          <span class="progress-title">正在使用AI大模型生成中...</span>
+        </div>
+        <el-progress
+          :percentage="progressPercent"
+          :stroke-width="20"
+          :text-inside="true"
+          status="success"
+          style="margin: 16px 0;"
+        />
+        <div class="progress-detail">
+          <span>已处理 {{ progressCurrent }} / {{ progressTotal }} 条</span>
+          <span>成功 {{ progressSuccess }} 条</span>
+          <span v-if="progressFail > 0" class="fail-count">失败 {{ progressFail }} 条</span>
+        </div>
+      </div>
+
       <div class="step-actions">
-        <el-button @click="goStep(1)">上一步</el-button>
+        <el-button @click="goStep(1)" :disabled="generating">上一步</el-button>
         <el-button type="primary" :loading="generating" @click="handleGenerate">
           <el-icon><Printer /></el-icon>
-          开始生成
+          {{ generating ? '生成中...' : '开始生成' }}
         </el-button>
       </div>
     </div>
@@ -148,7 +168,8 @@
             />
           </div>
           <div class="result-actions">
-            <el-button type="primary" @click="resetAll">继续生成</el-button>
+            <el-button type="primary" @click="openOutputDir">打开输出目录</el-button>
+            <el-button @click="resetAll">继续生成</el-button>
           </div>
         </template>
       </el-result>
@@ -159,7 +180,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getTemplateList, getTemplateImageUrl, getPlaceholders, parseExcel, batchGenerate } from '@/api'
+import { getTemplateList, getTemplateImageUrl, getPlaceholders, parseExcel, batchGenerateSSE } from '@/api'
 
 const currentStep = ref(0)
 const loadingTemplates = ref(false)
@@ -175,6 +196,13 @@ const fileNameField = ref('')
 const outputDir = ref('')
 const generating = ref(false)
 const generateResult = ref({ total: 0, success: 0, fail: 0, errors: [] })
+
+// 进度相关
+const progressPercent = ref(0)
+const progressCurrent = ref(0)
+const progressTotal = ref(0)
+const progressSuccess = ref(0)
+const progressFail = ref(0)
 
 const getImageUrl = (id) => getTemplateImageUrl(id)
 
@@ -202,14 +230,13 @@ const loadTemplates = async () => {
       templates.value = res.data || []
     }
   } catch (e) {
-    ElMessage.error('加载模板列表失败')
+    // 后端可能还没启动，静默处理
   } finally {
     loadingTemplates.value = false
   }
 }
 
 const goStep = async (step) => {
-  // 进入step 1时加载占位符信息
   if (step === 1 && selectedTemplateId.value) {
     try {
       const { data: res } = await getPlaceholders(selectedTemplateId.value)
@@ -245,30 +272,52 @@ const handleExcelRemove = () => {
   excelData.value = { headers: [], rows: [] }
 }
 
-const handleGenerate = async () => {
+const handleGenerate = () => {
   if (!outputDir.value.trim()) {
     return ElMessage.warning('请输入输出目录')
   }
 
   generating.value = true
-  try {
-    const { data: res } = await batchGenerate({
+  progressPercent.value = 0
+  progressCurrent.value = 0
+  progressTotal.value = excelData.value.rows.length
+  progressSuccess.value = 0
+  progressFail.value = 0
+
+  batchGenerateSSE(
+    {
       templateId: selectedTemplateId.value,
       rows: excelData.value.rows,
       outputDir: outputDir.value.trim(),
       format: outputFormat.value,
       fileNameField: fileNameField.value || null
-    })
-    if (res.code === 200) {
-      generateResult.value = res.data
+    },
+    // onProgress
+    (progress) => {
+      progressCurrent.value = progress.current
+      progressTotal.value = progress.total
+      progressSuccess.value = progress.success
+      progressFail.value = progress.fail
+      progressPercent.value = progress.percent
+    },
+    // onComplete
+    (result) => {
+      generating.value = false
+      generateResult.value = result
+      progressPercent.value = 100
       currentStep.value = 3
-    } else {
-      ElMessage.error(res.msg || '生成失败')
+    },
+    // onError
+    (msg) => {
+      generating.value = false
+      ElMessage.error('生成失败: ' + msg)
     }
-  } catch (e) {
-    ElMessage.error('生成失败: ' + (e.message || '网络错误'))
-  } finally {
-    generating.value = false
+  )
+}
+
+const openOutputDir = async () => {
+  if (window.electronAPI?.openPath) {
+    await window.electronAPI.openPath(outputDir.value)
   }
 }
 
@@ -281,10 +330,14 @@ const resetAll = () => {
   fileNameField.value = ''
   outputDir.value = ''
   generateResult.value = { total: 0, success: 0, fail: 0, errors: [] }
+  progressPercent.value = 0
+  progressCurrent.value = 0
+  progressTotal.value = 0
+  progressSuccess.value = 0
+  progressFail.value = 0
 }
 
 const selectOutputDir = async () => {
-  // 优先使用 Electron 的目录选择
   if (window.electronAPI && window.electronAPI.selectDirectory) {
     const dir = await window.electronAPI.selectDirectory()
     if (dir) {
@@ -441,5 +494,51 @@ onMounted(() => {
 
 .result-actions {
   margin-top: 16px;
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+/* 进度相关 */
+.generate-progress {
+  max-width: 700px;
+  margin: 20px 0;
+  padding: 20px;
+  background: #f0f9eb;
+  border-radius: 8px;
+  border: 1px solid #e1f3d8;
+}
+
+.progress-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+.progress-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: #409EFF;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.progress-spin {
+  animation: spin 1.5s linear infinite;
+}
+
+.progress-detail {
+  display: flex;
+  gap: 16px;
+  font-size: 13px;
+  color: #606266;
+}
+
+.fail-count {
+  color: #F56C6C;
 }
 </style>

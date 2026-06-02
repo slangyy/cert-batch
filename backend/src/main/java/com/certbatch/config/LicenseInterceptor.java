@@ -8,13 +8,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 
-import java.time.LocalDateTime;
-
 /**
  * 授权拦截器：非授权接口需验证 token
+ * 桌面客户端启动时通过 --app.license-check=false 关闭此拦截
  */
 @Slf4j
 @Component
@@ -24,8 +24,16 @@ public class LicenseInterceptor implements HandlerInterceptor {
     private final LicenseService licenseService;
     private final ObjectMapper objectMapper;
 
+    @Value("${app.license-check:true}")
+    private boolean licenseCheck;
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 桌面客户端模式：跳过授权检查（Electron 主进程已验证）
+        if (!licenseCheck) {
+            return true;
+        }
+
         // 放行 OPTIONS 预检请求
         if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
             return true;
@@ -35,17 +43,6 @@ public class LicenseInterceptor implements HandlerInterceptor {
         String uri = request.getRequestURI();
         if (uri.startsWith("/api/license/")) {
             return true;
-        }
-
-        // 图片接口：支持 URL 参数传递 token（用于 <img> 标签等直接访问场景）
-        if (uri.matches("/api/template/\\d+/image")) {
-            String queryToken = request.getParameter("token");
-            String queryMachineId = request.getParameter("machineId");
-            if (queryToken != null && queryMachineId != null) {
-                R<License> result = licenseService.validate(queryToken, queryMachineId);
-                return result.getCode() == 200;
-            }
-            // 没有参数则走 Header 验证
         }
 
         // 验证授权

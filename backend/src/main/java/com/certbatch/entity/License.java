@@ -36,6 +36,10 @@ public class License {
     /** 激活后颁发的 token */
     private String token;
 
+    /** RSA 签名（激活时由服务器生成，不存数据库，仅返回给客户端） */
+    @TableField(exist = false)
+    private String licenseSignature;
+
     /** 创建时间 */
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createTime;
