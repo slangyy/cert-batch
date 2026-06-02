@@ -1,0 +1,22 @@
+server:
+  port: 18080
+
+spring:
+  datasource:
+    url: jdbc:sqlite:${app.data-dir}/certbatch.db
+    driver-class-name: org.sqlite.JDBC
+  servlet:
+    multipart:
+      max-file-size: 50MB
+      max-request-size: 50MB
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+app:
+  data-dir: ./cert-batch-data
