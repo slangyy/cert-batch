@@ -1,5 +1,5 @@
 <template>
-  <el-container class="app-container">
+  <el-container class="app-container" v-if="licensed">
     <el-header class="app-header">
       <div class="header-left">
         <el-icon :size="28" color="#409EFF"><Stamp /></el-icon>
@@ -28,14 +28,54 @@
       </el-main>
     </el-container>
   </el-container>
+  <router-view v-else />
 </template>
 
 <script setup>
-import { computed } from 'vue'
-import { useRoute } from 'vue-router'
+import { ref, computed, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { validateLicense } from '@/api'
 
 const route = useRoute()
+const router = useRouter()
 const currentRoute = computed(() => route.path)
+const licensed = ref(false)
+
+onMounted(async () => {
+  // 从 Electron 本地文件读取授权信息
+  let licenseInfo = null
+  if (window.electronAPI?.readLicense) {
+    licenseInfo = await window.electronAPI.readLicense()
+  }
+
+  if (!licenseInfo || !licenseInfo.token) {
+    // 无本地授权，跳转激活页
+    licensed.value = false
+    router.replace('/activate')
+    return
+  }
+
+  // 同步到 localStorage（供 axios 拦截器使用）
+  localStorage.setItem('license_info', JSON.stringify(licenseInfo))
+
+  // 向服务端验证授权有效性
+  try {
+    const { data: res } = await validateLicense(licenseInfo.token, licenseInfo.machineId)
+    if (res.code === 200) {
+      licensed.value = true
+      router.replace('/template')
+    } else {
+      // 授权无效
+      localStorage.removeItem('license_info')
+      licensed.value = false
+      router.replace('/activate')
+    }
+  } catch (e) {
+    // 网络不通时，如果有本地授权则允许使用（离线容忍）
+    licensed.value = true
+    router.replace('/template')
+  }
+})
 </script>
 
 <style>

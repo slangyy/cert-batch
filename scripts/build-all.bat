@@ -9,49 +9,16 @@ cd /d "%~dp0.."
 echo Project Dir: %CD%
 echo.
 
-where java >nul 2>&1
-if %ERRORLEVEL% neq 0 (
-    echo [ERROR] java not found in PATH
-    goto :fail
-)
-
-where mvn >nul 2>&1
-if %ERRORLEVEL% neq 0 (
-    echo [ERROR] mvn not found in PATH
-    goto :fail
-)
-
 where node >nul 2>&1
 if %ERRORLEVEL% neq 0 (
     echo [ERROR] node not found in PATH
     goto :fail
 )
 
-echo [OK] java / mvn / node found.
+echo [OK] node found.
 echo.
 
-echo [1/3] Building SpringBoot backend...
-cd backend
-call mvn clean package -DskipTests -q
-if %ERRORLEVEL% neq 0 (
-    echo [ERROR] Backend build failed.
-    goto :fail
-)
-echo       Backend build OK.
-cd ..
-
-if not exist "jre\bin\java.exe" (
-    echo [2/3] Preparing embedded JRE...
-    call scripts\prepare-jre.bat
-    if %ERRORLEVEL% neq 0 (
-        echo [ERROR] JRE preparation failed.
-        goto :fail
-    )
-) else (
-    echo [2/3] Embedded JRE already exists.
-)
-
-echo [3/3] Building Electron app...
+echo [1/1] Building Electron app...
 cd frontend
 call npm install
 if %ERRORLEVEL% neq 0 (
@@ -74,7 +41,7 @@ echo.
 pause
 exit /b 0
 
-:fail
+::fail
 echo.
 echo ============================================
 echo   BUILD FAILED! Check errors above.

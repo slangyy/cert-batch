@@ -193,7 +193,9 @@ public class CertificateService {
             FontMetrics fm = g2d.getFontMetrics();
             int textWidth = fm.stringWidth(text);
             int x = (int) Math.round(placeholder.getPosX());
-            int y = (int) Math.round(placeholder.getPosY());
+            // 修正：前端 Konva Text 的 y 是文字顶部，Java2D drawString 的 y 是基线
+            // 需要加上 ascent 使两者语义一致
+            int y = (int) Math.round(placeholder.getPosY()) + fm.getAscent();
 
             switch (placeholder.getAlignment()) {
                 case "CENTER":

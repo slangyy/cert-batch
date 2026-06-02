@@ -69,21 +69,29 @@
                     fontSize: ph.fontSize,
                     fontFamily: ph.fontName,
                     fill: ph.fontColor || '#000000',
-                    align: (ph.alignment || 'LEFT').toLowerCase(),
+                    offsetX: getAlignOffsetX(ph),
                   }"
                 />
                 <!-- 选中边框 -->
                 <v-rect
                   v-if="selectedIndex === index"
                   :config="{
-                    x: -4,
+                    x: getAlignOffsetX(ph) * -1 - 4,
                     y: -4,
-                    width: getTextWidth(ph) + 8,
+                    width: measureTextWidth(ph) + 8,
                     height: (ph.fontSize || 24) + 8,
                     stroke: '#409EFF',
                     strokeWidth: 2,
                     dash: [6, 3],
                     fill: 'rgba(64,158,255,0.05)'
+                  }"
+                />
+                <!-- 锚点指示器 -->
+                <v-circle
+                  v-if="selectedIndex === index && ph.alignment !== 'LEFT'"
+                  :config="{
+                    radius: 3,
+                    fill: '#409EFF',
                   }"
                 />
               </v-group>
@@ -293,10 +301,38 @@ const handleDragEnd = (e, index) => {
 }
 
 const getTextWidth = (ph) => {
+  return measureTextWidth(ph)
+}
+
+/**
+ * 使用 Canvas 2D 精确测量文字像素宽度
+ */
+const measureTextWidth = (ph) => {
   const text = ph.name || '占位符'
   const fontSize = ph.fontSize || 24
-  // 粗略估算文字宽度
-  return text.length * fontSize * 0.7
+  const fontName = ph.fontName || '宋体'
+  const canvas = document.createElement('canvas')
+  const ctx = canvas.getContext('2d')
+  ctx.font = `${fontSize}px "${fontName}"`
+  return ctx.measureText(text).width
+}
+
+/**
+ * 根据对齐方式计算文字的 X 偏移量
+ * 使 posX 语义与后端一致：
+ *   LEFT   → posX = 文字左边缘，offsetX = 0
+ *   CENTER → posX = 文字中心点，offsetX = textWidth/2
+ *   RIGHT  → posX = 文字右边缘，offsetX = textWidth
+ */
+const getAlignOffsetX = (ph) => {
+  const alignment = ph.alignment || 'LEFT'
+  if (alignment === 'CENTER') {
+    return measureTextWidth(ph) / 2
+  }
+  if (alignment === 'RIGHT') {
+    return measureTextWidth(ph)
+  }
+  return 0
 }
 
 const handleSave = async () => {

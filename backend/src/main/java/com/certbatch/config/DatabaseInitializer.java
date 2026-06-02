@@ -56,6 +56,21 @@ public class DatabaseInitializer implements CommandLineRunner {
 
             // 创建索引
             stmt.execute("CREATE INDEX IF NOT EXISTS idx_placeholder_template_id ON placeholder(template_id)");
+
+            // 创建授权表
+            stmt.execute("""
+                CREATE TABLE IF NOT EXISTS license (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    license_key TEXT NOT NULL UNIQUE,
+                    machine_id TEXT,
+                    status INTEGER DEFAULT 0,
+                    customer TEXT,
+                    expire_at TEXT,
+                    activated_at TEXT,
+                    token TEXT,
+                    create_time TEXT
+                )
+            """);
         }
     }
 }

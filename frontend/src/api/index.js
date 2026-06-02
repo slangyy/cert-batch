@@ -1,9 +1,52 @@
 import axios from 'axios'
 
+// 统一使用远程后端服务器地址
+const REMOTE_BASE = 'http://8.152.161.203:18080'
+const BASE_URL = `${REMOTE_BASE}/api`
+
 const api = axios.create({
-  baseURL: '/api',
+  baseURL: BASE_URL,
   timeout: 60000
 })
+
+// 请求拦截：自动携带授权 token 和机器码
+api.interceptors.request.use(config => {
+  // 从 localStorage 读取授权信息（渲染进程可访问）
+  const licenseStr = localStorage.getItem('license_info')
+  if (licenseStr) {
+    try {
+      const license = JSON.parse(licenseStr)
+      if (license.token) config.headers['X-License-Token'] = license.token
+      if (license.machineId) config.headers['X-Machine-Id'] = license.machineId
+    } catch (e) { /* ignore */ }
+  }
+  return config
+})
+
+// 响应拦截：401 时跳转激活页
+api.interceptors.response.use(
+  res => res,
+  err => {
+    if (err.response && err.response.status === 401) {
+      // 授权失效，清除本地授权并跳转激活页
+      localStorage.removeItem('license_info')
+      window.location.hash = '#/activate'
+    }
+    return Promise.reject(err)
+  }
+)
+
+// ===== 授权相关 =====
+
+/** 激活授权码 */
+export function activateLicense(licenseKey, machineId) {
+  return api.post('/license/activate', { licenseKey, machineId })
+}
+
+/** 验证授权 */
+export function validateLicense(token, machineId) {
+  return api.post('/license/validate', { token, machineId })
+}
 
 // ===== 模板相关 =====
 
@@ -39,7 +82,19 @@ export function deleteTemplate(id) {
 
 /** 获取模板图片URL */
 export function getTemplateImageUrl(id) {
-  return `/api/template/${id}/image`
+  const token = (() => {
+    try {
+      const l = JSON.parse(localStorage.getItem('license_info') || '{}')
+      return l.token || ''
+    } catch { return '' }
+  })()
+  const machineId = (() => {
+    try {
+      const l = JSON.parse(localStorage.getItem('license_info') || '{}')
+      return l.machineId || ''
+    } catch { return '' }
+  })()
+  return `${REMOTE_BASE}/api/template/${id}/image?token=${encodeURIComponent(token)}&machineId=${encodeURIComponent(machineId)}`
 }
 
 /** 获取模板占位符 */
