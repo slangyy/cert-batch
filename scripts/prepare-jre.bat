@@ -30,7 +30,7 @@ echo.
     --add-modules java.base,java.desktop,java.logging,java.management,java.naming,java.net.http,java.security.jgss,java.sql,java.xml,jdk.unsupported,jdk.crypto.ec ^
     --output "%OUTPUT_DIR%" ^
     --strip-debug ^
-    --compress zip-6 ^
+    --compress=2 ^
     --no-header-files ^
     --no-man-pages
 
