@@ -1,0 +1,4134 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "Cert-Batch 证书批量生成工具",
+    "languages": [
+      "Java",
+      "JavaScript",
+      "Vue",
+      "Markdown",
+      "Python",
+      "Shell",
+      "Batch",
+      "YAML",
+      "XML",
+      "HTML"
+    ],
+    "frameworks": [
+      "Spring Boot",
+      "Maven",
+      "MyBatis-Plus",
+      "SQLite",
+      "Apache POI",
+      "Apache PDFBox",
+      "Vue 3",
+      "Vite",
+      "Electron",
+      "Element Plus",
+      "Konva.js"
+    ],
+    "description": "一个离线 Windows 桌面应用，使用 Electron/Vue 前端和 Spring Boot 后端管理证书模板、解析 Excel 数据并批量生成证书图片或 PDF。",
+    "analyzedAt": "2026-06-21T06:17:34.541Z",
+    "gitCommitHash": "2fc39524fd77998cb059a11c1deed6a0f77803ba"
+  },
+  "nodes": [
+    {
+      "id": "module:frontend",
+      "type": "module",
+      "name": "前端桌面客户端",
+      "summary": "Vue 渲染进程与 Electron 主进程共同组成离线桌面客户端。",
+      "tags": [
+        "前端",
+        "Electron",
+        "Vue"
+      ]
+    },
+    {
+      "id": "module:backend",
+      "type": "module",
+      "name": "后端业务服务",
+      "summary": "Spring Boot 后端提供模板管理、授权校验和证书生成能力。",
+      "tags": [
+        "后端",
+        "Spring Boot"
+      ]
+    },
+    {
+      "id": "module:docs",
+      "type": "module",
+      "name": "文档与交付脚本",
+      "summary": "用户指南、授权说明、协议文档和构建脚本支撑交付与使用。",
+      "tags": [
+        "文档",
+        "脚本"
+      ]
+    },
+    {
+      "id": "concept:offline-certificate-generation",
+      "type": "concept",
+      "name": "离线证书批量生成流程",
+      "summary": "用户在桌面端维护模板和 Excel 数据，后端渲染证书并输出图片或 PDF。",
+      "tags": [
+        "业务流程",
+        "证书生成"
+      ]
+    },
+    {
+      "id": "config:backend/pom.xml",
+      "type": "config",
+      "name": "pom.xml",
+      "filePath": "backend/pom.xml",
+      "summary": "后端 Maven 构建清单，定义 Spring Boot、MyBatis-Plus、SQLite、Apache POI 和 PDFBox 等核心依赖。",
+      "tags": [
+        "xml",
+        "config",
+        "Maven",
+        "Spring Boot"
+      ],
+      "language": "xml",
+      "complexity": "low",
+      "loc": 92
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "type": "file",
+      "name": "CertBatchApplication.java",
+      "filePath": "backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "summary": "Spring Boot 应用入口，设置无头图形模式并启动证书批量生成后端服务。",
+      "tags": [
+        "java",
+        "code"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 14
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/CertBatchApplication.java:CertBatchApplication",
+      "type": "class",
+      "name": "CertBatchApplication",
+      "filePath": "backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "summary": "CertBatchApplication 是 CertBatchApplication.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 6,
+      "endLine": 14
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/CertBatchApplication.java:main",
+      "type": "function",
+      "name": "main",
+      "filePath": "backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "summary": "main 是 CertBatchApplication.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 9,
+      "endLine": 13
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "type": "file",
+      "name": "R.java",
+      "filePath": "backend/src/main/java/com/certbatch/common/R.java",
+      "summary": "统一 API 响应包装类，为前后端接口返回成功、失败和数据载荷结构。",
+      "tags": [
+        "java",
+        "code"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 30
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/common/R.java:R",
+      "type": "class",
+      "name": "R",
+      "filePath": "backend/src/main/java/com/certbatch/common/R.java",
+      "summary": "R 是 R.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 5,
+      "endLine": 30
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/common/R.java:ok",
+      "type": "function",
+      "name": "ok",
+      "filePath": "backend/src/main/java/com/certbatch/common/R.java",
+      "summary": "ok 是 R.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 12,
+      "endLine": 18
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/common/R.java:fail",
+      "type": "function",
+      "name": "fail",
+      "filePath": "backend/src/main/java/com/certbatch/common/R.java",
+      "summary": "fail 是 R.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 24,
+      "endLine": 29
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "type": "file",
+      "name": "DatabaseInitializer.java",
+      "filePath": "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "summary": "数据库初始化组件，负责创建或迁移 SQLite 业务表结构。",
+      "tags": [
+        "java",
+        "code",
+        "后端配置"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 76
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java:DatabaseInitializer",
+      "type": "class",
+      "name": "DatabaseInitializer",
+      "filePath": "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "summary": "DatabaseInitializer 是 DatabaseInitializer.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 14,
+      "endLine": 76
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java:DatabaseInitializer",
+      "type": "function",
+      "name": "DatabaseInitializer",
+      "filePath": "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "summary": "DatabaseInitializer 是 DatabaseInitializer.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 19,
+      "endLine": 21
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java:run",
+      "type": "function",
+      "name": "run",
+      "filePath": "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "summary": "run 是 DatabaseInitializer.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 23,
+      "endLine": 75
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "type": "file",
+      "name": "DataDirInitializer.java",
+      "filePath": "backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "summary": "应用数据目录初始化组件，为本地模板、输出和数据库文件准备目录。",
+      "tags": [
+        "java",
+        "code",
+        "后端配置"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 40
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/config/DataDirInitializer.java:DataDirInitializer",
+      "type": "class",
+      "name": "DataDirInitializer",
+      "filePath": "backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "summary": "DataDirInitializer 是 DataDirInitializer.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 17,
+      "endLine": 40
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/DataDirInitializer.java:setEnvironment",
+      "type": "function",
+      "name": "setEnvironment",
+      "filePath": "backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "summary": "setEnvironment 是 DataDirInitializer.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 22,
+      "endLine": 25
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/DataDirInitializer.java:postProcessBeanFactory",
+      "type": "function",
+      "name": "postProcessBeanFactory",
+      "filePath": "backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "summary": "postProcessBeanFactory 是 DataDirInitializer.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 27,
+      "endLine": 39
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "type": "file",
+      "name": "LicenseInterceptor.java",
+      "filePath": "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "summary": "授权拦截器，在受保护 API 进入业务逻辑前校验当前机器授权状态。",
+      "tags": [
+        "java",
+        "code",
+        "后端配置"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 62
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java:LicenseInterceptor",
+      "type": "class",
+      "name": "LicenseInterceptor",
+      "filePath": "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "summary": "LicenseInterceptor 是 LicenseInterceptor.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 19,
+      "endLine": 62
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java:preHandle",
+      "type": "function",
+      "name": "preHandle",
+      "filePath": "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "summary": "preHandle 是 LicenseInterceptor.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 30,
+      "endLine": 61
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "type": "file",
+      "name": "MyBatisPlusMetaHandler.java",
+      "filePath": "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "summary": "MyBatisPlusMetaHandler.java 提供后端运行期配置，支撑数据库、Web、授权或审计行为。",
+      "tags": [
+        "java",
+        "code",
+        "后端配置"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 22
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java:MyBatisPlusMetaHandler",
+      "type": "class",
+      "name": "MyBatisPlusMetaHandler",
+      "filePath": "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "summary": "MyBatisPlusMetaHandler 是 MyBatisPlusMetaHandler.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 9,
+      "endLine": 22
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java:insertFill",
+      "type": "function",
+      "name": "insertFill",
+      "filePath": "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "summary": "insertFill 是 MyBatisPlusMetaHandler.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 12,
+      "endLine": 16
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java:updateFill",
+      "type": "function",
+      "name": "updateFill",
+      "filePath": "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "summary": "updateFill 是 MyBatisPlusMetaHandler.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 18,
+      "endLine": 21
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "type": "file",
+      "name": "WebConfig.java",
+      "filePath": "backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "summary": "Web MVC 配置，注册跨域、静态资源映射和授权拦截链。",
+      "tags": [
+        "java",
+        "code",
+        "后端配置"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 31
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/config/WebConfig.java:WebConfig",
+      "type": "class",
+      "name": "WebConfig",
+      "filePath": "backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "summary": "WebConfig 是 WebConfig.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 9,
+      "endLine": 31
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/WebConfig.java:addCorsMappings",
+      "type": "function",
+      "name": "addCorsMappings",
+      "filePath": "backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "summary": "addCorsMappings 是 WebConfig.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 15,
+      "endLine": 23
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/config/WebConfig.java:addInterceptors",
+      "type": "function",
+      "name": "addInterceptors",
+      "filePath": "backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "summary": "addInterceptors 是 WebConfig.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 25,
+      "endLine": 30
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "type": "file",
+      "name": "CertificateController.java",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "CertificateController.java 暴露后端 REST 接口，连接前端请求与模板、证书生成或授权业务服务。",
+      "tags": [
+        "java",
+        "code",
+        "REST 控制器",
+        "HTTP API"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 115
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/controller/CertificateController.java:CertificateController",
+      "type": "class",
+      "name": "CertificateController",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "CertificateController 是 CertificateController.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 22,
+      "endLine": 115
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/CertificateController.java:parseExcel",
+      "type": "function",
+      "name": "parseExcel",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "parseExcel 是 CertificateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 36,
+      "endLine": 44
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/CertificateController.java:batchGenerateSse",
+      "type": "function",
+      "name": "batchGenerateSse",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "batchGenerateSse 是 CertificateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 49,
+      "endLine": 92
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/CertificateController.java:preview",
+      "type": "function",
+      "name": "preview",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "preview 是 CertificateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 97,
+      "endLine": 114
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:REQUEST:/api/certificate/api/certificate",
+      "type": "endpoint",
+      "name": "REQUEST /api/certificate/api/certificate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "后端接口 REQUEST /api/certificate/api/certificate，由 CertificateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "REQUEST",
+        "后端端点"
+      ],
+      "startLine": 23
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/parse-excel",
+      "type": "endpoint",
+      "name": "POST /api/certificate/parse-excel",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "后端接口 POST /api/certificate/parse-excel，由 CertificateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 36
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate",
+      "type": "endpoint",
+      "name": "POST /api/certificate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "后端接口 POST /api/certificate，由 CertificateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 49
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/preview",
+      "type": "endpoint",
+      "name": "POST /api/certificate/preview",
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "summary": "后端接口 POST /api/certificate/preview，由 CertificateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 97
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "file",
+      "name": "LicenseController.java",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "LicenseController.java 暴露后端 REST 接口，连接前端请求与模板、证书生成或授权业务服务。",
+      "tags": [
+        "java",
+        "code",
+        "REST 控制器",
+        "HTTP API"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 81
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/controller/LicenseController.java:LicenseController",
+      "type": "class",
+      "name": "LicenseController",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "LicenseController 是 LicenseController.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 12,
+      "endLine": 81
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:activate",
+      "type": "function",
+      "name": "activate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "activate 是 LicenseController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 22,
+      "endLine": 27
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:validate",
+      "type": "function",
+      "name": "validate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "validate 是 LicenseController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 32,
+      "endLine": 37
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:generate",
+      "type": "function",
+      "name": "generate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "generate 是 LicenseController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 42,
+      "endLine": 48
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:list",
+      "type": "function",
+      "name": "list",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "list 是 LicenseController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 53,
+      "endLine": 56
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:disable",
+      "type": "function",
+      "name": "disable",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "disable 是 LicenseController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 61,
+      "endLine": 64
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:unbind",
+      "type": "function",
+      "name": "unbind",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "unbind 是 LicenseController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 69,
+      "endLine": 72
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:publicKey",
+      "type": "function",
+      "name": "publicKey",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "publicKey 是 LicenseController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 77,
+      "endLine": 80
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/activate",
+      "type": "endpoint",
+      "name": "POST /api/license/activate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "后端接口 POST /api/license/activate，由 LicenseController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 22
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/validate",
+      "type": "endpoint",
+      "name": "POST /api/license/validate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "后端接口 POST /api/license/validate，由 LicenseController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 32
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/generate",
+      "type": "endpoint",
+      "name": "POST /api/license/generate",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "后端接口 POST /api/license/generate，由 LicenseController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 42
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/list",
+      "type": "endpoint",
+      "name": "GET /api/license/list",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "后端接口 GET /api/license/list，由 LicenseController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "GET",
+        "后端端点"
+      ],
+      "startLine": 53
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/disable/{id}",
+      "type": "endpoint",
+      "name": "POST /api/license/disable/{id}",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "后端接口 POST /api/license/disable/{id}，由 LicenseController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 61
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/unbind/{id}",
+      "type": "endpoint",
+      "name": "POST /api/license/unbind/{id}",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "后端接口 POST /api/license/unbind/{id}，由 LicenseController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 69
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/public-key",
+      "type": "endpoint",
+      "name": "GET /api/license/public-key",
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "summary": "后端接口 GET /api/license/public-key，由 LicenseController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "GET",
+        "后端端点"
+      ],
+      "startLine": 77
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "file",
+      "name": "TemplateController.java",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "TemplateController.java 暴露后端 REST 接口，连接前端请求与模板、证书生成或授权业务服务。",
+      "tags": [
+        "java",
+        "code",
+        "REST 控制器",
+        "HTTP API"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 106
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/controller/TemplateController.java:TemplateController",
+      "type": "class",
+      "name": "TemplateController",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "TemplateController 是 TemplateController.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 18,
+      "endLine": 106
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:list",
+      "type": "function",
+      "name": "list",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "list 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 28,
+      "endLine": 31
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:detail",
+      "type": "function",
+      "name": "detail",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "detail 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 36,
+      "endLine": 39
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:create",
+      "type": "function",
+      "name": "create",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "create 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 44,
+      "endLine": 53
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:updateName",
+      "type": "function",
+      "name": "updateName",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "updateName 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 58,
+      "endLine": 62
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:delete",
+      "type": "function",
+      "name": "delete",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "delete 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 67,
+      "endLine": 71
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:getImage",
+      "type": "function",
+      "name": "getImage",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "getImage 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 76,
+      "endLine": 88
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:getPlaceholders",
+      "type": "function",
+      "name": "getPlaceholders",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "getPlaceholders 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 93,
+      "endLine": 96
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:savePlaceholders",
+      "type": "function",
+      "name": "savePlaceholders",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "savePlaceholders 是 TemplateController.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 101,
+      "endLine": 105
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:REQUEST:/api/template/api/template",
+      "type": "endpoint",
+      "name": "REQUEST /api/template/api/template",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 REQUEST /api/template/api/template，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "REQUEST",
+        "后端端点"
+      ],
+      "startLine": 19
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/list",
+      "type": "endpoint",
+      "name": "GET /api/template/list",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 GET /api/template/list，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "GET",
+        "后端端点"
+      ],
+      "startLine": 28
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}",
+      "type": "endpoint",
+      "name": "GET /api/template/{id}",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 GET /api/template/{id}，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "GET",
+        "后端端点"
+      ],
+      "startLine": 36
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/create",
+      "type": "endpoint",
+      "name": "POST /api/template/create",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 POST /api/template/create，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 44
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:PUT:/api/template/{id}/name",
+      "type": "endpoint",
+      "name": "PUT /api/template/{id}/name",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 PUT /api/template/{id}/name，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "PUT",
+        "后端端点"
+      ],
+      "startLine": 58
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:DELETE:/api/template/{id}",
+      "type": "endpoint",
+      "name": "DELETE /api/template/{id}",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 DELETE /api/template/{id}，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "DELETE",
+        "后端端点"
+      ],
+      "startLine": 67
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/image",
+      "type": "endpoint",
+      "name": "GET /api/template/{id}/image",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 GET /api/template/{id}/image，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "GET",
+        "后端端点"
+      ],
+      "startLine": 76
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/placeholders",
+      "type": "endpoint",
+      "name": "GET /api/template/{id}/placeholders",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 GET /api/template/{id}/placeholders，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "GET",
+        "后端端点"
+      ],
+      "startLine": 93
+    },
+    {
+      "id": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/{id}/placeholders",
+      "type": "endpoint",
+      "name": "POST /api/template/{id}/placeholders",
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "summary": "后端接口 POST /api/template/{id}/placeholders，由 TemplateController.java 处理并转交业务服务。",
+      "tags": [
+        "HTTP API",
+        "POST",
+        "后端端点"
+      ],
+      "startLine": 101
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/entity/License.java",
+      "type": "file",
+      "name": "License.java",
+      "filePath": "backend/src/main/java/com/certbatch/entity/License.java",
+      "summary": "授权实体，描述机器码、激活码、过期时间和授权状态等持久化字段。",
+      "tags": [
+        "java",
+        "code",
+        "领域实体"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 46
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/entity/License.java:License",
+      "type": "class",
+      "name": "License",
+      "filePath": "backend/src/main/java/com/certbatch/entity/License.java",
+      "summary": "License 是 License.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 11,
+      "endLine": 46
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "type": "file",
+      "name": "Placeholder.java",
+      "filePath": "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "summary": "模板占位符实体，描述字段名、坐标、字体、颜色和对齐方式。",
+      "tags": [
+        "java",
+        "code",
+        "领域实体"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 39
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/entity/Placeholder.java:Placeholder",
+      "type": "class",
+      "name": "Placeholder",
+      "filePath": "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "summary": "Placeholder 是 Placeholder.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 9,
+      "endLine": 39
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/entity/Template.java",
+      "type": "file",
+      "name": "Template.java",
+      "filePath": "backend/src/main/java/com/certbatch/entity/Template.java",
+      "summary": "证书模板实体，保存模板名称、图片路径、尺寸和创建更新时间。",
+      "tags": [
+        "java",
+        "code",
+        "领域实体"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 37
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/entity/Template.java:Template",
+      "type": "class",
+      "name": "Template",
+      "filePath": "backend/src/main/java/com/certbatch/entity/Template.java",
+      "summary": "Template 是 Template.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 11,
+      "endLine": 37
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "type": "file",
+      "name": "LicenseMapper.java",
+      "filePath": "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "summary": "LicenseMapper.java 是 MyBatis-Plus 数据访问接口，负责实体对象与 SQLite 表之间的持久化操作。",
+      "tags": [
+        "java",
+        "code",
+        "MyBatis",
+        "数据访问"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 9
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java:LicenseMapper",
+      "type": "class",
+      "name": "LicenseMapper",
+      "filePath": "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "summary": "LicenseMapper 是 LicenseMapper.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 7,
+      "endLine": 9
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "type": "file",
+      "name": "PlaceholderMapper.java",
+      "filePath": "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "summary": "PlaceholderMapper.java 是 MyBatis-Plus 数据访问接口，负责实体对象与 SQLite 表之间的持久化操作。",
+      "tags": [
+        "java",
+        "code",
+        "MyBatis",
+        "数据访问"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 21
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java:PlaceholderMapper",
+      "type": "class",
+      "name": "PlaceholderMapper",
+      "filePath": "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "summary": "PlaceholderMapper 是 PlaceholderMapper.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 9,
+      "endLine": 21
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "type": "file",
+      "name": "TemplateMapper.java",
+      "filePath": "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "summary": "TemplateMapper.java 是 MyBatis-Plus 数据访问接口，负责实体对象与 SQLite 表之间的持久化操作。",
+      "tags": [
+        "java",
+        "code",
+        "MyBatis",
+        "数据访问"
+      ],
+      "language": "java",
+      "complexity": "low",
+      "loc": 9
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java:TemplateMapper",
+      "type": "class",
+      "name": "TemplateMapper",
+      "filePath": "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "summary": "TemplateMapper 是 TemplateMapper.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 7,
+      "endLine": 9
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "type": "file",
+      "name": "CertificateService.java",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "证书生成核心服务，负责读取 Excel 数据、渲染模板图片并生成 PNG/PDF 输出。",
+      "tags": [
+        "java",
+        "code",
+        "业务服务"
+      ],
+      "language": "java",
+      "complexity": "medium",
+      "loc": 299
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/service/CertificateService.java:CertificateService",
+      "type": "class",
+      "name": "CertificateService",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "CertificateService 是 CertificateService.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 30,
+      "endLine": 299
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:parseExcel",
+      "type": "function",
+      "name": "parseExcel",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "parseExcel 是 CertificateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 43,
+      "endLine": 88
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:batchGenerate",
+      "type": "function",
+      "name": "batchGenerate",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "batchGenerate 是 CertificateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 93,
+      "endLine": 160
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:renderCertificate",
+      "type": "function",
+      "name": "renderCertificate",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "renderCertificate 是 CertificateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 173,
+      "endLine": 226
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:previewCertificate",
+      "type": "function",
+      "name": "previewCertificate",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "previewCertificate 是 CertificateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 231,
+      "endLine": 242
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:imageToPdf",
+      "type": "function",
+      "name": "imageToPdf",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "imageToPdf 是 CertificateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 247,
+      "endLine": 267
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:parseColor",
+      "type": "function",
+      "name": "parseColor",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "parseColor 是 CertificateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 272,
+      "endLine": 284
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:getFileName",
+      "type": "function",
+      "name": "getFileName",
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "summary": "getFileName 是 CertificateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 289,
+      "endLine": 298
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "type": "file",
+      "name": "LicenseService.java",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "授权服务，负责机器码、激活码校验、授权记录保存和授权状态判断。",
+      "tags": [
+        "java",
+        "code",
+        "业务服务"
+      ],
+      "language": "java",
+      "complexity": "medium",
+      "loc": 261
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/service/LicenseService.java:LicenseService",
+      "type": "class",
+      "name": "LicenseService",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "LicenseService 是 LicenseService.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 25,
+      "endLine": 261
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:getKeyPair",
+      "type": "function",
+      "name": "getKeyPair",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "getKeyPair 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 40,
+      "endLine": 78
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:list",
+      "type": "function",
+      "name": "list",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "list 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 83,
+      "endLine": 85
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:activate",
+      "type": "function",
+      "name": "activate",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "activate 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 90,
+      "endLine": 134
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:validate",
+      "type": "function",
+      "name": "validate",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "validate 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 139,
+      "endLine": 167
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:generateLicense",
+      "type": "function",
+      "name": "generateLicense",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "generateLicense 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 172,
+      "endLine": 182
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:disable",
+      "type": "function",
+      "name": "disable",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "disable 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 187,
+      "endLine": 196
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:unbind",
+      "type": "function",
+      "name": "unbind",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "unbind 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 201,
+      "endLine": 211
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:getPublicKeyBase64",
+      "type": "function",
+      "name": "getPublicKeyBase64",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "getPublicKeyBase64 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 216,
+      "endLine": 218
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:buildSignedData",
+      "type": "function",
+      "name": "buildSignedData",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "buildSignedData 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 225,
+      "endLine": 229
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:sign",
+      "type": "function",
+      "name": "sign",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "sign 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 234,
+      "endLine": 239
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:generateLicenseKey",
+      "type": "function",
+      "name": "generateLicenseKey",
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "summary": "generateLicenseKey 是 LicenseService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 244,
+      "endLine": 260
+    },
+    {
+      "id": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "type": "file",
+      "name": "TemplateService.java",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "模板业务服务，维护证书模板、占位符配置、模板图片路径和模板预览数据。",
+      "tags": [
+        "java",
+        "code",
+        "业务服务"
+      ],
+      "language": "java",
+      "complexity": "medium",
+      "loc": 151
+    },
+    {
+      "id": "class:backend/src/main/java/com/certbatch/service/TemplateService.java:TemplateService",
+      "type": "class",
+      "name": "TemplateService",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "TemplateService 是 TemplateService.java 中定义的主要类，封装该文件的核心职责。",
+      "tags": [
+        "class",
+        "java",
+        "code"
+      ],
+      "startLine": 24,
+      "endLine": 151
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getImageDir",
+      "type": "function",
+      "name": "getImageDir",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "getImageDir 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 36,
+      "endLine": 46
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:createTemplate",
+      "type": "function",
+      "name": "createTemplate",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "createTemplate 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 51,
+      "endLine": 78
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getTemplateDetail",
+      "type": "function",
+      "name": "getTemplateDetail",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "getTemplateDetail 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 83,
+      "endLine": 85
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getPlaceholders",
+      "type": "function",
+      "name": "getPlaceholders",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "getPlaceholders 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 90,
+      "endLine": 92
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:savePlaceholders",
+      "type": "function",
+      "name": "savePlaceholders",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "savePlaceholders 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 97,
+      "endLine": 107
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:deleteTemplate",
+      "type": "function",
+      "name": "deleteTemplate",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "deleteTemplate 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 112,
+      "endLine": 127
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:updateTemplateName",
+      "type": "function",
+      "name": "updateTemplateName",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "updateTemplateName 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 132,
+      "endLine": 139
+    },
+    {
+      "id": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getImagePath",
+      "type": "function",
+      "name": "getImagePath",
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "summary": "getImagePath 是 TemplateService.java 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "java",
+        "code"
+      ],
+      "startLine": 144,
+      "endLine": 150
+    },
+    {
+      "id": "config:backend/src/main/resources/application.yml",
+      "type": "config",
+      "name": "application.yml",
+      "filePath": "backend/src/main/resources/application.yml",
+      "summary": "Spring Boot 运行配置，集中声明服务端口、上传限制、SQLite 数据源和 MyBatis-Plus 行为。",
+      "tags": [
+        "yaml",
+        "config"
+      ],
+      "language": "yaml",
+      "complexity": "low",
+      "loc": 23
+    },
+    {
+      "id": "file:backend/src/main/resources/start.sh",
+      "type": "file",
+      "name": "start.sh",
+      "filePath": "backend/src/main/resources/start.sh",
+      "summary": "后端启动脚本，用于从打包环境启动 Spring Boot 服务。",
+      "tags": [
+        "shell",
+        "script"
+      ],
+      "language": "shell",
+      "complexity": "low",
+      "loc": 1
+    },
+    {
+      "id": "document:docs/证书生成及系统服务协议.md",
+      "type": "document",
+      "name": "证书生成及系统服务协议.md",
+      "filePath": "docs/证书生成及系统服务协议.md",
+      "summary": "项目 Markdown 文档，补充说明业务协议、用户流程或交付说明。",
+      "tags": [
+        "markdown",
+        "docs",
+        "文档"
+      ],
+      "language": "markdown",
+      "complexity": "medium",
+      "loc": 254
+    },
+    {
+      "id": "file:docs/generate_contract_docx.py",
+      "type": "file",
+      "name": "generate_contract_docx.py",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "协议文档生成脚本，用 Python 生成证书生成及系统服务协议的 Word 文档。",
+      "tags": [
+        "python",
+        "code"
+      ],
+      "language": "python",
+      "complexity": "high",
+      "loc": 432
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:set_cn_font",
+      "type": "function",
+      "name": "set_cn_font",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "set_cn_font 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 18,
+      "endLine": 25
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:add_title",
+      "type": "function",
+      "name": "add_title",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "add_title 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 28,
+      "endLine": 33
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:add_heading",
+      "type": "function",
+      "name": "add_heading",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "add_heading 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 36,
+      "endLine": 41
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:add_para",
+      "type": "function",
+      "name": "add_para",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "add_para 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 44,
+      "endLine": 57
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:add_divider",
+      "type": "function",
+      "name": "add_divider",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "add_divider 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 60,
+      "endLine": 65
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:add_grid_table",
+      "type": "function",
+      "name": "add_grid_table",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "add_grid_table 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 68,
+      "endLine": 82
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:build_attachments",
+      "type": "function",
+      "name": "build_attachments",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "build_attachments 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 85,
+      "endLine": 169
+    },
+    {
+      "id": "function:docs/generate_contract_docx.py:build",
+      "type": "function",
+      "name": "build",
+      "filePath": "docs/generate_contract_docx.py",
+      "summary": "build 是 generate_contract_docx.py 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "python",
+        "code"
+      ],
+      "startLine": 172,
+      "endLine": 428
+    },
+    {
+      "id": "file:frontend/electron/main.js",
+      "type": "file",
+      "name": "main.js",
+      "filePath": "frontend/electron/main.js",
+      "summary": "Electron 主进程入口，创建桌面窗口、启动/管理后端进程并处理应用生命周期。",
+      "tags": [
+        "javascript",
+        "code",
+        "Electron",
+        "桌面壳"
+      ],
+      "language": "javascript",
+      "complexity": "high",
+      "loc": 433
+    },
+    {
+      "id": "function:frontend/electron/main.js:getMachineId",
+      "type": "function",
+      "name": "getMachineId",
+      "filePath": "frontend/electron/main.js",
+      "summary": "getMachineId 是 main.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 20,
+      "endLine": 47
+    },
+    {
+      "id": "function:frontend/electron/main.js:waitForBackend",
+      "type": "function",
+      "name": "waitForBackend",
+      "filePath": "frontend/electron/main.js",
+      "summary": "waitForBackend 是 main.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 52,
+      "endLine": 88
+    },
+    {
+      "id": "function:frontend/electron/main.js:findJavaPath",
+      "type": "function",
+      "name": "findJavaPath",
+      "filePath": "frontend/electron/main.js",
+      "summary": "findJavaPath 是 main.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 93,
+      "endLine": 101
+    },
+    {
+      "id": "function:frontend/electron/main.js:getBackendLogPath",
+      "type": "function",
+      "name": "getBackendLogPath",
+      "filePath": "frontend/electron/main.js",
+      "summary": "getBackendLogPath 是 main.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 109,
+      "endLine": 111
+    },
+    {
+      "id": "function:frontend/electron/main.js:startBackend",
+      "type": "function",
+      "name": "startBackend",
+      "filePath": "frontend/electron/main.js",
+      "summary": "startBackend 是 main.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 116,
+      "endLine": 233
+    },
+    {
+      "id": "function:frontend/electron/main.js:verifyLicenseLocal",
+      "type": "function",
+      "name": "verifyLicenseLocal",
+      "filePath": "frontend/electron/main.js",
+      "summary": "verifyLicenseLocal 是 main.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 239,
+      "endLine": 298
+    },
+    {
+      "id": "function:frontend/electron/main.js:createWindow",
+      "type": "function",
+      "name": "createWindow",
+      "filePath": "frontend/electron/main.js",
+      "summary": "createWindow 是 main.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 303,
+      "endLine": 328
+    },
+    {
+      "id": "file:frontend/electron/preload.js",
+      "type": "file",
+      "name": "preload.js",
+      "filePath": "frontend/electron/preload.js",
+      "summary": "Electron 预加载脚本，为渲染进程暴露受控的桌面能力边界。",
+      "tags": [
+        "javascript",
+        "code",
+        "Electron",
+        "桌面壳"
+      ],
+      "language": "javascript",
+      "complexity": "low",
+      "loc": 12
+    },
+    {
+      "id": "file:frontend/index.html",
+      "type": "file",
+      "name": "index.html",
+      "filePath": "frontend/index.html",
+      "summary": "前端 HTML 入口，提供 Vue 应用挂载点。",
+      "tags": [
+        "html",
+        "markup"
+      ],
+      "language": "html",
+      "complexity": "low",
+      "loc": 12
+    },
+    {
+      "id": "config:frontend/package.json",
+      "type": "config",
+      "name": "package.json",
+      "filePath": "frontend/package.json",
+      "summary": "前端 npm 清单，定义 Vue/Vite/Electron 依赖、开发命令和 Windows 打包配置。",
+      "tags": [
+        "json",
+        "config",
+        "npm",
+        "Vite",
+        "Electron"
+      ],
+      "language": "json",
+      "complexity": "low",
+      "loc": 60
+    },
+    {
+      "id": "file:frontend/src/api/index.js",
+      "type": "file",
+      "name": "index.js",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "前端 API 封装层，统一调用模板、证书生成和授权相关的后端 HTTP 接口。",
+      "tags": [
+        "javascript",
+        "code",
+        "API 客户端"
+      ],
+      "language": "javascript",
+      "complexity": "medium",
+      "loc": 188
+    },
+    {
+      "id": "function:frontend/src/api/index.js:activateLicense",
+      "type": "function",
+      "name": "activateLicense",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "activateLicense 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 20,
+      "endLine": 22
+    },
+    {
+      "id": "function:frontend/src/api/index.js:validateLicenseOnline",
+      "type": "function",
+      "name": "validateLicenseOnline",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "validateLicenseOnline 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 25,
+      "endLine": 27
+    },
+    {
+      "id": "function:frontend/src/api/index.js:waitForBackend",
+      "type": "function",
+      "name": "waitForBackend",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "waitForBackend 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 32,
+      "endLine": 49
+    },
+    {
+      "id": "function:frontend/src/api/index.js:getTemplateList",
+      "type": "function",
+      "name": "getTemplateList",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "getTemplateList 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 54,
+      "endLine": 56
+    },
+    {
+      "id": "function:frontend/src/api/index.js:getTemplateDetail",
+      "type": "function",
+      "name": "getTemplateDetail",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "getTemplateDetail 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 59,
+      "endLine": 61
+    },
+    {
+      "id": "function:frontend/src/api/index.js:createTemplate",
+      "type": "function",
+      "name": "createTemplate",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "createTemplate 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 64,
+      "endLine": 71
+    },
+    {
+      "id": "function:frontend/src/api/index.js:updateTemplateName",
+      "type": "function",
+      "name": "updateTemplateName",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "updateTemplateName 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 74,
+      "endLine": 76
+    },
+    {
+      "id": "function:frontend/src/api/index.js:deleteTemplate",
+      "type": "function",
+      "name": "deleteTemplate",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "deleteTemplate 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 79,
+      "endLine": 81
+    },
+    {
+      "id": "function:frontend/src/api/index.js:getTemplateImageUrl",
+      "type": "function",
+      "name": "getTemplateImageUrl",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "getTemplateImageUrl 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 84,
+      "endLine": 86
+    },
+    {
+      "id": "function:frontend/src/api/index.js:getPlaceholders",
+      "type": "function",
+      "name": "getPlaceholders",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "getPlaceholders 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 89,
+      "endLine": 91
+    },
+    {
+      "id": "function:frontend/src/api/index.js:savePlaceholders",
+      "type": "function",
+      "name": "savePlaceholders",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "savePlaceholders 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 94,
+      "endLine": 96
+    },
+    {
+      "id": "function:frontend/src/api/index.js:parseExcel",
+      "type": "function",
+      "name": "parseExcel",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "parseExcel 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 101,
+      "endLine": 107
+    },
+    {
+      "id": "function:frontend/src/api/index.js:batchGenerateSSE",
+      "type": "function",
+      "name": "batchGenerateSSE",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "batchGenerateSSE 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 110,
+      "endLine": 179
+    },
+    {
+      "id": "function:frontend/src/api/index.js:previewCertificate",
+      "type": "function",
+      "name": "previewCertificate",
+      "filePath": "frontend/src/api/index.js",
+      "summary": "previewCertificate 是 index.js 中的函数或方法，参与该文件的业务处理流程。",
+      "tags": [
+        "function",
+        "javascript",
+        "code"
+      ],
+      "startLine": 182,
+      "endLine": 186
+    },
+    {
+      "id": "file:frontend/src/App.vue",
+      "type": "file",
+      "name": "App.vue",
+      "filePath": "frontend/src/App.vue",
+      "summary": "前端根组件，承载整体布局、导航和主要页面出口。",
+      "tags": [
+        "vue",
+        "code"
+      ],
+      "language": "vue",
+      "complexity": "medium",
+      "loc": 203
+    },
+    {
+      "id": "file:frontend/src/main.js",
+      "type": "file",
+      "name": "main.js",
+      "filePath": "frontend/src/main.js",
+      "summary": "Vue 渲染进程入口，挂载应用、路由和 Element Plus UI 组件库。",
+      "tags": [
+        "javascript",
+        "code"
+      ],
+      "language": "javascript",
+      "complexity": "low",
+      "loc": 20
+    },
+    {
+      "id": "file:frontend/src/router/index.js",
+      "type": "file",
+      "name": "index.js",
+      "filePath": "frontend/src/router/index.js",
+      "summary": "前端路由配置，组织模板管理、模板编辑、批量生成和授权激活页面。",
+      "tags": [
+        "javascript",
+        "code"
+      ],
+      "language": "javascript",
+      "complexity": "low",
+      "loc": 36
+    },
+    {
+      "id": "file:frontend/src/views/ActivateView.vue",
+      "type": "file",
+      "name": "ActivateView.vue",
+      "filePath": "frontend/src/views/ActivateView.vue",
+      "summary": "授权激活页面，展示机器码、录入激活码并调用授权接口完成离线激活。",
+      "tags": [
+        "vue",
+        "code",
+        "Vue 页面"
+      ],
+      "language": "vue",
+      "complexity": "medium",
+      "loc": 169
+    },
+    {
+      "id": "file:frontend/src/views/BatchGenerate.vue",
+      "type": "file",
+      "name": "BatchGenerate.vue",
+      "filePath": "frontend/src/views/BatchGenerate.vue",
+      "summary": "批量生成页面，选择模板、上传 Excel、预览数据并触发证书图片/PDF 批量输出。",
+      "tags": [
+        "vue",
+        "code",
+        "Vue 页面"
+      ],
+      "language": "vue",
+      "complexity": "high",
+      "loc": 544
+    },
+    {
+      "id": "file:frontend/src/views/TemplateEditor.vue",
+      "type": "file",
+      "name": "TemplateEditor.vue",
+      "filePath": "frontend/src/views/TemplateEditor.vue",
+      "summary": "模板可视化编辑页面，基于画布标注占位符位置并配置字体、颜色和对齐方式。",
+      "tags": [
+        "vue",
+        "code",
+        "Vue 页面"
+      ],
+      "language": "vue",
+      "complexity": "high",
+      "loc": 526
+    },
+    {
+      "id": "file:frontend/src/views/TemplateManage.vue",
+      "type": "file",
+      "name": "TemplateManage.vue",
+      "filePath": "frontend/src/views/TemplateManage.vue",
+      "summary": "模板管理页面，提供模板上传、列表查看、编辑、删除和预览入口。",
+      "tags": [
+        "vue",
+        "code",
+        "Vue 页面"
+      ],
+      "language": "vue",
+      "complexity": "medium",
+      "loc": 249
+    },
+    {
+      "id": "file:frontend/vite.config.js",
+      "type": "file",
+      "name": "vite.config.js",
+      "filePath": "frontend/vite.config.js",
+      "summary": "Vite 构建配置，定义 Vue 插件、开发服务器代理和前端构建行为。",
+      "tags": [
+        "javascript",
+        "code"
+      ],
+      "language": "javascript",
+      "complexity": "low",
+      "loc": 22
+    },
+    {
+      "id": "document:GUIDE.md",
+      "type": "document",
+      "name": "GUIDE.md",
+      "filePath": "GUIDE.md",
+      "summary": "使用指南文档，面向用户说明模板管理、Excel 上传和批量生成流程。",
+      "tags": [
+        "markdown",
+        "docs",
+        "文档"
+      ],
+      "language": "markdown",
+      "complexity": "medium",
+      "loc": 284
+    },
+    {
+      "id": "document:LICENSE-GUIDE.md",
+      "type": "document",
+      "name": "LICENSE-GUIDE.md",
+      "filePath": "LICENSE-GUIDE.md",
+      "summary": "授权说明文档，描述离线授权、机器码、激活码和授权管理流程。",
+      "tags": [
+        "markdown",
+        "docs",
+        "文档"
+      ],
+      "language": "markdown",
+      "complexity": "medium",
+      "loc": 203
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "name": "README.md",
+      "filePath": "README.md",
+      "summary": "项目总览文档，说明证书批量生成工具的功能、架构、技术栈和运行方式。",
+      "tags": [
+        "markdown",
+        "docs",
+        "文档"
+      ],
+      "language": "markdown",
+      "complexity": "medium",
+      "loc": 151
+    },
+    {
+      "id": "file:scripts/build-all.bat",
+      "type": "file",
+      "name": "build-all.bat",
+      "filePath": "scripts/build-all.bat",
+      "summary": "build-all.bat 是 Windows 批处理脚本，用于准备 JRE 或执行前后端整体构建。",
+      "tags": [
+        "batch",
+        "script",
+        "构建脚本"
+      ],
+      "language": "batch",
+      "complexity": "low",
+      "loc": 90
+    },
+    {
+      "id": "file:scripts/prepare-jre.bat",
+      "type": "file",
+      "name": "prepare-jre.bat",
+      "filePath": "scripts/prepare-jre.bat",
+      "summary": "prepare-jre.bat 是 Windows 批处理脚本，用于准备 JRE 或执行前后端整体构建。",
+      "tags": [
+        "batch",
+        "script",
+        "构建脚本"
+      ],
+      "language": "batch",
+      "complexity": "low",
+      "loc": 50
+    }
+  ],
+  "edges": [
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "config:backend/pom.xml",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "target": "class:backend/src/main/java/com/certbatch/CertBatchApplication.java:CertBatchApplication",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "target": "function:backend/src/main/java/com/certbatch/CertBatchApplication.java:main",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "target": "class:backend/src/main/java/com/certbatch/common/R.java:R",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "target": "function:backend/src/main/java/com/certbatch/common/R.java:ok",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "target": "function:backend/src/main/java/com/certbatch/common/R.java:fail",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "target": "class:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java:DatabaseInitializer",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java:DatabaseInitializer",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java:run",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "target": "class:backend/src/main/java/com/certbatch/config/DataDirInitializer.java:DataDirInitializer",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/DataDirInitializer.java:setEnvironment",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/DataDirInitializer.java:postProcessBeanFactory",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "target": "class:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java:LicenseInterceptor",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java:preHandle",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "target": "class:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java:MyBatisPlusMetaHandler",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java:insertFill",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java:updateFill",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "target": "class:backend/src/main/java/com/certbatch/config/WebConfig.java:WebConfig",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/WebConfig.java:addCorsMappings",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "target": "function:backend/src/main/java/com/certbatch/config/WebConfig.java:addInterceptors",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "class:backend/src/main/java/com/certbatch/controller/CertificateController.java:CertificateController",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/CertificateController.java:parseExcel",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/CertificateController.java:batchGenerateSse",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/CertificateController.java:preview",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:REQUEST:/api/certificate/api/certificate",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:REQUEST:/api/certificate/api/certificate",
+      "target": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/parse-excel",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/parse-excel",
+      "target": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate",
+      "target": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/preview",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/preview",
+      "target": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "class:backend/src/main/java/com/certbatch/controller/LicenseController.java:LicenseController",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:activate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:validate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:generate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:list",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:disable",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:unbind",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/LicenseController.java:publicKey",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/activate",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/activate",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/validate",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/validate",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/generate",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/generate",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/list",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/list",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/disable/{id}",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/disable/{id}",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/unbind/{id}",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/unbind/{id}",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/public-key",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/public-key",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "class:backend/src/main/java/com/certbatch/controller/TemplateController.java:TemplateController",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:list",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:detail",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:create",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:updateName",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:delete",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:getImage",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:getPlaceholders",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "function:backend/src/main/java/com/certbatch/controller/TemplateController.java:savePlaceholders",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:REQUEST:/api/template/api/template",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:REQUEST:/api/template/api/template",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/list",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/list",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/create",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/create",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:PUT:/api/template/{id}/name",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:PUT:/api/template/{id}/name",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:DELETE:/api/template/{id}",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:DELETE:/api/template/{id}",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/image",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/image",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/placeholders",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/placeholders",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/{id}/placeholders",
+      "type": "contains"
+    },
+    {
+      "weight": 0.5,
+      "source": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/{id}/placeholders",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "routes"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/entity/License.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/entity/License.java",
+      "target": "class:backend/src/main/java/com/certbatch/entity/License.java:License",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "target": "class:backend/src/main/java/com/certbatch/entity/Placeholder.java:Placeholder",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Template.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/entity/Template.java",
+      "target": "class:backend/src/main/java/com/certbatch/entity/Template.java:Template",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "target": "class:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java:LicenseMapper",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "target": "class:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java:PlaceholderMapper",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "target": "class:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java:TemplateMapper",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "class:backend/src/main/java/com/certbatch/service/CertificateService.java:CertificateService",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:parseExcel",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:batchGenerate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:renderCertificate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:previewCertificate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:imageToPdf",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:parseColor",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/CertificateService.java:getFileName",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "class:backend/src/main/java/com/certbatch/service/LicenseService.java:LicenseService",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:getKeyPair",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:list",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:activate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:validate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:generateLicense",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:disable",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:unbind",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:getPublicKeyBase64",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:buildSignedData",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:sign",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/LicenseService.java:generateLicenseKey",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "class:backend/src/main/java/com/certbatch/service/TemplateService.java:TemplateService",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getImageDir",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:createTemplate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getTemplateDetail",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getPlaceholders",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:savePlaceholders",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:deleteTemplate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:updateTemplateName",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "function:backend/src/main/java/com/certbatch/service/TemplateService.java:getImagePath",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "config:backend/src/main/resources/application.yml",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:backend",
+      "target": "file:backend/src/main/resources/start.sh",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:docs",
+      "target": "document:docs/证书生成及系统服务协议.md",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:docs",
+      "target": "file:docs/generate_contract_docx.py",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:set_cn_font",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:add_title",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:add_heading",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:add_para",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:add_divider",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:add_grid_table",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:build_attachments",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:docs/generate_contract_docx.py",
+      "target": "function:docs/generate_contract_docx.py:build",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/electron/main.js",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/electron/main.js",
+      "target": "function:frontend/electron/main.js:getMachineId",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/electron/main.js",
+      "target": "function:frontend/electron/main.js:waitForBackend",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/electron/main.js",
+      "target": "function:frontend/electron/main.js:findJavaPath",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/electron/main.js",
+      "target": "function:frontend/electron/main.js:getBackendLogPath",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/electron/main.js",
+      "target": "function:frontend/electron/main.js:startBackend",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/electron/main.js",
+      "target": "function:frontend/electron/main.js:verifyLicenseLocal",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/electron/main.js",
+      "target": "function:frontend/electron/main.js:createWindow",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/electron/preload.js",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/index.html",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "config:frontend/package.json",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/api/index.js",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:activateLicense",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:validateLicenseOnline",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:waitForBackend",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:getTemplateList",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:getTemplateDetail",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:createTemplate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:updateTemplateName",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:deleteTemplate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:getTemplateImageUrl",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:getPlaceholders",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:savePlaceholders",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:parseExcel",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:batchGenerateSSE",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "file:frontend/src/api/index.js",
+      "target": "function:frontend/src/api/index.js:previewCertificate",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/App.vue",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/main.js",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/router/index.js",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/views/ActivateView.vue",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/views/BatchGenerate.vue",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/views/TemplateEditor.vue",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/src/views/TemplateManage.vue",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:frontend",
+      "target": "file:frontend/vite.config.js",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:docs",
+      "target": "document:GUIDE.md",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:docs",
+      "target": "document:LICENSE-GUIDE.md",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:docs",
+      "target": "document:README.md",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:docs",
+      "target": "file:scripts/build-all.bat",
+      "type": "contains"
+    },
+    {
+      "weight": 1,
+      "source": "module:docs",
+      "target": "file:scripts/prepare-jre.bat",
+      "type": "contains"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "target": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/License.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "target": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "target": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/License.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "target": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Template.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "target": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/License.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Template.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Template.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "file:backend/src/main/java/com/certbatch/common/R.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/License.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "target": "file:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "file:backend/src/main/java/com/certbatch/entity/Template.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "file:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "target": "file:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:frontend/src/main.js",
+      "target": "file:frontend/src/App.vue",
+      "type": "imports"
+    },
+    {
+      "weight": 0.7,
+      "source": "file:frontend/src/main.js",
+      "target": "file:frontend/src/router/index.js",
+      "type": "imports"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/router/index.js",
+      "target": "file:frontend/src/views/TemplateManage.vue",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/router/index.js",
+      "target": "file:frontend/src/views/TemplateEditor.vue",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/router/index.js",
+      "target": "file:frontend/src/views/BatchGenerate.vue",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/router/index.js",
+      "target": "file:frontend/src/views/ActivateView.vue",
+      "type": "routes"
+    },
+    {
+      "weight": 0.6,
+      "source": "file:frontend/src/api/index.js",
+      "target": "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "type": "depends_on"
+    },
+    {
+      "weight": 0.6,
+      "source": "file:frontend/src/api/index.js",
+      "target": "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "type": "depends_on"
+    },
+    {
+      "weight": 0.6,
+      "source": "file:frontend/src/api/index.js",
+      "target": "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "type": "depends_on"
+    },
+    {
+      "weight": 0.6,
+      "source": "file:frontend/electron/main.js",
+      "target": "config:backend/pom.xml",
+      "type": "depends_on"
+    },
+    {
+      "weight": 0.6,
+      "source": "file:frontend/electron/main.js",
+      "target": "file:backend/src/main/resources/start.sh",
+      "type": "depends_on"
+    },
+    {
+      "weight": 0.6,
+      "source": "config:backend/src/main/resources/application.yml",
+      "target": "file:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "type": "configures"
+    },
+    {
+      "weight": 0.6,
+      "source": "config:backend/src/main/resources/application.yml",
+      "target": "file:backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "type": "configures"
+    },
+    {
+      "weight": 0.6,
+      "source": "config:backend/pom.xml",
+      "target": "file:backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "type": "configures"
+    },
+    {
+      "weight": 0.6,
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/electron/main.js",
+      "type": "configures"
+    },
+    {
+      "weight": 0.6,
+      "source": "config:frontend/package.json",
+      "target": "file:frontend/src/main.js",
+      "type": "configures"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:README.md",
+      "target": "module:frontend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:README.md",
+      "target": "module:backend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:README.md",
+      "target": "concept:offline-certificate-generation",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:GUIDE.md",
+      "target": "module:frontend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:GUIDE.md",
+      "target": "module:backend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:GUIDE.md",
+      "target": "concept:offline-certificate-generation",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:LICENSE-GUIDE.md",
+      "target": "module:frontend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:LICENSE-GUIDE.md",
+      "target": "module:backend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:LICENSE-GUIDE.md",
+      "target": "concept:offline-certificate-generation",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:docs/证书生成及系统服务协议.md",
+      "target": "module:frontend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:docs/证书生成及系统服务协议.md",
+      "target": "module:backend",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "document:docs/证书生成及系统服务协议.md",
+      "target": "concept:offline-certificate-generation",
+      "type": "documents"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:REQUEST:/api/certificate/api/certificate",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/parse-excel",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/CertificateController.java:POST:/api/certificate/preview",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/activate",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/validate",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/generate",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/list",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/disable/{id}",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:POST:/api/license/unbind/{id}",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/LicenseController.java:GET:/api/license/public-key",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:REQUEST:/api/template/api/template",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/list",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/create",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:PUT:/api/template/{id}/name",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:DELETE:/api/template/{id}",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/image",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:GET:/api/template/{id}/placeholders",
+      "type": "routes"
+    },
+    {
+      "weight": 0.5,
+      "source": "file:frontend/src/api/index.js",
+      "target": "endpoint:backend/src/main/java/com/certbatch/controller/TemplateController.java:POST:/api/template/{id}/placeholders",
+      "type": "routes"
+    }
+  ],
+  "layers": [
+    {
+      "id": "layer:desktop-shell",
+      "name": "桌面壳层",
+      "description": "Electron 主进程、预加载脚本和桌面生命周期管理。",
+      "nodeIds": [
+        "file:frontend/electron/main.js",
+        "file:frontend/electron/preload.js"
+      ]
+    },
+    {
+      "id": "layer:frontend-renderer",
+      "name": "前端渲染层",
+      "description": "Vue 页面、路由、API 封装和用户交互流程。",
+      "nodeIds": [
+        "file:frontend/src/api/index.js",
+        "file:frontend/src/App.vue",
+        "file:frontend/src/main.js",
+        "file:frontend/src/router/index.js",
+        "file:frontend/src/views/ActivateView.vue",
+        "file:frontend/src/views/BatchGenerate.vue",
+        "file:frontend/src/views/TemplateEditor.vue",
+        "file:frontend/src/views/TemplateManage.vue"
+      ]
+    },
+    {
+      "id": "layer:backend-api",
+      "name": "后端 API 层",
+      "description": "Spring MVC 控制器和 HTTP 端点入口。",
+      "nodeIds": [
+        "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+        "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+        "file:backend/src/main/java/com/certbatch/controller/TemplateController.java"
+      ]
+    },
+    {
+      "id": "layer:backend-domain-data",
+      "name": "后端业务与数据层",
+      "description": "业务服务、实体、Mapper、授权和数据库初始化逻辑。",
+      "nodeIds": [
+        "file:backend/src/main/java/com/certbatch/CertBatchApplication.java",
+        "file:backend/src/main/java/com/certbatch/common/R.java",
+        "file:backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+        "file:backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+        "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+        "file:backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+        "file:backend/src/main/java/com/certbatch/config/WebConfig.java",
+        "file:backend/src/main/java/com/certbatch/entity/License.java",
+        "file:backend/src/main/java/com/certbatch/entity/Placeholder.java",
+        "file:backend/src/main/java/com/certbatch/entity/Template.java",
+        "file:backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+        "file:backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+        "file:backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+        "file:backend/src/main/java/com/certbatch/service/CertificateService.java",
+        "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+        "file:backend/src/main/java/com/certbatch/service/TemplateService.java"
+      ]
+    },
+    {
+      "id": "layer:config-build",
+      "name": "配置与构建层",
+      "description": "Maven、npm、Vite、Spring 配置和资源入口。",
+      "nodeIds": [
+        "config:backend/pom.xml",
+        "config:backend/src/main/resources/application.yml",
+        "file:backend/src/main/resources/start.sh",
+        "file:frontend/index.html",
+        "config:frontend/package.json",
+        "file:frontend/vite.config.js"
+      ]
+    },
+    {
+      "id": "layer:docs-scripts",
+      "name": "文档与脚本层",
+      "description": "用户文档、授权说明、协议生成和构建准备脚本。",
+      "nodeIds": [
+        "document:docs/证书生成及系统服务协议.md",
+        "file:docs/generate_contract_docx.py",
+        "document:GUIDE.md",
+        "document:LICENSE-GUIDE.md",
+        "document:README.md",
+        "file:scripts/build-all.bat",
+        "file:scripts/prepare-jre.bat"
+      ]
+    }
+  ],
+  "tour": [
+    {
+      "order": 1,
+      "title": "项目整体入口",
+      "description": "先阅读 README 和 GUIDE，理解证书批量生成工具的目标、技术栈和典型使用路径。",
+      "nodeIds": [
+        "document:README.md",
+        "document:GUIDE.md",
+        "concept:offline-certificate-generation"
+      ]
+    },
+    {
+      "order": 2,
+      "title": "桌面应用启动链路",
+      "description": "查看 Electron 主进程如何创建窗口、启动后端，再由 Vue 入口挂载渲染进程。",
+      "nodeIds": [
+        "file:frontend/electron/main.js",
+        "file:frontend/electron/preload.js",
+        "file:frontend/src/main.js",
+        "file:frontend/src/App.vue"
+      ]
+    },
+    {
+      "order": 3,
+      "title": "模板维护与可视化编辑",
+      "description": "沿着模板管理、模板编辑和前端 API 封装，理解模板上传、占位符配置和预览流程。",
+      "nodeIds": [
+        "file:frontend/src/views/TemplateManage.vue",
+        "file:frontend/src/views/TemplateEditor.vue",
+        "file:frontend/src/api/index.js",
+        "file:backend/src/main/java/com/certbatch/controller/TemplateController.java",
+        "file:backend/src/main/java/com/certbatch/service/TemplateService.java"
+      ]
+    },
+    {
+      "order": 4,
+      "title": "批量生成证书",
+      "description": "从批量生成页面进入后端证书服务，跟踪 Excel 解析、模板渲染和 PNG/PDF 输出职责。",
+      "nodeIds": [
+        "file:frontend/src/views/BatchGenerate.vue",
+        "file:backend/src/main/java/com/certbatch/controller/CertificateController.java",
+        "file:backend/src/main/java/com/certbatch/service/CertificateService.java"
+      ]
+    },
+    {
+      "order": 5,
+      "title": "授权与本地持久化",
+      "description": "查看授权页面、授权控制器、拦截器和实体/Mapper，理解离线激活与 SQLite 保存方式。",
+      "nodeIds": [
+        "file:frontend/src/views/ActivateView.vue",
+        "file:backend/src/main/java/com/certbatch/controller/LicenseController.java",
+        "file:backend/src/main/java/com/certbatch/service/LicenseService.java",
+        "file:backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+        "file:backend/src/main/java/com/certbatch/entity/License.java"
+      ]
+    },
+    {
+      "order": 6,
+      "title": "构建与交付",
+      "description": "最后看 Maven、npm 和脚本文件，了解前后端构建、JRE 准备和桌面安装包交付。",
+      "nodeIds": [
+        "config:backend/pom.xml",
+        "config:frontend/package.json",
+        "file:scripts/build-all.bat",
+        "file:scripts/prepare-jre.bat"
+      ]
+    }
+  ]
+}

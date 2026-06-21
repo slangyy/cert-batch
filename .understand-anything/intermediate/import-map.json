@@ -1,0 +1,90 @@
+{
+  "scriptCompleted": true,
+  "stats": {
+    "filesScanned": 42,
+    "filesWithImports": 11,
+    "totalEdges": 27
+  },
+  "importMap": {
+    "backend/pom.xml": [],
+    "backend/src/main/java/com/certbatch/CertBatchApplication.java": [],
+    "backend/src/main/java/com/certbatch/common/R.java": [],
+    "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java": [],
+    "backend/src/main/java/com/certbatch/config/DataDirInitializer.java": [],
+    "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java": [
+      "backend/src/main/java/com/certbatch/common/R.java",
+      "backend/src/main/java/com/certbatch/entity/License.java",
+      "backend/src/main/java/com/certbatch/service/LicenseService.java"
+    ],
+    "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java": [],
+    "backend/src/main/java/com/certbatch/config/WebConfig.java": [],
+    "backend/src/main/java/com/certbatch/controller/CertificateController.java": [
+      "backend/src/main/java/com/certbatch/common/R.java",
+      "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "backend/src/main/java/com/certbatch/service/TemplateService.java"
+    ],
+    "backend/src/main/java/com/certbatch/controller/LicenseController.java": [
+      "backend/src/main/java/com/certbatch/common/R.java",
+      "backend/src/main/java/com/certbatch/entity/License.java",
+      "backend/src/main/java/com/certbatch/service/LicenseService.java"
+    ],
+    "backend/src/main/java/com/certbatch/controller/TemplateController.java": [
+      "backend/src/main/java/com/certbatch/common/R.java",
+      "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "backend/src/main/java/com/certbatch/entity/Template.java",
+      "backend/src/main/java/com/certbatch/service/TemplateService.java"
+    ],
+    "backend/src/main/java/com/certbatch/entity/License.java": [],
+    "backend/src/main/java/com/certbatch/entity/Placeholder.java": [],
+    "backend/src/main/java/com/certbatch/entity/Template.java": [],
+    "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java": [
+      "backend/src/main/java/com/certbatch/entity/License.java"
+    ],
+    "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java": [
+      "backend/src/main/java/com/certbatch/entity/Placeholder.java"
+    ],
+    "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java": [
+      "backend/src/main/java/com/certbatch/entity/Template.java"
+    ],
+    "backend/src/main/java/com/certbatch/service/CertificateService.java": [
+      "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "backend/src/main/java/com/certbatch/entity/Template.java"
+    ],
+    "backend/src/main/java/com/certbatch/service/LicenseService.java": [
+      "backend/src/main/java/com/certbatch/common/R.java",
+      "backend/src/main/java/com/certbatch/entity/License.java",
+      "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java"
+    ],
+    "backend/src/main/java/com/certbatch/service/TemplateService.java": [
+      "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "backend/src/main/java/com/certbatch/entity/Template.java",
+      "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java"
+    ],
+    "backend/src/main/resources/application.yml": [],
+    "backend/src/main/resources/start.sh": [],
+    "docs/璇佷功鐢熸垚鍙婄郴缁熸湇鍔″崗璁?md": [],
+    "docs/generate_contract_docx.py": [],
+    "frontend/electron/main.js": [],
+    "frontend/electron/preload.js": [],
+    "frontend/index.html": [],
+    "frontend/package.json": [],
+    "frontend/src/api/index.js": [],
+    "frontend/src/App.vue": [],
+    "frontend/src/main.js": [
+      "frontend/src/App.vue",
+      "frontend/src/router/index.js"
+    ],
+    "frontend/src/router/index.js": [],
+    "frontend/src/views/ActivateView.vue": [],
+    "frontend/src/views/BatchGenerate.vue": [],
+    "frontend/src/views/TemplateEditor.vue": [],
+    "frontend/src/views/TemplateManage.vue": [],
+    "frontend/vite.config.js": [],
+    "GUIDE.md": [],
+    "LICENSE-GUIDE.md": [],
+    "README.md": [],
+    "scripts/build-all.bat": [],
+    "scripts/prepare-jre.bat": []
+  }
+}

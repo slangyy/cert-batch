@@ -1,0 +1,579 @@
+{
+  "schemaVersion": 1,
+  "algorithm": "louvain",
+  "totalFiles": 42,
+  "totalBatches": 5,
+  "exportsByPath": {
+    "backend/src/main/java/com/certbatch/CertBatchApplication.java": [
+      "main",
+      "CertBatchApplication"
+    ],
+    "backend/src/main/java/com/certbatch/common/R.java": [
+      "ok",
+      "ok",
+      "fail",
+      "R"
+    ],
+    "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java": [
+      "DatabaseInitializer",
+      "run",
+      "DatabaseInitializer"
+    ],
+    "backend/src/main/java/com/certbatch/config/DataDirInitializer.java": [
+      "setEnvironment",
+      "postProcessBeanFactory",
+      "DataDirInitializer"
+    ],
+    "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java": [
+      "preHandle",
+      "LicenseInterceptor"
+    ],
+    "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java": [
+      "insertFill",
+      "updateFill",
+      "MyBatisPlusMetaHandler"
+    ],
+    "backend/src/main/java/com/certbatch/config/WebConfig.java": [
+      "addCorsMappings",
+      "addInterceptors",
+      "WebConfig"
+    ],
+    "backend/src/main/java/com/certbatch/controller/CertificateController.java": [
+      "parseExcel",
+      "batchGenerateSse",
+      "preview",
+      "CertificateController"
+    ],
+    "backend/src/main/java/com/certbatch/controller/LicenseController.java": [
+      "activate",
+      "validate",
+      "generate",
+      "list",
+      "disable",
+      "unbind",
+      "publicKey",
+      "LicenseController"
+    ],
+    "backend/src/main/java/com/certbatch/controller/TemplateController.java": [
+      "list",
+      "detail",
+      "create",
+      "updateName",
+      "delete",
+      "getImage",
+      "getPlaceholders",
+      "savePlaceholders",
+      "TemplateController"
+    ],
+    "backend/src/main/java/com/certbatch/entity/License.java": [
+      "License"
+    ],
+    "backend/src/main/java/com/certbatch/entity/Placeholder.java": [
+      "Placeholder"
+    ],
+    "backend/src/main/java/com/certbatch/entity/Template.java": [
+      "Template"
+    ],
+    "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java": [
+      "LicenseMapper"
+    ],
+    "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java": [
+      "PlaceholderMapper"
+    ],
+    "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java": [
+      "TemplateMapper"
+    ],
+    "backend/src/main/java/com/certbatch/service/CertificateService.java": [
+      "parseExcel",
+      "batchGenerate",
+      "batchGenerate",
+      "renderCertificate",
+      "previewCertificate",
+      "CertificateService"
+    ],
+    "backend/src/main/java/com/certbatch/service/LicenseService.java": [
+      "list",
+      "activate",
+      "validate",
+      "generateLicense",
+      "disable",
+      "unbind",
+      "getPublicKeyBase64",
+      "LicenseService"
+    ],
+    "backend/src/main/java/com/certbatch/service/TemplateService.java": [
+      "getImageDir",
+      "createTemplate",
+      "getTemplateDetail",
+      "getPlaceholders",
+      "savePlaceholders",
+      "deleteTemplate",
+      "updateTemplateName",
+      "getImagePath",
+      "TemplateService"
+    ],
+    "docs/generate_contract_docx.py": [
+      "set_cn_font",
+      "add_title",
+      "add_heading",
+      "add_para",
+      "add_divider",
+      "add_grid_table",
+      "build_attachments",
+      "build"
+    ],
+    "frontend/electron/main.js": [],
+    "frontend/electron/preload.js": [],
+    "frontend/src/api/index.js": [
+      "activateLicense",
+      "validateLicenseOnline",
+      "waitForBackend",
+      "getTemplateList",
+      "getTemplateDetail",
+      "createTemplate",
+      "updateTemplateName",
+      "deleteTemplate",
+      "getTemplateImageUrl",
+      "getPlaceholders",
+      "savePlaceholders",
+      "parseExcel",
+      "batchGenerateSSE",
+      "previewCertificate"
+    ],
+    "frontend/src/App.vue": [],
+    "frontend/src/main.js": [],
+    "frontend/src/router/index.js": [],
+    "frontend/src/views/ActivateView.vue": [],
+    "frontend/src/views/BatchGenerate.vue": [],
+    "frontend/src/views/TemplateEditor.vue": [],
+    "frontend/src/views/TemplateManage.vue": [],
+    "frontend/vite.config.js": []
+  },
+  "batches": [
+    {
+      "batchIndex": 1,
+      "files": [
+        {
+          "path": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+          "language": "java",
+          "sizeLines": 115,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+          "language": "java",
+          "sizeLines": 106,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+          "language": "java",
+          "sizeLines": 39,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/entity/Template.java",
+          "language": "java",
+          "sizeLines": 37,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+          "language": "java",
+          "sizeLines": 21,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+          "language": "java",
+          "sizeLines": 9,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+          "language": "java",
+          "sizeLines": 299,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+          "language": "java",
+          "sizeLines": 151,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "backend/src/main/java/com/certbatch/controller/CertificateController.java": [
+          "backend/src/main/java/com/certbatch/common/R.java",
+          "backend/src/main/java/com/certbatch/service/CertificateService.java",
+          "backend/src/main/java/com/certbatch/service/TemplateService.java"
+        ],
+        "backend/src/main/java/com/certbatch/controller/TemplateController.java": [
+          "backend/src/main/java/com/certbatch/common/R.java",
+          "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+          "backend/src/main/java/com/certbatch/entity/Template.java",
+          "backend/src/main/java/com/certbatch/service/TemplateService.java"
+        ],
+        "backend/src/main/java/com/certbatch/entity/Placeholder.java": [],
+        "backend/src/main/java/com/certbatch/entity/Template.java": [],
+        "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java": [
+          "backend/src/main/java/com/certbatch/entity/Placeholder.java"
+        ],
+        "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java": [
+          "backend/src/main/java/com/certbatch/entity/Template.java"
+        ],
+        "backend/src/main/java/com/certbatch/service/CertificateService.java": [
+          "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+          "backend/src/main/java/com/certbatch/entity/Template.java"
+        ],
+        "backend/src/main/java/com/certbatch/service/TemplateService.java": [
+          "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+          "backend/src/main/java/com/certbatch/entity/Template.java",
+          "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+          "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java"
+        ]
+      },
+      "neighborMap": {
+        "backend/src/main/java/com/certbatch/controller/CertificateController.java": [
+          {
+            "path": "backend/src/main/java/com/certbatch/common/R.java",
+            "batchIndex": 2,
+            "symbols": [
+              "ok",
+              "ok",
+              "fail",
+              "R"
+            ]
+          }
+        ],
+        "backend/src/main/java/com/certbatch/controller/TemplateController.java": [
+          {
+            "path": "backend/src/main/java/com/certbatch/common/R.java",
+            "batchIndex": 2,
+            "symbols": [
+              "ok",
+              "ok",
+              "fail",
+              "R"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 2,
+      "files": [
+        {
+          "path": "backend/src/main/java/com/certbatch/common/R.java",
+          "language": "java",
+          "sizeLines": 30,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+          "language": "java",
+          "sizeLines": 62,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+          "language": "java",
+          "sizeLines": 81,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/entity/License.java",
+          "language": "java",
+          "sizeLines": 46,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+          "language": "java",
+          "sizeLines": 9,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+          "language": "java",
+          "sizeLines": 261,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "backend/src/main/java/com/certbatch/common/R.java": [],
+        "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java": [
+          "backend/src/main/java/com/certbatch/common/R.java",
+          "backend/src/main/java/com/certbatch/entity/License.java",
+          "backend/src/main/java/com/certbatch/service/LicenseService.java"
+        ],
+        "backend/src/main/java/com/certbatch/controller/LicenseController.java": [
+          "backend/src/main/java/com/certbatch/common/R.java",
+          "backend/src/main/java/com/certbatch/entity/License.java",
+          "backend/src/main/java/com/certbatch/service/LicenseService.java"
+        ],
+        "backend/src/main/java/com/certbatch/entity/License.java": [],
+        "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java": [
+          "backend/src/main/java/com/certbatch/entity/License.java"
+        ],
+        "backend/src/main/java/com/certbatch/service/LicenseService.java": [
+          "backend/src/main/java/com/certbatch/common/R.java",
+          "backend/src/main/java/com/certbatch/entity/License.java",
+          "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java"
+        ]
+      },
+      "neighborMap": {
+        "backend/src/main/java/com/certbatch/common/R.java": [
+          {
+            "path": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+            "batchIndex": 1,
+            "symbols": [
+              "parseExcel",
+              "batchGenerateSse",
+              "preview",
+              "CertificateController"
+            ]
+          },
+          {
+            "path": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+            "batchIndex": 1,
+            "symbols": [
+              "list",
+              "detail",
+              "create",
+              "updateName",
+              "delete",
+              "getImage",
+              "getPlaceholders",
+              "savePlaceholders",
+              "TemplateController"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "batchIndex": 3,
+      "files": [
+        {
+          "path": "frontend/src/App.vue",
+          "language": "vue",
+          "sizeLines": 203,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/main.js",
+          "language": "javascript",
+          "sizeLines": 20,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/router/index.js",
+          "language": "javascript",
+          "sizeLines": 36,
+          "fileCategory": "code"
+        }
+      ],
+      "batchImportData": {
+        "frontend/src/App.vue": [],
+        "frontend/src/main.js": [
+          "frontend/src/App.vue",
+          "frontend/src/router/index.js"
+        ],
+        "frontend/src/router/index.js": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 4,
+      "files": [
+        {
+          "path": "GUIDE.md",
+          "language": "markdown",
+          "sizeLines": 284,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "LICENSE-GUIDE.md",
+          "language": "markdown",
+          "sizeLines": 203,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "README.md",
+          "language": "markdown",
+          "sizeLines": 151,
+          "fileCategory": "docs"
+        }
+      ],
+      "batchImportData": {
+        "GUIDE.md": [],
+        "LICENSE-GUIDE.md": [],
+        "README.md": []
+      },
+      "neighborMap": {}
+    },
+    {
+      "batchIndex": 5,
+      "files": [
+        {
+          "path": "backend/pom.xml",
+          "language": "xml",
+          "sizeLines": 92,
+          "fileCategory": "config"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/CertBatchApplication.java",
+          "language": "java",
+          "sizeLines": 14,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+          "language": "java",
+          "sizeLines": 76,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+          "language": "java",
+          "sizeLines": 40,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+          "language": "java",
+          "sizeLines": 22,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/java/com/certbatch/config/WebConfig.java",
+          "language": "java",
+          "sizeLines": 31,
+          "fileCategory": "code"
+        },
+        {
+          "path": "backend/src/main/resources/application.yml",
+          "language": "yaml",
+          "sizeLines": 23,
+          "fileCategory": "config"
+        },
+        {
+          "path": "backend/src/main/resources/start.sh",
+          "language": "shell",
+          "sizeLines": 1,
+          "fileCategory": "script"
+        },
+        {
+          "path": "docs/证书生成及系统服务协议.md",
+          "language": "markdown",
+          "sizeLines": 254,
+          "fileCategory": "docs"
+        },
+        {
+          "path": "docs/generate_contract_docx.py",
+          "language": "python",
+          "sizeLines": 432,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/electron/main.js",
+          "language": "javascript",
+          "sizeLines": 433,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/electron/preload.js",
+          "language": "javascript",
+          "sizeLines": 12,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/index.html",
+          "language": "html",
+          "sizeLines": 12,
+          "fileCategory": "markup"
+        },
+        {
+          "path": "frontend/package.json",
+          "language": "json",
+          "sizeLines": 60,
+          "fileCategory": "config"
+        },
+        {
+          "path": "frontend/src/api/index.js",
+          "language": "javascript",
+          "sizeLines": 188,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/views/ActivateView.vue",
+          "language": "vue",
+          "sizeLines": 169,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/views/BatchGenerate.vue",
+          "language": "vue",
+          "sizeLines": 544,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/views/TemplateEditor.vue",
+          "language": "vue",
+          "sizeLines": 526,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/src/views/TemplateManage.vue",
+          "language": "vue",
+          "sizeLines": 249,
+          "fileCategory": "code"
+        },
+        {
+          "path": "frontend/vite.config.js",
+          "language": "javascript",
+          "sizeLines": 22,
+          "fileCategory": "code"
+        },
+        {
+          "path": "scripts/build-all.bat",
+          "language": "batch",
+          "sizeLines": 90,
+          "fileCategory": "script"
+        },
+        {
+          "path": "scripts/prepare-jre.bat",
+          "language": "batch",
+          "sizeLines": 50,
+          "fileCategory": "script"
+        }
+      ],
+      "batchImportData": {
+        "backend/pom.xml": [],
+        "backend/src/main/java/com/certbatch/CertBatchApplication.java": [],
+        "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java": [],
+        "backend/src/main/java/com/certbatch/config/DataDirInitializer.java": [],
+        "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java": [],
+        "backend/src/main/java/com/certbatch/config/WebConfig.java": [],
+        "backend/src/main/resources/application.yml": [],
+        "backend/src/main/resources/start.sh": [],
+        "docs/证书生成及系统服务协议.md": [],
+        "docs/generate_contract_docx.py": [],
+        "frontend/electron/main.js": [],
+        "frontend/electron/preload.js": [],
+        "frontend/index.html": [],
+        "frontend/package.json": [],
+        "frontend/src/api/index.js": [],
+        "frontend/src/views/ActivateView.vue": [],
+        "frontend/src/views/BatchGenerate.vue": [],
+        "frontend/src/views/TemplateEditor.vue": [],
+        "frontend/src/views/TemplateManage.vue": [],
+        "frontend/vite.config.js": [],
+        "scripts/build-all.bat": [],
+        "scripts/prepare-jre.bat": []
+      },
+      "neighborMap": {}
+    }
+  ]
+}

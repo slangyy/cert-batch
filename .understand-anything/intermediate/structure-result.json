@@ -1,0 +1,6709 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 42,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "backend/pom.xml",
+      "language": "xml",
+      "fileCategory": "config",
+      "totalLines": 92,
+      "nonEmptyLines": 81,
+      "metrics": {}
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 11,
+      "functions": [
+        {
+          "name": "main",
+          "startLine": 9,
+          "endLine": 13,
+          "params": [
+            "args"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CertBatchApplication",
+          "startLine": 6,
+          "endLine": 14,
+          "methods": [
+            "main"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "main",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "CertBatchApplication",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "main",
+          "callee": "System.setProperty",
+          "lineNumber": 11
+        },
+        {
+          "caller": "main",
+          "callee": "SpringApplication.run",
+          "lineNumber": 12
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/common/R.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 24,
+      "functions": [
+        {
+          "name": "ok",
+          "startLine": 12,
+          "endLine": 18,
+          "params": [
+            "data"
+          ]
+        },
+        {
+          "name": "ok",
+          "startLine": 20,
+          "endLine": 22,
+          "params": []
+        },
+        {
+          "name": "fail",
+          "startLine": 24,
+          "endLine": 29,
+          "params": [
+            "msg"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "R",
+          "startLine": 5,
+          "endLine": 30,
+          "methods": [
+            "ok",
+            "ok",
+            "fail"
+          ],
+          "properties": [
+            "code",
+            "msg",
+            "data"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ok",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ok",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "fail",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "R",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ok",
+          "callee": "new R<>",
+          "lineNumber": 13
+        },
+        {
+          "caller": "ok",
+          "callee": "r.setCode",
+          "lineNumber": 14
+        },
+        {
+          "caller": "ok",
+          "callee": "r.setMsg",
+          "lineNumber": 15
+        },
+        {
+          "caller": "ok",
+          "callee": "r.setData",
+          "lineNumber": 16
+        },
+        {
+          "caller": "ok",
+          "callee": "ok",
+          "lineNumber": 21
+        },
+        {
+          "caller": "fail",
+          "callee": "new R<>",
+          "lineNumber": 25
+        },
+        {
+          "caller": "fail",
+          "callee": "r.setCode",
+          "lineNumber": 26
+        },
+        {
+          "caller": "fail",
+          "callee": "r.setMsg",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 76,
+      "nonEmptyLines": 66,
+      "functions": [
+        {
+          "name": "DatabaseInitializer",
+          "startLine": 19,
+          "endLine": 21,
+          "params": [
+            "dataSource"
+          ]
+        },
+        {
+          "name": "run",
+          "startLine": 23,
+          "endLine": 75,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "DatabaseInitializer",
+          "startLine": 14,
+          "endLine": 76,
+          "methods": [
+            "DatabaseInitializer",
+            "run"
+          ],
+          "properties": [
+            "dataSource"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DatabaseInitializer",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "run",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "DatabaseInitializer",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "run",
+          "callee": "dataSource.getConnection",
+          "lineNumber": 25
+        },
+        {
+          "caller": "run",
+          "callee": "conn.createStatement",
+          "lineNumber": 26
+        },
+        {
+          "caller": "run",
+          "callee": "stmt.execute",
+          "lineNumber": 29
+        },
+        {
+          "caller": "run",
+          "callee": "stmt.execute",
+          "lineNumber": 42
+        },
+        {
+          "caller": "run",
+          "callee": "stmt.execute",
+          "lineNumber": 58
+        },
+        {
+          "caller": "run",
+          "callee": "stmt.execute",
+          "lineNumber": 61
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 34,
+      "functions": [
+        {
+          "name": "setEnvironment",
+          "startLine": 22,
+          "endLine": 25,
+          "params": [
+            "environment"
+          ]
+        },
+        {
+          "name": "postProcessBeanFactory",
+          "startLine": 27,
+          "endLine": 39,
+          "params": [
+            "beanFactory"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DataDirInitializer",
+          "startLine": 17,
+          "endLine": 40,
+          "methods": [
+            "setEnvironment",
+            "postProcessBeanFactory"
+          ],
+          "properties": [
+            "environment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "setEnvironment",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "postProcessBeanFactory",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "DataDirInitializer",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "postProcessBeanFactory",
+          "callee": "environment.getProperty",
+          "lineNumber": 29
+        },
+        {
+          "caller": "postProcessBeanFactory",
+          "callee": "Paths.get(dataDir).toAbsolutePath",
+          "lineNumber": 30
+        },
+        {
+          "caller": "postProcessBeanFactory",
+          "callee": "Paths.get",
+          "lineNumber": 30
+        },
+        {
+          "caller": "postProcessBeanFactory",
+          "callee": "Files.exists",
+          "lineNumber": 32
+        },
+        {
+          "caller": "postProcessBeanFactory",
+          "callee": "Files.createDirectories",
+          "lineNumber": 33
+        },
+        {
+          "caller": "postProcessBeanFactory",
+          "callee": "System.out.println",
+          "lineNumber": 34
+        },
+        {
+          "caller": "postProcessBeanFactory",
+          "callee": "new RuntimeException",
+          "lineNumber": 37
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 62,
+      "nonEmptyLines": 52,
+      "functions": [
+        {
+          "name": "preHandle",
+          "startLine": 30,
+          "endLine": 61,
+          "params": [
+            "request",
+            "response",
+            "handler"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LicenseInterceptor",
+          "startLine": 19,
+          "endLine": 62,
+          "methods": [
+            "preHandle"
+          ],
+          "properties": [
+            "licenseService",
+            "objectMapper",
+            "licenseCheck"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "preHandle",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "LicenseInterceptor",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "preHandle",
+          "callee": "\"OPTIONS\".equalsIgnoreCase",
+          "lineNumber": 38
+        },
+        {
+          "caller": "preHandle",
+          "callee": "request.getMethod",
+          "lineNumber": 38
+        },
+        {
+          "caller": "preHandle",
+          "callee": "request.getRequestURI",
+          "lineNumber": 43
+        },
+        {
+          "caller": "preHandle",
+          "callee": "uri.startsWith",
+          "lineNumber": 44
+        },
+        {
+          "caller": "preHandle",
+          "callee": "request.getHeader",
+          "lineNumber": 49
+        },
+        {
+          "caller": "preHandle",
+          "callee": "request.getHeader",
+          "lineNumber": 50
+        },
+        {
+          "caller": "preHandle",
+          "callee": "licenseService.validate",
+          "lineNumber": 52
+        },
+        {
+          "caller": "preHandle",
+          "callee": "result.getCode",
+          "lineNumber": 53
+        },
+        {
+          "caller": "preHandle",
+          "callee": "response.setStatus",
+          "lineNumber": 54
+        },
+        {
+          "caller": "preHandle",
+          "callee": "response.setContentType",
+          "lineNumber": 55
+        },
+        {
+          "caller": "preHandle",
+          "callee": "response.getWriter().write",
+          "lineNumber": 56
+        },
+        {
+          "caller": "preHandle",
+          "callee": "response.getWriter",
+          "lineNumber": 56
+        },
+        {
+          "caller": "preHandle",
+          "callee": "objectMapper.writeValueAsString",
+          "lineNumber": 56
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "insertFill",
+          "startLine": 12,
+          "endLine": 16,
+          "params": [
+            "metaObject"
+          ]
+        },
+        {
+          "name": "updateFill",
+          "startLine": 18,
+          "endLine": 21,
+          "params": [
+            "metaObject"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "MyBatisPlusMetaHandler",
+          "startLine": 9,
+          "endLine": 22,
+          "methods": [
+            "insertFill",
+            "updateFill"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "insertFill",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "updateFill",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "MyBatisPlusMetaHandler",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "insertFill",
+          "callee": "this.strictInsertFill",
+          "lineNumber": 14
+        },
+        {
+          "caller": "insertFill",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 14
+        },
+        {
+          "caller": "insertFill",
+          "callee": "this.strictInsertFill",
+          "lineNumber": 15
+        },
+        {
+          "caller": "insertFill",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 15
+        },
+        {
+          "caller": "updateFill",
+          "callee": "this.strictUpdateFill",
+          "lineNumber": 20
+        },
+        {
+          "caller": "updateFill",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "addCorsMappings",
+          "startLine": 15,
+          "endLine": 23,
+          "params": [
+            "registry"
+          ]
+        },
+        {
+          "name": "addInterceptors",
+          "startLine": 25,
+          "endLine": 30,
+          "params": [
+            "registry"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "WebConfig",
+          "startLine": 9,
+          "endLine": 31,
+          "methods": [
+            "addCorsMappings",
+            "addInterceptors"
+          ],
+          "properties": [
+            "licenseInterceptor"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "addCorsMappings",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "addInterceptors",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "WebConfig",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "addCorsMappings",
+          "callee": "registry.addMapping(\"/api/**\")\n                .allowedOriginPatterns(\"*\")\n                .allowedMethods(\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTIONS\")\n                .allowedHeaders(\"*\")\n                .exposedHeaders(\"X-License-Token\", \"X-Machine-Id\").allowCredentials",
+          "lineNumber": 17
+        },
+        {
+          "caller": "addCorsMappings",
+          "callee": "registry.addMapping(\"/api/**\")\n                .allowedOriginPatterns(\"*\")\n                .allowedMethods(\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTIONS\")\n                .allowedHeaders(\"*\").exposedHeaders",
+          "lineNumber": 17
+        },
+        {
+          "caller": "addCorsMappings",
+          "callee": "registry.addMapping(\"/api/**\")\n                .allowedOriginPatterns(\"*\")\n                .allowedMethods(\"GET\", \"POST\", \"PUT\", \"DELETE\", \"OPTIONS\").allowedHeaders",
+          "lineNumber": 17
+        },
+        {
+          "caller": "addCorsMappings",
+          "callee": "registry.addMapping(\"/api/**\")\n                .allowedOriginPatterns(\"*\").allowedMethods",
+          "lineNumber": 17
+        },
+        {
+          "caller": "addCorsMappings",
+          "callee": "registry.addMapping(\"/api/**\").allowedOriginPatterns",
+          "lineNumber": 17
+        },
+        {
+          "caller": "addCorsMappings",
+          "callee": "registry.addMapping",
+          "lineNumber": 17
+        },
+        {
+          "caller": "addInterceptors",
+          "callee": "registry.addInterceptor(licenseInterceptor)\n                .addPathPatterns(\"/api/**\").excludePathPatterns",
+          "lineNumber": 27
+        },
+        {
+          "caller": "addInterceptors",
+          "callee": "registry.addInterceptor(licenseInterceptor).addPathPatterns",
+          "lineNumber": 27
+        },
+        {
+          "caller": "addInterceptors",
+          "callee": "registry.addInterceptor",
+          "lineNumber": 27
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 115,
+      "nonEmptyLines": 101,
+      "functions": [
+        {
+          "name": "parseExcel",
+          "startLine": 36,
+          "endLine": 44,
+          "params": [
+            "file"
+          ]
+        },
+        {
+          "name": "batchGenerateSse",
+          "startLine": 49,
+          "endLine": 92,
+          "params": [
+            "request"
+          ]
+        },
+        {
+          "name": "preview",
+          "startLine": 97,
+          "endLine": 114,
+          "params": [
+            "request"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CertificateController",
+          "startLine": 22,
+          "endLine": 115,
+          "methods": [
+            "parseExcel",
+            "batchGenerateSse",
+            "preview"
+          ],
+          "properties": [
+            "certificateService",
+            "templateService",
+            "objectMapper",
+            "sseExecutor"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "parseExcel",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "batchGenerateSse",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "preview",
+          "line": 97,
+          "isDefault": false
+        },
+        {
+          "name": "CertificateController",
+          "line": 22,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parseExcel",
+          "callee": "certificateService.parseExcel",
+          "lineNumber": 39
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "file.getInputStream",
+          "lineNumber": 39
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "R.ok",
+          "lineNumber": 40
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "R.fail",
+          "lineNumber": 42
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "e.getMessage",
+          "lineNumber": 42
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "new SseEmitter",
+          "lineNumber": 51
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "sseExecutor.execute",
+          "lineNumber": 53
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "Long.valueOf",
+          "lineNumber": 55
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "request.get(\"templateId\").toString",
+          "lineNumber": 55
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "request.get",
+          "lineNumber": 55
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "request.get",
+          "lineNumber": 57
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "request.get",
+          "lineNumber": 58
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "request.get",
+          "lineNumber": 59
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "request.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "certificateService.batchGenerate",
+          "lineNumber": 62
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "emitter.send",
+          "lineNumber": 66
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event()\n                                        .name(\"progress\").data",
+          "lineNumber": 66
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event().name",
+          "lineNumber": 66
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event",
+          "lineNumber": 66
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "objectMapper.writeValueAsString",
+          "lineNumber": 68
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "emitter.send",
+          "lineNumber": 76
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event()\n                        .name(\"complete\").data",
+          "lineNumber": 76
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event().name",
+          "lineNumber": 76
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event",
+          "lineNumber": 76
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "objectMapper.writeValueAsString",
+          "lineNumber": 78
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "emitter.complete",
+          "lineNumber": 79
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "R.fail",
+          "lineNumber": 82
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "e.getMessage",
+          "lineNumber": 82
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "emitter.send",
+          "lineNumber": 83
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event()\n                            .name(\"error\").data",
+          "lineNumber": 83
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event().name",
+          "lineNumber": 83
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "SseEmitter.event",
+          "lineNumber": 83
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "objectMapper.writeValueAsString",
+          "lineNumber": 85
+        },
+        {
+          "caller": "batchGenerateSse",
+          "callee": "emitter.completeWithError",
+          "lineNumber": 87
+        },
+        {
+          "caller": "preview",
+          "callee": "Long.valueOf",
+          "lineNumber": 100
+        },
+        {
+          "caller": "preview",
+          "callee": "request.get(\"templateId\").toString",
+          "lineNumber": 100
+        },
+        {
+          "caller": "preview",
+          "callee": "request.get",
+          "lineNumber": 100
+        },
+        {
+          "caller": "preview",
+          "callee": "request.get",
+          "lineNumber": 102
+        },
+        {
+          "caller": "preview",
+          "callee": "certificateService.previewCertificate",
+          "lineNumber": 104
+        },
+        {
+          "caller": "preview",
+          "callee": "new ByteArrayOutputStream",
+          "lineNumber": 105
+        },
+        {
+          "caller": "preview",
+          "callee": "ImageIO.write",
+          "lineNumber": 106
+        },
+        {
+          "caller": "preview",
+          "callee": "ResponseEntity.ok()\n                    .contentType(MediaType.IMAGE_PNG).body",
+          "lineNumber": 108
+        },
+        {
+          "caller": "preview",
+          "callee": "ResponseEntity.ok().contentType",
+          "lineNumber": 108
+        },
+        {
+          "caller": "preview",
+          "callee": "ResponseEntity.ok",
+          "lineNumber": 108
+        },
+        {
+          "caller": "preview",
+          "callee": "baos.toByteArray",
+          "lineNumber": 110
+        },
+        {
+          "caller": "preview",
+          "callee": "ResponseEntity.internalServerError().build",
+          "lineNumber": 112
+        },
+        {
+          "caller": "preview",
+          "callee": "ResponseEntity.internalServerError",
+          "lineNumber": 112
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 70,
+      "functions": [
+        {
+          "name": "activate",
+          "startLine": 22,
+          "endLine": 27,
+          "params": [
+            "params"
+          ]
+        },
+        {
+          "name": "validate",
+          "startLine": 32,
+          "endLine": 37,
+          "params": [
+            "params"
+          ]
+        },
+        {
+          "name": "generate",
+          "startLine": 42,
+          "endLine": 48,
+          "params": [
+            "params"
+          ]
+        },
+        {
+          "name": "list",
+          "startLine": 53,
+          "endLine": 56,
+          "params": []
+        },
+        {
+          "name": "disable",
+          "startLine": 61,
+          "endLine": 64,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "unbind",
+          "startLine": 69,
+          "endLine": 72,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "publicKey",
+          "startLine": 77,
+          "endLine": 80,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "LicenseController",
+          "startLine": 12,
+          "endLine": 81,
+          "methods": [
+            "activate",
+            "validate",
+            "generate",
+            "list",
+            "disable",
+            "unbind",
+            "publicKey"
+          ],
+          "properties": [
+            "licenseService"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "activate",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "validate",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "generate",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "list",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "disable",
+          "line": 61,
+          "isDefault": false
+        },
+        {
+          "name": "unbind",
+          "line": 69,
+          "isDefault": false
+        },
+        {
+          "name": "publicKey",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "LicenseController",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "activate",
+          "callee": "params.get",
+          "lineNumber": 24
+        },
+        {
+          "caller": "activate",
+          "callee": "params.get",
+          "lineNumber": 25
+        },
+        {
+          "caller": "activate",
+          "callee": "licenseService.activate",
+          "lineNumber": 26
+        },
+        {
+          "caller": "validate",
+          "callee": "params.get",
+          "lineNumber": 34
+        },
+        {
+          "caller": "validate",
+          "callee": "params.get",
+          "lineNumber": 35
+        },
+        {
+          "caller": "validate",
+          "callee": "licenseService.validate",
+          "lineNumber": 36
+        },
+        {
+          "caller": "generate",
+          "callee": "params.get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "generate",
+          "callee": "params.get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "generate",
+          "callee": "params.get",
+          "lineNumber": 45
+        },
+        {
+          "caller": "generate",
+          "callee": "licenseService.generateLicense",
+          "lineNumber": 46
+        },
+        {
+          "caller": "generate",
+          "callee": "R.ok",
+          "lineNumber": 47
+        },
+        {
+          "caller": "list",
+          "callee": "R.ok",
+          "lineNumber": 55
+        },
+        {
+          "caller": "list",
+          "callee": "licenseService.list",
+          "lineNumber": 55
+        },
+        {
+          "caller": "disable",
+          "callee": "licenseService.disable",
+          "lineNumber": 63
+        },
+        {
+          "caller": "unbind",
+          "callee": "licenseService.unbind",
+          "lineNumber": 71
+        },
+        {
+          "caller": "publicKey",
+          "callee": "R.ok",
+          "lineNumber": 79
+        },
+        {
+          "caller": "publicKey",
+          "callee": "licenseService.getPublicKeyBase64",
+          "lineNumber": 79
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 106,
+      "nonEmptyLines": 94,
+      "functions": [
+        {
+          "name": "list",
+          "startLine": 28,
+          "endLine": 31,
+          "params": []
+        },
+        {
+          "name": "detail",
+          "startLine": 36,
+          "endLine": 39,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "create",
+          "startLine": 44,
+          "endLine": 53,
+          "params": [
+            "name",
+            "image"
+          ]
+        },
+        {
+          "name": "updateName",
+          "startLine": 58,
+          "endLine": 62,
+          "params": [
+            "id",
+            "name"
+          ]
+        },
+        {
+          "name": "delete",
+          "startLine": 67,
+          "endLine": 71,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "getImage",
+          "startLine": 76,
+          "endLine": 88,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "getPlaceholders",
+          "startLine": 93,
+          "endLine": 96,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "savePlaceholders",
+          "startLine": 101,
+          "endLine": 105,
+          "params": [
+            "id",
+            "placeholders"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "TemplateController",
+          "startLine": 18,
+          "endLine": 106,
+          "methods": [
+            "list",
+            "detail",
+            "create",
+            "updateName",
+            "delete",
+            "getImage",
+            "getPlaceholders",
+            "savePlaceholders"
+          ],
+          "properties": [
+            "templateService"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "list",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "detail",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "create",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "updateName",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "delete",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "getImage",
+          "line": 76,
+          "isDefault": false
+        },
+        {
+          "name": "getPlaceholders",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "savePlaceholders",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "TemplateController",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "list",
+          "callee": "R.ok",
+          "lineNumber": 30
+        },
+        {
+          "caller": "list",
+          "callee": "templateService.list",
+          "lineNumber": 30
+        },
+        {
+          "caller": "detail",
+          "callee": "R.ok",
+          "lineNumber": 38
+        },
+        {
+          "caller": "detail",
+          "callee": "templateService.getById",
+          "lineNumber": 38
+        },
+        {
+          "caller": "create",
+          "callee": "templateService.createTemplate",
+          "lineNumber": 48
+        },
+        {
+          "caller": "create",
+          "callee": "R.ok",
+          "lineNumber": 49
+        },
+        {
+          "caller": "create",
+          "callee": "R.fail",
+          "lineNumber": 51
+        },
+        {
+          "caller": "create",
+          "callee": "e.getMessage",
+          "lineNumber": 51
+        },
+        {
+          "caller": "updateName",
+          "callee": "templateService.updateTemplateName",
+          "lineNumber": 60
+        },
+        {
+          "caller": "updateName",
+          "callee": "R.ok",
+          "lineNumber": 61
+        },
+        {
+          "caller": "delete",
+          "callee": "templateService.deleteTemplate",
+          "lineNumber": 69
+        },
+        {
+          "caller": "delete",
+          "callee": "R.ok",
+          "lineNumber": 70
+        },
+        {
+          "caller": "getImage",
+          "callee": "templateService.getImagePath",
+          "lineNumber": 78
+        },
+        {
+          "caller": "getImage",
+          "callee": "imagePath.toFile().exists",
+          "lineNumber": 79
+        },
+        {
+          "caller": "getImage",
+          "callee": "imagePath.toFile",
+          "lineNumber": 79
+        },
+        {
+          "caller": "getImage",
+          "callee": "ResponseEntity.notFound().build",
+          "lineNumber": 80
+        },
+        {
+          "caller": "getImage",
+          "callee": "ResponseEntity.notFound",
+          "lineNumber": 80
+        },
+        {
+          "caller": "getImage",
+          "callee": "new FileSystemResource",
+          "lineNumber": 82
+        },
+        {
+          "caller": "getImage",
+          "callee": "imagePath.getFileName().toString().toLowerCase",
+          "lineNumber": 83
+        },
+        {
+          "caller": "getImage",
+          "callee": "imagePath.getFileName().toString",
+          "lineNumber": 83
+        },
+        {
+          "caller": "getImage",
+          "callee": "imagePath.getFileName",
+          "lineNumber": 83
+        },
+        {
+          "caller": "getImage",
+          "callee": "fileName.endsWith",
+          "lineNumber": 84
+        },
+        {
+          "caller": "getImage",
+          "callee": "ResponseEntity.ok()\n                .contentType(mediaType).body",
+          "lineNumber": 85
+        },
+        {
+          "caller": "getImage",
+          "callee": "ResponseEntity.ok().contentType",
+          "lineNumber": 85
+        },
+        {
+          "caller": "getImage",
+          "callee": "ResponseEntity.ok",
+          "lineNumber": 85
+        },
+        {
+          "caller": "getPlaceholders",
+          "callee": "R.ok",
+          "lineNumber": 95
+        },
+        {
+          "caller": "getPlaceholders",
+          "callee": "templateService.getPlaceholders",
+          "lineNumber": 95
+        },
+        {
+          "caller": "savePlaceholders",
+          "callee": "templateService.savePlaceholders",
+          "lineNumber": 103
+        },
+        {
+          "caller": "savePlaceholders",
+          "callee": "R.ok",
+          "lineNumber": 104
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 9,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/entity/License.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 33,
+      "classes": [
+        {
+          "name": "License",
+          "startLine": 11,
+          "endLine": 46,
+          "methods": [],
+          "properties": [
+            "id",
+            "licenseKey",
+            "machineId",
+            "status",
+            "customer",
+            "expireAt",
+            "activatedAt",
+            "token",
+            "licenseSignature",
+            "createTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "License",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 39,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "Placeholder",
+          "startLine": 9,
+          "endLine": 39,
+          "methods": [],
+          "properties": [
+            "id",
+            "templateId",
+            "name",
+            "posX",
+            "posY",
+            "fontName",
+            "fontSize",
+            "fontColor",
+            "alignment"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Placeholder",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/entity/Template.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 27,
+      "classes": [
+        {
+          "name": "Template",
+          "startLine": 11,
+          "endLine": 37,
+          "methods": [],
+          "properties": [
+            "id",
+            "name",
+            "imageFileName",
+            "imageWidth",
+            "imageHeight",
+            "createTime",
+            "updateTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Template",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "LicenseMapper",
+          "startLine": 7,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "LicenseMapper",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 16,
+      "classes": [
+        {
+          "name": "PlaceholderMapper",
+          "startLine": 9,
+          "endLine": 21,
+          "methods": [
+            "selectByTemplateId",
+            "deleteByTemplateId"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PlaceholderMapper",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "selectByTemplateId",
+          "callee": "selectList",
+          "lineNumber": 13
+        },
+        {
+          "caller": "selectByTemplateId",
+          "callee": "new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<Placeholder>().eq",
+          "lineNumber": 13
+        },
+        {
+          "caller": "selectByTemplateId",
+          "callee": "new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<Placeholder>",
+          "lineNumber": 13
+        },
+        {
+          "caller": "deleteByTemplateId",
+          "callee": "delete",
+          "lineNumber": 18
+        },
+        {
+          "caller": "deleteByTemplateId",
+          "callee": "new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<Placeholder>().eq",
+          "lineNumber": 18
+        },
+        {
+          "caller": "deleteByTemplateId",
+          "callee": "new com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper<Placeholder>",
+          "lineNumber": 18
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "TemplateMapper",
+          "startLine": 7,
+          "endLine": 9,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "TemplateMapper",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 299,
+      "nonEmptyLines": 257,
+      "functions": [
+        {
+          "name": "parseExcel",
+          "startLine": 43,
+          "endLine": 88,
+          "params": [
+            "inputStream"
+          ]
+        },
+        {
+          "name": "batchGenerate",
+          "startLine": 93,
+          "endLine": 160,
+          "params": [
+            "templateId",
+            "rows",
+            "outputDir",
+            "format",
+            "fileNameField",
+            "progressCallback"
+          ]
+        },
+        {
+          "name": "batchGenerate",
+          "startLine": 165,
+          "endLine": 168,
+          "params": [
+            "templateId",
+            "rows",
+            "outputDir",
+            "format",
+            "fileNameField"
+          ]
+        },
+        {
+          "name": "renderCertificate",
+          "startLine": 173,
+          "endLine": 226,
+          "params": [
+            "templateImage",
+            "placeholders",
+            "data"
+          ]
+        },
+        {
+          "name": "previewCertificate",
+          "startLine": 231,
+          "endLine": 242,
+          "params": [
+            "templateId",
+            "data"
+          ]
+        },
+        {
+          "name": "imageToPdf",
+          "startLine": 247,
+          "endLine": 267,
+          "params": [
+            "image",
+            "pdfPath"
+          ]
+        },
+        {
+          "name": "parseColor",
+          "startLine": 272,
+          "endLine": 284,
+          "params": [
+            "colorStr"
+          ]
+        },
+        {
+          "name": "getFileName",
+          "startLine": 289,
+          "endLine": 298,
+          "params": [
+            "rowData",
+            "fileNameField",
+            "index"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CertificateService",
+          "startLine": 30,
+          "endLine": 299,
+          "methods": [
+            "parseExcel",
+            "batchGenerate",
+            "batchGenerate",
+            "renderCertificate",
+            "previewCertificate",
+            "imageToPdf",
+            "parseColor",
+            "getFileName"
+          ],
+          "properties": [
+            "templateService",
+            "dataDir"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "parseExcel",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "batchGenerate",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "batchGenerate",
+          "line": 165,
+          "isDefault": false
+        },
+        {
+          "name": "renderCertificate",
+          "line": 173,
+          "isDefault": false
+        },
+        {
+          "name": "previewCertificate",
+          "line": 231,
+          "isDefault": false
+        },
+        {
+          "name": "CertificateService",
+          "line": 30,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "parseExcel",
+          "callee": "new ArrayList<>",
+          "lineNumber": 44
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "new ArrayList<>",
+          "lineNumber": 45
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "WorkbookFactory.create",
+          "lineNumber": 47
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "workbook.getSheetAt",
+          "lineNumber": 48
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "sheet.getPhysicalNumberOfRows",
+          "lineNumber": 49
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "new IOException",
+          "lineNumber": 50
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "sheet.getRow",
+          "lineNumber": 54
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "new IOException",
+          "lineNumber": 56
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "new DataFormatter",
+          "lineNumber": 58
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "headerRow.getLastCellNum",
+          "lineNumber": 59
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "headerRow.getCell",
+          "lineNumber": 60
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "formatter.formatCellValue(cell).trim",
+          "lineNumber": 61
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "formatter.formatCellValue",
+          "lineNumber": 61
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "headers.add",
+          "lineNumber": 62
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "sheet.getLastRowNum",
+          "lineNumber": 66
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "sheet.getRow",
+          "lineNumber": 67
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "new LinkedHashMap<>",
+          "lineNumber": 70
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "headers.size",
+          "lineNumber": 72
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "row.getCell",
+          "lineNumber": 73
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "formatter.formatCellValue(cell).trim",
+          "lineNumber": 74
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "formatter.formatCellValue",
+          "lineNumber": 74
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "rowData.put",
+          "lineNumber": 75
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "headers.get",
+          "lineNumber": 75
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "value.isEmpty",
+          "lineNumber": 76
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "rows.add",
+          "lineNumber": 79
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "new LinkedHashMap<>",
+          "lineNumber": 84
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "result.put",
+          "lineNumber": 85
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "result.put",
+          "lineNumber": 86
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "templateService.getById",
+          "lineNumber": 96
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "new IllegalArgumentException",
+          "lineNumber": 98
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "templateService.getPlaceholders",
+          "lineNumber": 101
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "templateService.getImagePath",
+          "lineNumber": 102
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "Files.exists",
+          "lineNumber": 103
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "new IllegalArgumentException",
+          "lineNumber": 104
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "ImageIO.read",
+          "lineNumber": 107
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "templateImagePath.toFile",
+          "lineNumber": 107
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "Paths.get",
+          "lineNumber": 109
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "Files.exists",
+          "lineNumber": 110
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "Files.createDirectories",
+          "lineNumber": 111
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "rows.size",
+          "lineNumber": 114
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "new ArrayList<>",
+          "lineNumber": 117
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "rows.size",
+          "lineNumber": 119
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "rows.get",
+          "lineNumber": 120
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "renderCertificate",
+          "lineNumber": 122
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "getFileName",
+          "lineNumber": 123
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "\"png\".equals",
+          "lineNumber": 125
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "\"both\".equals",
+          "lineNumber": 125
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "outPath.resolve",
+          "lineNumber": 126
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "ImageIO.write",
+          "lineNumber": 127
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "pngPath.toFile",
+          "lineNumber": 127
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "\"pdf\".equals",
+          "lineNumber": 130
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "\"both\".equals",
+          "lineNumber": 130
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "outPath.resolve",
+          "lineNumber": 131
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "imageToPdf",
+          "lineNumber": 132
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "errors.add",
+          "lineNumber": 138
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "e.getMessage",
+          "lineNumber": 138
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "log.error",
+          "lineNumber": 139
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "new LinkedHashMap<>",
+          "lineNumber": 144
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "progress.put",
+          "lineNumber": 145
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "progress.put",
+          "lineNumber": 146
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "progress.put",
+          "lineNumber": 147
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "progress.put",
+          "lineNumber": 148
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "progress.put",
+          "lineNumber": 149
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "Math.round",
+          "lineNumber": 149
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "progressCallback.accept",
+          "lineNumber": 150
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "new LinkedHashMap<>",
+          "lineNumber": 154
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "result.put",
+          "lineNumber": 155
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "result.put",
+          "lineNumber": 156
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "result.put",
+          "lineNumber": 157
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "result.put",
+          "lineNumber": 158
+        },
+        {
+          "caller": "batchGenerate",
+          "callee": "batchGenerate",
+          "lineNumber": 167
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "new BufferedImage",
+          "lineNumber": 177
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "templateImage.getWidth",
+          "lineNumber": 178
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "templateImage.getHeight",
+          "lineNumber": 178
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "certImage.createGraphics",
+          "lineNumber": 179
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.setRenderingHint",
+          "lineNumber": 182
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.setRenderingHint",
+          "lineNumber": 183
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.setRenderingHint",
+          "lineNumber": 184
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.drawImage",
+          "lineNumber": 187
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "data.getOrDefault",
+          "lineNumber": 191
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "placeholder.getName",
+          "lineNumber": 191
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "text.isEmpty",
+          "lineNumber": 192
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "new Font",
+          "lineNumber": 195
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "placeholder.getFontName",
+          "lineNumber": 195
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "placeholder.getFontSize",
+          "lineNumber": 195
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.setFont",
+          "lineNumber": 196
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.setColor",
+          "lineNumber": 199
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "parseColor",
+          "lineNumber": 199
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "placeholder.getFontColor",
+          "lineNumber": 199
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.getFontMetrics",
+          "lineNumber": 202
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "fm.stringWidth",
+          "lineNumber": 203
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "Math.round",
+          "lineNumber": 204
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "placeholder.getPosX",
+          "lineNumber": 204
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "Math.round",
+          "lineNumber": 207
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "placeholder.getPosY",
+          "lineNumber": 207
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "fm.getAscent",
+          "lineNumber": 207
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "placeholder.getAlignment",
+          "lineNumber": 209
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.drawString",
+          "lineNumber": 221
+        },
+        {
+          "caller": "renderCertificate",
+          "callee": "g2d.dispose",
+          "lineNumber": 224
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "templateService.getById",
+          "lineNumber": 232
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "new IllegalArgumentException",
+          "lineNumber": 234
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "templateService.getPlaceholders",
+          "lineNumber": 237
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "templateService.getImagePath",
+          "lineNumber": 238
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "ImageIO.read",
+          "lineNumber": 239
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "templateImagePath.toFile",
+          "lineNumber": 239
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "renderCertificate",
+          "lineNumber": 241
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "Files.createTempFile",
+          "lineNumber": 249
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "ImageIO.write",
+          "lineNumber": 251
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "tempPng.toFile",
+          "lineNumber": 251
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "new PDDocument",
+          "lineNumber": 253
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "new PDPage",
+          "lineNumber": 254
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "new PDRectangle",
+          "lineNumber": 254
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "image.getWidth",
+          "lineNumber": 254
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "image.getHeight",
+          "lineNumber": 254
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "document.addPage",
+          "lineNumber": 255
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "PDImageXObject.createFromFile",
+          "lineNumber": 257
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "tempPng.toString",
+          "lineNumber": 257
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "new PDPageContentStream",
+          "lineNumber": 258
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "contentStream.drawImage",
+          "lineNumber": 259
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "image.getWidth",
+          "lineNumber": 259
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "image.getHeight",
+          "lineNumber": 259
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "document.save",
+          "lineNumber": 262
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "pdfPath.toFile",
+          "lineNumber": 262
+        },
+        {
+          "caller": "imageToPdf",
+          "callee": "Files.deleteIfExists",
+          "lineNumber": 265
+        },
+        {
+          "caller": "parseColor",
+          "callee": "colorStr.isEmpty",
+          "lineNumber": 273
+        },
+        {
+          "caller": "parseColor",
+          "callee": "colorStr.startsWith",
+          "lineNumber": 277
+        },
+        {
+          "caller": "parseColor",
+          "callee": "Color.decode",
+          "lineNumber": 278
+        },
+        {
+          "caller": "parseColor",
+          "callee": "Color.decode",
+          "lineNumber": 280
+        },
+        {
+          "caller": "getFileName",
+          "callee": "fileNameField.isEmpty",
+          "lineNumber": 290
+        },
+        {
+          "caller": "getFileName",
+          "callee": "rowData.get",
+          "lineNumber": 291
+        },
+        {
+          "caller": "getFileName",
+          "callee": "name.isEmpty",
+          "lineNumber": 292
+        },
+        {
+          "caller": "getFileName",
+          "callee": "name.replaceAll",
+          "lineNumber": 294
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 6,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 261,
+      "nonEmptyLines": 233,
+      "functions": [
+        {
+          "name": "getKeyPair",
+          "startLine": 40,
+          "endLine": 78,
+          "params": []
+        },
+        {
+          "name": "list",
+          "startLine": 83,
+          "endLine": 85,
+          "params": []
+        },
+        {
+          "name": "activate",
+          "startLine": 90,
+          "endLine": 134,
+          "params": [
+            "licenseKey",
+            "machineId"
+          ]
+        },
+        {
+          "name": "validate",
+          "startLine": 139,
+          "endLine": 167,
+          "params": [
+            "token",
+            "machineId"
+          ]
+        },
+        {
+          "name": "generateLicense",
+          "startLine": 172,
+          "endLine": 182,
+          "params": [
+            "customer",
+            "days"
+          ]
+        },
+        {
+          "name": "disable",
+          "startLine": 187,
+          "endLine": 196,
+          "params": [
+            "licenseId"
+          ]
+        },
+        {
+          "name": "unbind",
+          "startLine": 201,
+          "endLine": 211,
+          "params": [
+            "licenseId"
+          ]
+        },
+        {
+          "name": "getPublicKeyBase64",
+          "startLine": 216,
+          "endLine": 218,
+          "params": []
+        },
+        {
+          "name": "buildSignedData",
+          "startLine": 225,
+          "endLine": 229,
+          "params": [
+            "machineId",
+            "licenseKey",
+            "expireAt"
+          ]
+        },
+        {
+          "name": "sign",
+          "startLine": 234,
+          "endLine": 239,
+          "params": [
+            "data"
+          ]
+        },
+        {
+          "name": "generateLicenseKey",
+          "startLine": 244,
+          "endLine": 260,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "LicenseService",
+          "startLine": 25,
+          "endLine": 261,
+          "methods": [
+            "getKeyPair",
+            "list",
+            "activate",
+            "validate",
+            "generateLicense",
+            "disable",
+            "unbind",
+            "getPublicKeyBase64",
+            "buildSignedData",
+            "sign",
+            "generateLicenseKey"
+          ],
+          "properties": [
+            "licenseMapper",
+            "dataDir",
+            "keyPair"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "list",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "activate",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "validate",
+          "line": 139,
+          "isDefault": false
+        },
+        {
+          "name": "generateLicense",
+          "line": 172,
+          "isDefault": false
+        },
+        {
+          "name": "disable",
+          "line": 187,
+          "isDefault": false
+        },
+        {
+          "name": "unbind",
+          "line": 201,
+          "isDefault": false
+        },
+        {
+          "name": "getPublicKeyBase64",
+          "line": 216,
+          "isDefault": false
+        },
+        {
+          "name": "LicenseService",
+          "line": 25,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getKeyPair",
+          "callee": "Paths.get",
+          "lineNumber": 43
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Paths.get",
+          "lineNumber": 44
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "KeyFactory.getInstance",
+          "lineNumber": 46
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.exists",
+          "lineNumber": 48
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.exists",
+          "lineNumber": 48
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getDecoder().decode",
+          "lineNumber": 50
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getDecoder",
+          "lineNumber": 50
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.readString(privateKeyPath).trim",
+          "lineNumber": 50
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.readString",
+          "lineNumber": 50
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getDecoder().decode",
+          "lineNumber": 51
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getDecoder",
+          "lineNumber": 51
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.readString(publicKeyPath).trim",
+          "lineNumber": 51
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.readString",
+          "lineNumber": 51
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyFactory.generatePrivate",
+          "lineNumber": 52
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "new PKCS8EncodedKeySpec",
+          "lineNumber": 52
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyFactory.generatePublic",
+          "lineNumber": 53
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "new X509EncodedKeySpec",
+          "lineNumber": 53
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "new KeyPair",
+          "lineNumber": 54
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "KeyPairGenerator.getInstance",
+          "lineNumber": 57
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "generator.initialize",
+          "lineNumber": 58
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "generator.generateKeyPair",
+          "lineNumber": 59
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.createDirectories",
+          "lineNumber": 62
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "privateKeyPath.getParent",
+          "lineNumber": 62
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.writeString",
+          "lineNumber": 63
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getEncoder().encodeToString",
+          "lineNumber": 64
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getEncoder",
+          "lineNumber": 64
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyPair.getPrivate().getEncoded",
+          "lineNumber": 64
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyPair.getPrivate",
+          "lineNumber": 64
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Files.writeString",
+          "lineNumber": 65
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getEncoder().encodeToString",
+          "lineNumber": 66
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getEncoder",
+          "lineNumber": 66
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyPair.getPublic().getEncoded",
+          "lineNumber": 66
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyPair.getPublic",
+          "lineNumber": 66
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "log.info",
+          "lineNumber": 68
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "log.info",
+          "lineNumber": 69
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "log.info",
+          "lineNumber": 70
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "log.info",
+          "lineNumber": 71
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getEncoder().encodeToString",
+          "lineNumber": 71
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "Base64.getEncoder",
+          "lineNumber": 71
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyPair.getPublic().getEncoded",
+          "lineNumber": 71
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "keyPair.getPublic",
+          "lineNumber": 71
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "log.info",
+          "lineNumber": 72
+        },
+        {
+          "caller": "getKeyPair",
+          "callee": "new RuntimeException",
+          "lineNumber": 76
+        },
+        {
+          "caller": "list",
+          "callee": "licenseMapper.selectList",
+          "lineNumber": 84
+        },
+        {
+          "caller": "activate",
+          "callee": "licenseKey.trim().isEmpty",
+          "lineNumber": 91
+        },
+        {
+          "caller": "activate",
+          "callee": "licenseKey.trim",
+          "lineNumber": 91
+        },
+        {
+          "caller": "activate",
+          "callee": "R.fail",
+          "lineNumber": 92
+        },
+        {
+          "caller": "activate",
+          "callee": "machineId.trim().isEmpty",
+          "lineNumber": 94
+        },
+        {
+          "caller": "activate",
+          "callee": "machineId.trim",
+          "lineNumber": 94
+        },
+        {
+          "caller": "activate",
+          "callee": "R.fail",
+          "lineNumber": 95
+        },
+        {
+          "caller": "activate",
+          "callee": "licenseMapper.selectOne",
+          "lineNumber": 98
+        },
+        {
+          "caller": "activate",
+          "callee": "new LambdaQueryWrapper<License>().eq",
+          "lineNumber": 99
+        },
+        {
+          "caller": "activate",
+          "callee": "new LambdaQueryWrapper<License>",
+          "lineNumber": 99
+        },
+        {
+          "caller": "activate",
+          "callee": "licenseKey.trim",
+          "lineNumber": 99
+        },
+        {
+          "caller": "activate",
+          "callee": "R.fail",
+          "lineNumber": 102
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getStatus",
+          "lineNumber": 104
+        },
+        {
+          "caller": "activate",
+          "callee": "R.fail",
+          "lineNumber": 105
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getStatus",
+          "lineNumber": 107
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getMachineId",
+          "lineNumber": 107
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getMachineId().equals",
+          "lineNumber": 108
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getMachineId",
+          "lineNumber": 108
+        },
+        {
+          "caller": "activate",
+          "callee": "R.fail",
+          "lineNumber": 109
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getExpireAt",
+          "lineNumber": 111
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getExpireAt().isBefore",
+          "lineNumber": 111
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getExpireAt",
+          "lineNumber": 111
+        },
+        {
+          "caller": "activate",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 111
+        },
+        {
+          "caller": "activate",
+          "callee": "R.fail",
+          "lineNumber": 112
+        },
+        {
+          "caller": "activate",
+          "callee": "license.setStatus",
+          "lineNumber": 116
+        },
+        {
+          "caller": "activate",
+          "callee": "license.setMachineId",
+          "lineNumber": 117
+        },
+        {
+          "caller": "activate",
+          "callee": "license.setActivatedAt",
+          "lineNumber": 118
+        },
+        {
+          "caller": "activate",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 118
+        },
+        {
+          "caller": "activate",
+          "callee": "license.setToken",
+          "lineNumber": 119
+        },
+        {
+          "caller": "activate",
+          "callee": "UUID.randomUUID().toString().replace",
+          "lineNumber": 119
+        },
+        {
+          "caller": "activate",
+          "callee": "UUID.randomUUID().toString",
+          "lineNumber": 119
+        },
+        {
+          "caller": "activate",
+          "callee": "UUID.randomUUID",
+          "lineNumber": 119
+        },
+        {
+          "caller": "activate",
+          "callee": "licenseMapper.updateById",
+          "lineNumber": 120
+        },
+        {
+          "caller": "activate",
+          "callee": "buildSignedData",
+          "lineNumber": 124
+        },
+        {
+          "caller": "activate",
+          "callee": "licenseKey.trim",
+          "lineNumber": 124
+        },
+        {
+          "caller": "activate",
+          "callee": "license.getExpireAt",
+          "lineNumber": 124
+        },
+        {
+          "caller": "activate",
+          "callee": "sign",
+          "lineNumber": 125
+        },
+        {
+          "caller": "activate",
+          "callee": "license.setLicenseSignature",
+          "lineNumber": 126
+        },
+        {
+          "caller": "activate",
+          "callee": "log.error",
+          "lineNumber": 128
+        },
+        {
+          "caller": "activate",
+          "callee": "R.fail",
+          "lineNumber": 129
+        },
+        {
+          "caller": "activate",
+          "callee": "log.info",
+          "lineNumber": 132
+        },
+        {
+          "caller": "activate",
+          "callee": "R.ok",
+          "lineNumber": 133
+        },
+        {
+          "caller": "validate",
+          "callee": "token.trim().isEmpty",
+          "lineNumber": 140
+        },
+        {
+          "caller": "validate",
+          "callee": "token.trim",
+          "lineNumber": 140
+        },
+        {
+          "caller": "validate",
+          "callee": "R.fail",
+          "lineNumber": 141
+        },
+        {
+          "caller": "validate",
+          "callee": "machineId.trim().isEmpty",
+          "lineNumber": 143
+        },
+        {
+          "caller": "validate",
+          "callee": "machineId.trim",
+          "lineNumber": 143
+        },
+        {
+          "caller": "validate",
+          "callee": "R.fail",
+          "lineNumber": 144
+        },
+        {
+          "caller": "validate",
+          "callee": "licenseMapper.selectOne",
+          "lineNumber": 147
+        },
+        {
+          "caller": "validate",
+          "callee": "new LambdaQueryWrapper<License>().eq",
+          "lineNumber": 148
+        },
+        {
+          "caller": "validate",
+          "callee": "new LambdaQueryWrapper<License>",
+          "lineNumber": 148
+        },
+        {
+          "caller": "validate",
+          "callee": "R.fail",
+          "lineNumber": 151
+        },
+        {
+          "caller": "validate",
+          "callee": "license.getStatus",
+          "lineNumber": 153
+        },
+        {
+          "caller": "validate",
+          "callee": "R.fail",
+          "lineNumber": 154
+        },
+        {
+          "caller": "validate",
+          "callee": "license.getStatus",
+          "lineNumber": 156
+        },
+        {
+          "caller": "validate",
+          "callee": "R.fail",
+          "lineNumber": 157
+        },
+        {
+          "caller": "validate",
+          "callee": "machineId.equals",
+          "lineNumber": 159
+        },
+        {
+          "caller": "validate",
+          "callee": "license.getMachineId",
+          "lineNumber": 159
+        },
+        {
+          "caller": "validate",
+          "callee": "R.fail",
+          "lineNumber": 160
+        },
+        {
+          "caller": "validate",
+          "callee": "license.getExpireAt",
+          "lineNumber": 162
+        },
+        {
+          "caller": "validate",
+          "callee": "license.getExpireAt().isBefore",
+          "lineNumber": 162
+        },
+        {
+          "caller": "validate",
+          "callee": "license.getExpireAt",
+          "lineNumber": 162
+        },
+        {
+          "caller": "validate",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 162
+        },
+        {
+          "caller": "validate",
+          "callee": "R.fail",
+          "lineNumber": 163
+        },
+        {
+          "caller": "validate",
+          "callee": "R.ok",
+          "lineNumber": 166
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "new License",
+          "lineNumber": 173
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "license.setLicenseKey",
+          "lineNumber": 174
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "generateLicenseKey",
+          "lineNumber": 174
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "license.setStatus",
+          "lineNumber": 175
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "license.setCustomer",
+          "lineNumber": 176
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "license.setExpireAt",
+          "lineNumber": 178
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "LocalDateTime.now().plusDays",
+          "lineNumber": 178
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 178
+        },
+        {
+          "caller": "generateLicense",
+          "callee": "licenseMapper.insert",
+          "lineNumber": 180
+        },
+        {
+          "caller": "disable",
+          "callee": "licenseMapper.selectById",
+          "lineNumber": 188
+        },
+        {
+          "caller": "disable",
+          "callee": "R.fail",
+          "lineNumber": 190
+        },
+        {
+          "caller": "disable",
+          "callee": "license.setStatus",
+          "lineNumber": 192
+        },
+        {
+          "caller": "disable",
+          "callee": "license.setToken",
+          "lineNumber": 193
+        },
+        {
+          "caller": "disable",
+          "callee": "licenseMapper.updateById",
+          "lineNumber": 194
+        },
+        {
+          "caller": "disable",
+          "callee": "R.ok",
+          "lineNumber": 195
+        },
+        {
+          "caller": "unbind",
+          "callee": "licenseMapper.selectById",
+          "lineNumber": 202
+        },
+        {
+          "caller": "unbind",
+          "callee": "R.fail",
+          "lineNumber": 204
+        },
+        {
+          "caller": "unbind",
+          "callee": "license.setMachineId",
+          "lineNumber": 206
+        },
+        {
+          "caller": "unbind",
+          "callee": "license.setToken",
+          "lineNumber": 207
+        },
+        {
+          "caller": "unbind",
+          "callee": "license.setStatus",
+          "lineNumber": 208
+        },
+        {
+          "caller": "unbind",
+          "callee": "licenseMapper.updateById",
+          "lineNumber": 209
+        },
+        {
+          "caller": "unbind",
+          "callee": "R.ok",
+          "lineNumber": 210
+        },
+        {
+          "caller": "getPublicKeyBase64",
+          "callee": "Base64.getEncoder().encodeToString",
+          "lineNumber": 217
+        },
+        {
+          "caller": "getPublicKeyBase64",
+          "callee": "Base64.getEncoder",
+          "lineNumber": 217
+        },
+        {
+          "caller": "getPublicKeyBase64",
+          "callee": "getKeyPair().getPublic().getEncoded",
+          "lineNumber": 217
+        },
+        {
+          "caller": "getPublicKeyBase64",
+          "callee": "getKeyPair().getPublic",
+          "lineNumber": 217
+        },
+        {
+          "caller": "getPublicKeyBase64",
+          "callee": "getKeyPair",
+          "lineNumber": 217
+        },
+        {
+          "caller": "buildSignedData",
+          "callee": "expireAt.format",
+          "lineNumber": 226
+        },
+        {
+          "caller": "buildSignedData",
+          "callee": "LocalDateTime.now().format",
+          "lineNumber": 227
+        },
+        {
+          "caller": "buildSignedData",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 227
+        },
+        {
+          "caller": "sign",
+          "callee": "Signature.getInstance",
+          "lineNumber": 235
+        },
+        {
+          "caller": "sign",
+          "callee": "sig.initSign",
+          "lineNumber": 236
+        },
+        {
+          "caller": "sign",
+          "callee": "getKeyPair().getPrivate",
+          "lineNumber": 236
+        },
+        {
+          "caller": "sign",
+          "callee": "getKeyPair",
+          "lineNumber": 236
+        },
+        {
+          "caller": "sign",
+          "callee": "sig.update",
+          "lineNumber": 237
+        },
+        {
+          "caller": "sign",
+          "callee": "data.getBytes",
+          "lineNumber": 237
+        },
+        {
+          "caller": "sign",
+          "callee": "Base64.getEncoder().encodeToString",
+          "lineNumber": 238
+        },
+        {
+          "caller": "sign",
+          "callee": "Base64.getEncoder",
+          "lineNumber": 238
+        },
+        {
+          "caller": "sign",
+          "callee": "sig.sign",
+          "lineNumber": 238
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "new StringBuilder",
+          "lineNumber": 246
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "sb.append",
+          "lineNumber": 248
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "Math.random",
+          "lineNumber": 249
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "chars.length",
+          "lineNumber": 249
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "sb.append",
+          "lineNumber": 250
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "chars.charAt",
+          "lineNumber": 250
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "sb.toString",
+          "lineNumber": 252
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "licenseMapper.selectOne",
+          "lineNumber": 253
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "new LambdaQueryWrapper<License>().eq",
+          "lineNumber": 254
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "new LambdaQueryWrapper<License>",
+          "lineNumber": 254
+        },
+        {
+          "caller": "generateLicenseKey",
+          "callee": "generateLicenseKey",
+          "lineNumber": 257
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 8,
+        "functionCount": 11,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "language": "java",
+      "fileCategory": "code",
+      "totalLines": 151,
+      "nonEmptyLines": 134,
+      "functions": [
+        {
+          "name": "getImageDir",
+          "startLine": 36,
+          "endLine": 46,
+          "params": []
+        },
+        {
+          "name": "createTemplate",
+          "startLine": 51,
+          "endLine": 78,
+          "params": [
+            "name",
+            "imageFile"
+          ]
+        },
+        {
+          "name": "getTemplateDetail",
+          "startLine": 83,
+          "endLine": 85,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "getPlaceholders",
+          "startLine": 90,
+          "endLine": 92,
+          "params": [
+            "templateId"
+          ]
+        },
+        {
+          "name": "savePlaceholders",
+          "startLine": 97,
+          "endLine": 107,
+          "params": [
+            "templateId",
+            "placeholders"
+          ]
+        },
+        {
+          "name": "deleteTemplate",
+          "startLine": 112,
+          "endLine": 127,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "updateTemplateName",
+          "startLine": 132,
+          "endLine": 139,
+          "params": [
+            "id",
+            "name"
+          ]
+        },
+        {
+          "name": "getImagePath",
+          "startLine": 144,
+          "endLine": 150,
+          "params": [
+            "templateId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "TemplateService",
+          "startLine": 24,
+          "endLine": 151,
+          "methods": [
+            "getImageDir",
+            "createTemplate",
+            "getTemplateDetail",
+            "getPlaceholders",
+            "savePlaceholders",
+            "deleteTemplate",
+            "updateTemplateName",
+            "getImagePath"
+          ],
+          "properties": [
+            "placeholderMapper",
+            "dataDir"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "getImageDir",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "createTemplate",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "getTemplateDetail",
+          "line": 83,
+          "isDefault": false
+        },
+        {
+          "name": "getPlaceholders",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "savePlaceholders",
+          "line": 97,
+          "isDefault": false
+        },
+        {
+          "name": "deleteTemplate",
+          "line": 112,
+          "isDefault": false
+        },
+        {
+          "name": "updateTemplateName",
+          "line": 132,
+          "isDefault": false
+        },
+        {
+          "name": "getImagePath",
+          "line": 144,
+          "isDefault": false
+        },
+        {
+          "name": "TemplateService",
+          "line": 24,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getImageDir",
+          "callee": "Paths.get(dataDir, \"templates\").toAbsolutePath",
+          "lineNumber": 37
+        },
+        {
+          "caller": "getImageDir",
+          "callee": "Paths.get",
+          "lineNumber": 37
+        },
+        {
+          "caller": "getImageDir",
+          "callee": "Files.exists",
+          "lineNumber": 38
+        },
+        {
+          "caller": "getImageDir",
+          "callee": "Files.createDirectories",
+          "lineNumber": 40
+        },
+        {
+          "caller": "getImageDir",
+          "callee": "new RuntimeException",
+          "lineNumber": 42
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "imageFile.getOriginalFilename",
+          "lineNumber": 54
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "originalName.contains",
+          "lineNumber": 55
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "originalName.substring",
+          "lineNumber": 56
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "originalName.lastIndexOf",
+          "lineNumber": 56
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "UUID.randomUUID",
+          "lineNumber": 58
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "getImageDir().resolve",
+          "lineNumber": 61
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "getImageDir",
+          "lineNumber": 61
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "imageFile.transferTo",
+          "lineNumber": 62
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "imagePath.toFile",
+          "lineNumber": 62
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "ImageIO.read",
+          "lineNumber": 65
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "imagePath.toFile",
+          "lineNumber": 65
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "new Template",
+          "lineNumber": 68
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "template.setName",
+          "lineNumber": 69
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "template.setImageFileName",
+          "lineNumber": 70
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "template.setImageWidth",
+          "lineNumber": 71
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "img.getWidth",
+          "lineNumber": 71
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "template.setImageHeight",
+          "lineNumber": 72
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "img.getHeight",
+          "lineNumber": 72
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "template.setCreateTime",
+          "lineNumber": 73
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 73
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "template.setUpdateTime",
+          "lineNumber": 74
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 74
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "this.save",
+          "lineNumber": 75
+        },
+        {
+          "caller": "getTemplateDetail",
+          "callee": "this.getById",
+          "lineNumber": 84
+        },
+        {
+          "caller": "getPlaceholders",
+          "callee": "placeholderMapper.selectByTemplateId",
+          "lineNumber": 91
+        },
+        {
+          "caller": "savePlaceholders",
+          "callee": "placeholderMapper.deleteByTemplateId",
+          "lineNumber": 100
+        },
+        {
+          "caller": "savePlaceholders",
+          "callee": "p.setId",
+          "lineNumber": 103
+        },
+        {
+          "caller": "savePlaceholders",
+          "callee": "p.setTemplateId",
+          "lineNumber": 104
+        },
+        {
+          "caller": "savePlaceholders",
+          "callee": "placeholderMapper.insert",
+          "lineNumber": 105
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "this.getById",
+          "lineNumber": 114
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "getImageDir().resolve",
+          "lineNumber": 117
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "getImageDir",
+          "lineNumber": 117
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "template.getImageFileName",
+          "lineNumber": 117
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "Files.deleteIfExists",
+          "lineNumber": 119
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "placeholderMapper.deleteByTemplateId",
+          "lineNumber": 123
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "this.removeById",
+          "lineNumber": 125
+        },
+        {
+          "caller": "updateTemplateName",
+          "callee": "this.getById",
+          "lineNumber": 133
+        },
+        {
+          "caller": "updateTemplateName",
+          "callee": "template.setName",
+          "lineNumber": 135
+        },
+        {
+          "caller": "updateTemplateName",
+          "callee": "template.setUpdateTime",
+          "lineNumber": 136
+        },
+        {
+          "caller": "updateTemplateName",
+          "callee": "LocalDateTime.now",
+          "lineNumber": 136
+        },
+        {
+          "caller": "updateTemplateName",
+          "callee": "this.updateById",
+          "lineNumber": 137
+        },
+        {
+          "caller": "getImagePath",
+          "callee": "this.getById",
+          "lineNumber": 145
+        },
+        {
+          "caller": "getImagePath",
+          "callee": "getImageDir().resolve",
+          "lineNumber": 149
+        },
+        {
+          "caller": "getImagePath",
+          "callee": "getImageDir",
+          "lineNumber": 149
+        },
+        {
+          "caller": "getImagePath",
+          "callee": "template.getImageFileName",
+          "lineNumber": 149
+        }
+      ],
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 9,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "backend/src/main/resources/application.yml",
+      "language": "yaml",
+      "fileCategory": "config",
+      "totalLines": 23,
+      "nonEmptyLines": 20,
+      "sections": [
+        {
+          "heading": "server",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "spring",
+          "level": 1,
+          "line": 4
+        },
+        {
+          "heading": "mybatis-plus",
+          "level": 1,
+          "line": 13
+        },
+        {
+          "heading": "app",
+          "level": 1,
+          "line": 21
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 4
+      }
+    },
+    {
+      "path": "backend/src/main/resources/start.sh",
+      "language": "shell",
+      "fileCategory": "script",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "docs/证书生成及系统服务协议.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 254,
+      "nonEmptyLines": 139,
+      "sections": [
+        {
+          "heading": "证书生成及系统服务协议",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "鉴于条款（前言）",
+          "level": 2,
+          "line": 22
+        },
+        {
+          "heading": "第一条 定义与解释",
+          "level": 2,
+          "line": 30
+        },
+        {
+          "heading": "第二条 服务内容",
+          "level": 2,
+          "line": 48
+        },
+        {
+          "heading": "第三条 费用与结算",
+          "level": 2,
+          "line": 70
+        },
+        {
+          "heading": "第四条 双方权利与义务",
+          "level": 2,
+          "line": 110
+        },
+        {
+          "heading": "第五条 知识产权",
+          "level": 2,
+          "line": 144
+        },
+        {
+          "heading": "第六条 保密条款",
+          "level": 2,
+          "line": 172
+        },
+        {
+          "heading": "第七条 违约责任",
+          "level": 2,
+          "line": 182
+        },
+        {
+          "heading": "第八条 协议的变更、解除与终止",
+          "level": 2,
+          "line": 200
+        },
+        {
+          "heading": "第九条 法律适用与争议解决",
+          "level": 2,
+          "line": 214
+        },
+        {
+          "heading": "第十条 其他",
+          "level": 2,
+          "line": 224
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 12
+      }
+    },
+    {
+      "path": "docs/generate_contract_docx.py",
+      "language": "python",
+      "fileCategory": "code",
+      "totalLines": 432,
+      "nonEmptyLines": 376,
+      "functions": [
+        {
+          "name": "set_cn_font",
+          "startLine": 18,
+          "endLine": 25,
+          "params": [
+            "run",
+            "font",
+            "size",
+            "bold",
+            "color"
+          ]
+        },
+        {
+          "name": "add_title",
+          "startLine": 28,
+          "endLine": 33,
+          "params": [
+            "doc",
+            "text"
+          ]
+        },
+        {
+          "name": "add_heading",
+          "startLine": 36,
+          "endLine": 41,
+          "params": [
+            "doc",
+            "text"
+          ]
+        },
+        {
+          "name": "add_para",
+          "startLine": 44,
+          "endLine": 57,
+          "params": [
+            "doc",
+            "segments",
+            "align",
+            "size",
+            "indent"
+          ]
+        },
+        {
+          "name": "add_divider",
+          "startLine": 60,
+          "endLine": 65,
+          "params": [
+            "doc"
+          ]
+        },
+        {
+          "name": "add_grid_table",
+          "startLine": 68,
+          "endLine": 82,
+          "params": [
+            "doc",
+            "headers",
+            "rows_data",
+            "widths"
+          ]
+        },
+        {
+          "name": "build_attachments",
+          "startLine": 85,
+          "endLine": 169,
+          "params": [
+            "doc"
+          ]
+        },
+        {
+          "name": "build",
+          "startLine": 172,
+          "endLine": 428,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "set_cn_font",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "add_title",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "add_heading",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "add_para",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "add_divider",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "add_grid_table",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "build_attachments",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "build",
+          "line": 172,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "set_cn_font",
+          "callee": "Pt",
+          "lineNumber": 20
+        },
+        {
+          "caller": "set_cn_font",
+          "callee": "r.rPr.rFonts.set",
+          "lineNumber": 25
+        },
+        {
+          "caller": "set_cn_font",
+          "callee": "qn",
+          "lineNumber": 25
+        },
+        {
+          "caller": "add_title",
+          "callee": "doc.add_paragraph",
+          "lineNumber": 29
+        },
+        {
+          "caller": "add_title",
+          "callee": "p.add_run",
+          "lineNumber": 31
+        },
+        {
+          "caller": "add_title",
+          "callee": "set_cn_font",
+          "lineNumber": 32
+        },
+        {
+          "caller": "add_title",
+          "callee": "Pt",
+          "lineNumber": 33
+        },
+        {
+          "caller": "add_heading",
+          "callee": "doc.add_paragraph",
+          "lineNumber": 37
+        },
+        {
+          "caller": "add_heading",
+          "callee": "p.add_run",
+          "lineNumber": 38
+        },
+        {
+          "caller": "add_heading",
+          "callee": "set_cn_font",
+          "lineNumber": 39
+        },
+        {
+          "caller": "add_heading",
+          "callee": "Pt",
+          "lineNumber": 40
+        },
+        {
+          "caller": "add_heading",
+          "callee": "Pt",
+          "lineNumber": 41
+        },
+        {
+          "caller": "add_para",
+          "callee": "doc.add_paragraph",
+          "lineNumber": 46
+        },
+        {
+          "caller": "add_para",
+          "callee": "Pt",
+          "lineNumber": 48
+        },
+        {
+          "caller": "add_para",
+          "callee": "Pt",
+          "lineNumber": 51
+        },
+        {
+          "caller": "add_para",
+          "callee": "isinstance",
+          "lineNumber": 52
+        },
+        {
+          "caller": "add_para",
+          "callee": "p.add_run",
+          "lineNumber": 55
+        },
+        {
+          "caller": "add_para",
+          "callee": "set_cn_font",
+          "lineNumber": 56
+        },
+        {
+          "caller": "add_divider",
+          "callee": "doc.add_paragraph",
+          "lineNumber": 61
+        },
+        {
+          "caller": "add_divider",
+          "callee": "p.add_run",
+          "lineNumber": 62
+        },
+        {
+          "caller": "add_divider",
+          "callee": "set_cn_font",
+          "lineNumber": 63
+        },
+        {
+          "caller": "add_divider",
+          "callee": "RGBColor",
+          "lineNumber": 63
+        },
+        {
+          "caller": "add_divider",
+          "callee": "Pt",
+          "lineNumber": 65
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "doc.add_table",
+          "lineNumber": 69
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "len",
+          "lineNumber": 69
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "len",
+          "lineNumber": 69
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "enumerate",
+          "lineNumber": 72
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "cell.paragraphs[0].add_run",
+          "lineNumber": 75
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "set_cn_font",
+          "lineNumber": 76
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "enumerate",
+          "lineNumber": 77
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "enumerate",
+          "lineNumber": 78
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "cell.paragraphs[0].add_run",
+          "lineNumber": 80
+        },
+        {
+          "caller": "add_grid_table",
+          "callee": "set_cn_font",
+          "lineNumber": 81
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "doc.add_page_break",
+          "lineNumber": 87
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_heading",
+          "lineNumber": 88
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 89
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 90
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 91
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 92
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 93
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_grid_table",
+          "lineNumber": 94
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 105
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 106
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 107
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 108
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "doc.add_page_break",
+          "lineNumber": 111
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_heading",
+          "lineNumber": 112
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 113
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_grid_table",
+          "lineNumber": 114
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 125
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 126
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_grid_table",
+          "lineNumber": 127
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 138
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "doc.add_page_break",
+          "lineNumber": 141
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_heading",
+          "lineNumber": 142
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 143
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_grid_table",
+          "lineNumber": 144
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 155
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 162
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 163
+        },
+        {
+          "caller": "build_attachments",
+          "callee": "add_para",
+          "lineNumber": 169
+        },
+        {
+          "caller": "build",
+          "callee": "Document",
+          "lineNumber": 173
+        },
+        {
+          "caller": "build",
+          "callee": "Pt",
+          "lineNumber": 177
+        },
+        {
+          "caller": "build",
+          "callee": "style.element.rPr.rFonts.set",
+          "lineNumber": 178
+        },
+        {
+          "caller": "build",
+          "callee": "qn",
+          "lineNumber": 178
+        },
+        {
+          "caller": "build",
+          "callee": "add_title",
+          "lineNumber": 181
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 182
+        },
+        {
+          "caller": "build",
+          "callee": "doc.add_paragraph",
+          "lineNumber": 183
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 186
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 193
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 195
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 201
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 203
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 205
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 208
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 214
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 216
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 219
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 220
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 230
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 232
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 235
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 236
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 237
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 238
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 239
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 240
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 241
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 242
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 243
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 244
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 246
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 249
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 250
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 251
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 253
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 254
+        },
+        {
+          "caller": "build",
+          "callee": "doc.add_table",
+          "lineNumber": 257
+        },
+        {
+          "caller": "build",
+          "callee": "enumerate",
+          "lineNumber": 266
+        },
+        {
+          "caller": "build",
+          "callee": "cell.paragraphs[0].add_run",
+          "lineNumber": 269
+        },
+        {
+          "caller": "build",
+          "callee": "set_cn_font",
+          "lineNumber": 270
+        },
+        {
+          "caller": "build",
+          "callee": "enumerate",
+          "lineNumber": 271
+        },
+        {
+          "caller": "build",
+          "callee": "enumerate",
+          "lineNumber": 272
+        },
+        {
+          "caller": "build",
+          "callee": "cell.paragraphs[0].add_run",
+          "lineNumber": 275
+        },
+        {
+          "caller": "build",
+          "callee": "set_cn_font",
+          "lineNumber": 276
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 278
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 279
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 280
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 281
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 282
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 283
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 284
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 286
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 287
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 288
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 290
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 293
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 294
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 302
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 303
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 311
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 312
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 313
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 314
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 316
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 319
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 320
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 321
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 322
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 323
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 324
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 325
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 334
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 336
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 339
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 340
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 341
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 342
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 344
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 347
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 348
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 349
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 350
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 351
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 352
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 353
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 354
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 356
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 359
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 360
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 361
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 367
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 368
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 370
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 373
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 374
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 375
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 377
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 379
+        },
+        {
+          "caller": "build",
+          "callee": "add_heading",
+          "lineNumber": 382
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 383
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 384
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 385
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 391
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 392
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 393
+        },
+        {
+          "caller": "build",
+          "callee": "add_divider",
+          "lineNumber": 395
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 398
+        },
+        {
+          "caller": "build",
+          "callee": "doc.add_paragraph",
+          "lineNumber": 399
+        },
+        {
+          "caller": "build",
+          "callee": "doc.add_table",
+          "lineNumber": 401
+        },
+        {
+          "caller": "build",
+          "callee": "enumerate",
+          "lineNumber": 410
+        },
+        {
+          "caller": "build",
+          "callee": "enumerate",
+          "lineNumber": 411
+        },
+        {
+          "caller": "build",
+          "callee": "enumerate",
+          "lineNumber": 414
+        },
+        {
+          "caller": "build",
+          "callee": "val.split",
+          "lineNumber": 414
+        },
+        {
+          "caller": "build",
+          "callee": "cell.add_paragraph",
+          "lineNumber": 415
+        },
+        {
+          "caller": "build",
+          "callee": "para.add_run",
+          "lineNumber": 416
+        },
+        {
+          "caller": "build",
+          "callee": "set_cn_font",
+          "lineNumber": 417
+        },
+        {
+          "caller": "build",
+          "callee": "doc.add_paragraph",
+          "lineNumber": 419
+        },
+        {
+          "caller": "build",
+          "callee": "add_para",
+          "lineNumber": 420
+        },
+        {
+          "caller": "build",
+          "callee": "build_attachments",
+          "lineNumber": 425
+        },
+        {
+          "caller": "build",
+          "callee": "doc.save",
+          "lineNumber": 427
+        },
+        {
+          "caller": "build",
+          "callee": "print",
+          "lineNumber": 428
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 8,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/electron/main.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 433,
+      "nonEmptyLines": 373,
+      "functions": [
+        {
+          "name": "getMachineId",
+          "startLine": 20,
+          "endLine": 47,
+          "params": []
+        },
+        {
+          "name": "waitForBackend",
+          "startLine": 52,
+          "endLine": 88,
+          "params": [
+            "port"
+          ]
+        },
+        {
+          "name": "findJavaPath",
+          "startLine": 93,
+          "endLine": 101,
+          "params": []
+        },
+        {
+          "name": "getBackendLogPath",
+          "startLine": 109,
+          "endLine": 111,
+          "params": []
+        },
+        {
+          "name": "startBackend",
+          "startLine": 116,
+          "endLine": 233,
+          "params": []
+        },
+        {
+          "name": "verifyLicenseLocal",
+          "startLine": 239,
+          "endLine": 298,
+          "params": []
+        },
+        {
+          "name": "createWindow",
+          "startLine": 303,
+          "endLine": 328,
+          "params": []
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "getMachineId",
+          "callee": "execSync('wmic csproduct get UUID', { encoding: 'utf-8' })\n        .split('\\n').filter(l => l.trim() && !l.includes('UUID'))[0]?.trim",
+          "lineNumber": 24
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "execSync('wmic csproduct get UUID', { encoding: 'utf-8' })\n        .split('\\n').filter",
+          "lineNumber": 24
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "execSync('wmic csproduct get UUID', { encoding: 'utf-8' })\n        .split",
+          "lineNumber": 24
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "execSync",
+          "lineNumber": 24
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "l.trim",
+          "lineNumber": 25
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "l.includes",
+          "lineNumber": 25
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "execSync('wmic diskdrive get SerialNumber', { encoding: 'utf-8' })\n        .split('\\n').filter(l => l.trim() && !l.includes('SerialNumber'))[0]?.trim",
+          "lineNumber": 29
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "execSync('wmic diskdrive get SerialNumber', { encoding: 'utf-8' })\n        .split('\\n').filter",
+          "lineNumber": 29
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "execSync('wmic diskdrive get SerialNumber', { encoding: 'utf-8' })\n        .split",
+          "lineNumber": 29
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "execSync",
+          "lineNumber": 29
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "l.trim",
+          "lineNumber": 30
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "l.includes",
+          "lineNumber": 30
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "crypto.createHash('sha256').update(raw).digest",
+          "lineNumber": 35
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "crypto.createHash('sha256').update",
+          "lineNumber": 35
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "crypto.createHash",
+          "lineNumber": 35
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "path.join",
+          "lineNumber": 40
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "app.getPath",
+          "lineNumber": 40
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "fs.existsSync",
+          "lineNumber": 41
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "fs.readFileSync(fallbackPath, 'utf-8').trim",
+          "lineNumber": 42
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "fs.readFileSync",
+          "lineNumber": 42
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "crypto.randomBytes(32).toString",
+          "lineNumber": 44
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "crypto.randomBytes",
+          "lineNumber": 44
+        },
+        {
+          "caller": "getMachineId",
+          "callee": "fs.writeFileSync",
+          "lineNumber": 45
+        },
+        {
+          "caller": "onClose",
+          "callee": "reject",
+          "lineNumber": 60
+        },
+        {
+          "caller": "waitForBackend",
+          "callee": "backendProcess.once",
+          "lineNumber": 64
+        },
+        {
+          "caller": "check",
+          "callee": "net.createConnection",
+          "lineNumber": 69
+        },
+        {
+          "caller": "check",
+          "callee": "client.end",
+          "lineNumber": 70
+        },
+        {
+          "caller": "check",
+          "callee": "backendProcess.removeListener",
+          "lineNumber": 72
+        },
+        {
+          "caller": "check",
+          "callee": "resolve",
+          "lineNumber": 73
+        },
+        {
+          "caller": "check",
+          "callee": "client.on",
+          "lineNumber": 75
+        },
+        {
+          "caller": "check",
+          "callee": "backendProcess.removeListener",
+          "lineNumber": 79
+        },
+        {
+          "caller": "check",
+          "callee": "reject",
+          "lineNumber": 80
+        },
+        {
+          "caller": "check",
+          "callee": "setTimeout",
+          "lineNumber": 82
+        },
+        {
+          "caller": "waitForBackend",
+          "callee": "check",
+          "lineNumber": 86
+        },
+        {
+          "caller": "findJavaPath",
+          "callee": "path.join",
+          "lineNumber": 94
+        },
+        {
+          "caller": "findJavaPath",
+          "callee": "fs.existsSync",
+          "lineNumber": 95
+        },
+        {
+          "caller": "findJavaPath",
+          "callee": "path.join",
+          "lineNumber": 97
+        },
+        {
+          "caller": "findJavaPath",
+          "callee": "fs.existsSync",
+          "lineNumber": 98
+        },
+        {
+          "caller": "getBackendLogPath",
+          "callee": "path.join",
+          "lineNumber": 110
+        },
+        {
+          "caller": "getBackendLogPath",
+          "callee": "app.getPath",
+          "lineNumber": 110
+        },
+        {
+          "caller": "startBackend",
+          "callee": "path.join",
+          "lineNumber": 118
+        },
+        {
+          "caller": "startBackend",
+          "callee": "path.join",
+          "lineNumber": 119
+        },
+        {
+          "caller": "startBackend",
+          "callee": "fs.existsSync",
+          "lineNumber": 121
+        },
+        {
+          "caller": "startBackend",
+          "callee": "fs.existsSync",
+          "lineNumber": 123
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.error",
+          "lineNumber": 126
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.error",
+          "lineNumber": 127
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.error",
+          "lineNumber": 128
+        },
+        {
+          "caller": "startBackend",
+          "callee": "dialog.showErrorBox",
+          "lineNumber": 129
+        },
+        {
+          "caller": "startBackend",
+          "callee": "findJavaPath",
+          "lineNumber": 136
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.log",
+          "lineNumber": 137
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.log",
+          "lineNumber": 138
+        },
+        {
+          "caller": "startBackend",
+          "callee": "path.join",
+          "lineNumber": 140
+        },
+        {
+          "caller": "startBackend",
+          "callee": "app.getPath",
+          "lineNumber": 140
+        },
+        {
+          "caller": "startBackend",
+          "callee": "fs.existsSync",
+          "lineNumber": 141
+        },
+        {
+          "caller": "startBackend",
+          "callee": "fs.mkdirSync",
+          "lineNumber": 142
+        },
+        {
+          "caller": "startBackend",
+          "callee": "require('child_process').execSync",
+          "lineNumber": 147
+        },
+        {
+          "caller": "startBackend",
+          "callee": "require",
+          "lineNumber": 147
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.log",
+          "lineNumber": 148
+        },
+        {
+          "caller": "startBackend",
+          "callee": "dialog.showErrorBox",
+          "lineNumber": 151
+        },
+        {
+          "caller": "startBackend",
+          "callee": "versionOutput.substring",
+          "lineNumber": 154
+        },
+        {
+          "caller": "startBackend",
+          "callee": "getBackendLogPath",
+          "lineNumber": 159
+        },
+        {
+          "caller": "startBackend",
+          "callee": "fs.writeFileSync",
+          "lineNumber": 161
+        },
+        {
+          "caller": "startBackend",
+          "callee": "new Date().toISOString",
+          "lineNumber": 161
+        },
+        {
+          "caller": "startBackend",
+          "callee": "fs.createWriteStream",
+          "lineNumber": 164
+        },
+        {
+          "caller": "startBackend",
+          "callee": "spawn",
+          "lineNumber": 166
+        },
+        {
+          "caller": "startBackend",
+          "callee": "path.dirname",
+          "lineNumber": 172
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendProcess.stdout.on",
+          "lineNumber": 177
+        },
+        {
+          "caller": "startBackend",
+          "callee": "data.toString",
+          "lineNumber": 178
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.log",
+          "lineNumber": 179
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendErrorLog.push",
+          "lineNumber": 180
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendErrorLog.shift",
+          "lineNumber": 181
+        },
+        {
+          "caller": "startBackend",
+          "callee": "logStream.write",
+          "lineNumber": 182
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendProcess.stderr.on",
+          "lineNumber": 185
+        },
+        {
+          "caller": "startBackend",
+          "callee": "data.toString",
+          "lineNumber": 186
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.error",
+          "lineNumber": 187
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendErrorLog.push",
+          "lineNumber": 188
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendErrorLog.shift",
+          "lineNumber": 189
+        },
+        {
+          "caller": "startBackend",
+          "callee": "logStream.write",
+          "lineNumber": 190
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendProcess.on",
+          "lineNumber": 193
+        },
+        {
+          "caller": "startBackend",
+          "callee": "logStream.end",
+          "lineNumber": 194
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.error",
+          "lineNumber": 195
+        },
+        {
+          "caller": "startBackend",
+          "callee": "dialog.showErrorBox",
+          "lineNumber": 196
+        },
+        {
+          "caller": "startBackend",
+          "callee": "backendProcess.on",
+          "lineNumber": 202
+        },
+        {
+          "caller": "startBackend",
+          "callee": "logStream.end",
+          "lineNumber": 203
+        },
+        {
+          "caller": "startBackend",
+          "callee": "console.log",
+          "lineNumber": 204
+        },
+        {
+          "caller": "startBackend",
+          "callee": "fs.readFileSync",
+          "lineNumber": 208
+        },
+        {
+          "caller": "startBackend",
+          "callee": "logContent.slice",
+          "lineNumber": 211
+        },
+        {
+          "caller": "startBackend",
+          "callee": "require",
+          "lineNumber": 213
+        },
+        {
+          "caller": "startBackend",
+          "callee": "dialog.showMessageBox",
+          "lineNumber": 214
+        },
+        {
+          "caller": "startBackend",
+          "callee": "shell.openPath",
+          "lineNumber": 228
+        },
+        {
+          "caller": "startBackend",
+          "callee": "path.dirname",
+          "lineNumber": 228
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "path.join",
+          "lineNumber": 240
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "app.getPath",
+          "lineNumber": 240
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "fs.existsSync",
+          "lineNumber": 241
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "JSON.parse",
+          "lineNumber": 246
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "fs.readFileSync",
+          "lineNumber": 246
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "getMachineId",
+          "lineNumber": 254
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "console.warn",
+          "lineNumber": 270
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "crypto.createVerify",
+          "lineNumber": 278
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "verifier.update",
+          "lineNumber": 279
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "verifier.end",
+          "lineNumber": 280
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "crypto.createPublicKey",
+          "lineNumber": 282
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "Buffer.from",
+          "lineNumber": 283
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "verifier.verify",
+          "lineNumber": 288
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "Buffer.from",
+          "lineNumber": 288
+        },
+        {
+          "caller": "verifyLicenseLocal",
+          "callee": "console.error",
+          "lineNumber": 295
+        },
+        {
+          "caller": "createWindow",
+          "callee": "path.join",
+          "lineNumber": 314
+        },
+        {
+          "caller": "createWindow",
+          "callee": "mainWindow.loadURL",
+          "lineNumber": 319
+        },
+        {
+          "caller": "createWindow",
+          "callee": "mainWindow.webContents.openDevTools",
+          "lineNumber": 320
+        },
+        {
+          "caller": "createWindow",
+          "callee": "mainWindow.loadFile",
+          "lineNumber": 322
+        },
+        {
+          "caller": "createWindow",
+          "callee": "path.join",
+          "lineNumber": 322
+        },
+        {
+          "caller": "createWindow",
+          "callee": "mainWindow.on",
+          "lineNumber": 325
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 7,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/electron/preload.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/index.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 12,
+      "nonEmptyLines": 12,
+      "metrics": {}
+    },
+    {
+      "path": "frontend/package.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 60,
+      "nonEmptyLines": 60,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "version",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "private",
+          "level": 1,
+          "line": 4
+        },
+        {
+          "heading": "main",
+          "level": 1,
+          "line": 5
+        },
+        {
+          "heading": "scripts",
+          "level": 1,
+          "line": 6
+        },
+        {
+          "heading": "dependencies",
+          "level": 1,
+          "line": 13
+        },
+        {
+          "heading": "devDependencies",
+          "level": 1,
+          "line": 22
+        },
+        {
+          "heading": "build",
+          "level": 1,
+          "line": 8
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 8
+      }
+    },
+    {
+      "path": "frontend/src/api/index.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 188,
+      "nonEmptyLines": 163,
+      "functions": [
+        {
+          "name": "activateLicense",
+          "startLine": 20,
+          "endLine": 22,
+          "params": [
+            "licenseKey",
+            "machineId"
+          ]
+        },
+        {
+          "name": "validateLicenseOnline",
+          "startLine": 25,
+          "endLine": 27,
+          "params": [
+            "token",
+            "machineId"
+          ]
+        },
+        {
+          "name": "waitForBackend",
+          "startLine": 32,
+          "endLine": 49,
+          "params": []
+        },
+        {
+          "name": "getTemplateList",
+          "startLine": 54,
+          "endLine": 56,
+          "params": []
+        },
+        {
+          "name": "getTemplateDetail",
+          "startLine": 59,
+          "endLine": 61,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "createTemplate",
+          "startLine": 64,
+          "endLine": 71,
+          "params": [
+            "name",
+            "imageFile"
+          ]
+        },
+        {
+          "name": "updateTemplateName",
+          "startLine": 74,
+          "endLine": 76,
+          "params": [
+            "id",
+            "name"
+          ]
+        },
+        {
+          "name": "deleteTemplate",
+          "startLine": 79,
+          "endLine": 81,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "getTemplateImageUrl",
+          "startLine": 84,
+          "endLine": 86,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "getPlaceholders",
+          "startLine": 89,
+          "endLine": 91,
+          "params": [
+            "templateId"
+          ]
+        },
+        {
+          "name": "savePlaceholders",
+          "startLine": 94,
+          "endLine": 96,
+          "params": [
+            "templateId",
+            "placeholders"
+          ]
+        },
+        {
+          "name": "parseExcel",
+          "startLine": 101,
+          "endLine": 107,
+          "params": [
+            "file"
+          ]
+        },
+        {
+          "name": "batchGenerateSSE",
+          "startLine": 110,
+          "endLine": 179,
+          "params": [
+            "params",
+            "onProgress",
+            "onComplete",
+            "onError"
+          ]
+        },
+        {
+          "name": "previewCertificate",
+          "startLine": 182,
+          "endLine": 186,
+          "params": [
+            "templateId",
+            "data"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "activateLicense",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "validateLicenseOnline",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "waitForBackend",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "getTemplateList",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "getTemplateDetail",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "createTemplate",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "updateTemplateName",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "deleteTemplate",
+          "line": 79,
+          "isDefault": false
+        },
+        {
+          "name": "getTemplateImageUrl",
+          "line": 84,
+          "isDefault": false
+        },
+        {
+          "name": "getPlaceholders",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "savePlaceholders",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "parseExcel",
+          "line": 101,
+          "isDefault": false
+        },
+        {
+          "name": "batchGenerateSSE",
+          "line": 110,
+          "isDefault": false
+        },
+        {
+          "name": "previewCertificate",
+          "line": 182,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "activateLicense",
+          "callee": "LICENSE_API.post",
+          "lineNumber": 21
+        },
+        {
+          "caller": "validateLicenseOnline",
+          "callee": "LICENSE_API.post",
+          "lineNumber": 26
+        },
+        {
+          "caller": "check",
+          "callee": "LOCAL_API.get('/template/list').then(res => {\n        resolve(true)\n      }).catch",
+          "lineNumber": 36
+        },
+        {
+          "caller": "check",
+          "callee": "LOCAL_API.get('/template/list').then",
+          "lineNumber": 36
+        },
+        {
+          "caller": "check",
+          "callee": "LOCAL_API.get",
+          "lineNumber": 36
+        },
+        {
+          "caller": "check",
+          "callee": "resolve",
+          "lineNumber": 37
+        },
+        {
+          "caller": "check",
+          "callee": "reject",
+          "lineNumber": 41
+        },
+        {
+          "caller": "check",
+          "callee": "setTimeout",
+          "lineNumber": 43
+        },
+        {
+          "caller": "waitForBackend",
+          "callee": "check",
+          "lineNumber": 47
+        },
+        {
+          "caller": "getTemplateList",
+          "callee": "LOCAL_API.get",
+          "lineNumber": 55
+        },
+        {
+          "caller": "getTemplateDetail",
+          "callee": "LOCAL_API.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "formData.append",
+          "lineNumber": 66
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "formData.append",
+          "lineNumber": 67
+        },
+        {
+          "caller": "createTemplate",
+          "callee": "LOCAL_API.post",
+          "lineNumber": 68
+        },
+        {
+          "caller": "updateTemplateName",
+          "callee": "LOCAL_API.put",
+          "lineNumber": 75
+        },
+        {
+          "caller": "deleteTemplate",
+          "callee": "LOCAL_API.delete",
+          "lineNumber": 80
+        },
+        {
+          "caller": "getPlaceholders",
+          "callee": "LOCAL_API.get",
+          "lineNumber": 90
+        },
+        {
+          "caller": "savePlaceholders",
+          "callee": "LOCAL_API.post",
+          "lineNumber": 95
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "formData.append",
+          "lineNumber": 103
+        },
+        {
+          "caller": "parseExcel",
+          "callee": "LOCAL_API.post",
+          "lineNumber": 104
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "(() => {\n    try {\n      const l = JSON.parse(localStorage.getItem('license_info') || '{}')\n      return l.token || ''\n    } catch { return '' }\n  })",
+          "lineNumber": 111
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "JSON.parse",
+          "lineNumber": 113
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "localStorage.getItem",
+          "lineNumber": 113
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "(() => {\n    try {\n      const l = JSON.parse(localStorage.getItem('license_info') || '{}')\n      return l.machineId || ''\n    } catch { return '' }\n  })",
+          "lineNumber": 117
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "JSON.parse",
+          "lineNumber": 119
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "localStorage.getItem",
+          "lineNumber": 119
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "JSON.stringify",
+          "lineNumber": 131
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "fetch(`${LOCAL_BASE}/api/certificate/batch-generate`, fetchOptions)\n    .then(response => {\n      if (!response.ok) {\n        throw new Error(`HTTP ${response.status}`)\n      }\n      const reader = response.body.getReader()\n      const decoder = new TextDecoder()\n      let buffer = ''\n\n      function read() {\n        reader.read().then(({ done, value }) => {\n          if (done) return\n          buffer += decoder.decode(value, { stream: true })\n          const lines = buffer.split('\\n')\n          buffer = lines.pop() || ''\n\n          for (const line of lines) {\n            if (line.startsWith('event:progress')) continue\n            if (line.startsWith('event:complete')) continue\n            if (line.startsWith('event:error')) continue\n            if (line.startsWith('data:')) {\n              const data = line.slice(5).trim()\n              if (!data) continue\n              try {\n                const parsed = JSON.parse(data)\n                // 判断事件类型需看上一个 event 行，简化处理：\n                // progress 有 current/total/percent 字段\n                if (parsed.current !== undefined) {\n                  onProgress?.(parsed)\n                } else if (parsed.total !== undefined && parsed.success !== undefined && parsed.current === undefined) {\n                  onComplete?.(parsed)\n                } else if (parsed.code !== undefined) {\n                  onError?.(parsed.msg || '生成失败')\n                }\n              } catch (e) { /* ignore */ }\n            }\n          }\n          read()\n        })\n      }\n      read()\n    })\n    .catch",
+          "lineNumber": 134
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "fetch(`${LOCAL_BASE}/api/certificate/batch-generate`, fetchOptions)\n    .then",
+          "lineNumber": 134
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "fetch",
+          "lineNumber": 134
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "response.body.getReader",
+          "lineNumber": 139
+        },
+        {
+          "caller": "read",
+          "callee": "reader.read().then",
+          "lineNumber": 144
+        },
+        {
+          "caller": "read",
+          "callee": "reader.read",
+          "lineNumber": 144
+        },
+        {
+          "caller": "read",
+          "callee": "decoder.decode",
+          "lineNumber": 146
+        },
+        {
+          "caller": "read",
+          "callee": "buffer.split",
+          "lineNumber": 147
+        },
+        {
+          "caller": "read",
+          "callee": "lines.pop",
+          "lineNumber": 148
+        },
+        {
+          "caller": "read",
+          "callee": "line.startsWith",
+          "lineNumber": 151
+        },
+        {
+          "caller": "read",
+          "callee": "line.startsWith",
+          "lineNumber": 152
+        },
+        {
+          "caller": "read",
+          "callee": "line.startsWith",
+          "lineNumber": 153
+        },
+        {
+          "caller": "read",
+          "callee": "line.startsWith",
+          "lineNumber": 154
+        },
+        {
+          "caller": "read",
+          "callee": "line.slice(5).trim",
+          "lineNumber": 155
+        },
+        {
+          "caller": "read",
+          "callee": "line.slice",
+          "lineNumber": 155
+        },
+        {
+          "caller": "read",
+          "callee": "JSON.parse",
+          "lineNumber": 158
+        },
+        {
+          "caller": "read",
+          "callee": "onProgress",
+          "lineNumber": 162
+        },
+        {
+          "caller": "read",
+          "callee": "onComplete",
+          "lineNumber": 164
+        },
+        {
+          "caller": "read",
+          "callee": "onError",
+          "lineNumber": 166
+        },
+        {
+          "caller": "read",
+          "callee": "read",
+          "lineNumber": 171
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "read",
+          "lineNumber": 174
+        },
+        {
+          "caller": "batchGenerateSSE",
+          "callee": "onError",
+          "lineNumber": 177
+        },
+        {
+          "caller": "previewCertificate",
+          "callee": "LOCAL_API.post",
+          "lineNumber": 183
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/App.vue",
+      "language": "vue",
+      "fileCategory": "code",
+      "totalLines": 203,
+      "nonEmptyLines": 178,
+      "metrics": {}
+    },
+    {
+      "path": "frontend/src/main.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 17,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/router/index.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 33,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "frontend/src/views/ActivateView.vue",
+      "language": "vue",
+      "fileCategory": "code",
+      "totalLines": 169,
+      "nonEmptyLines": 151,
+      "metrics": {}
+    },
+    {
+      "path": "frontend/src/views/BatchGenerate.vue",
+      "language": "vue",
+      "fileCategory": "code",
+      "totalLines": 544,
+      "nonEmptyLines": 483,
+      "metrics": {}
+    },
+    {
+      "path": "frontend/src/views/TemplateEditor.vue",
+      "language": "vue",
+      "fileCategory": "code",
+      "totalLines": 526,
+      "nonEmptyLines": 475,
+      "metrics": {}
+    },
+    {
+      "path": "frontend/src/views/TemplateManage.vue",
+      "language": "vue",
+      "fileCategory": "code",
+      "totalLines": 249,
+      "nonEmptyLines": 223,
+      "metrics": {}
+    },
+    {
+      "path": "frontend/vite.config.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 21,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "GUIDE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 284,
+      "nonEmptyLines": 223,
+      "sections": [
+        {
+          "heading": "开发调试 & 打包部署指南",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "一、环境要求",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "二、项目结构",
+          "level": 2,
+          "line": 25
+        },
+        {
+          "heading": "三、开发调试",
+          "level": 2,
+          "line": 65
+        },
+        {
+          "heading": "3.1 首次准备",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "3.2 启动后端",
+          "level": 3,
+          "line": 77
+        },
+        {
+          "heading": "3.3 启动前端",
+          "level": 3,
+          "line": 94
+        },
+        {
+          "heading": "3.4 开发调试流程总结",
+          "level": 3,
+          "line": 114
+        },
+        {
+          "heading": "3.5 调试技巧",
+          "level": 3,
+          "line": 129
+        },
+        {
+          "heading": "3.6 后端 API 一览",
+          "level": 3,
+          "line": 139
+        },
+        {
+          "heading": "四、打包部署",
+          "level": 2,
+          "line": 157
+        },
+        {
+          "heading": "4.1 一键打包（推荐）",
+          "level": 3,
+          "line": 159
+        },
+        {
+          "heading": "4.2 分步打包（手动）",
+          "level": 3,
+          "line": 170
+        },
+        {
+          "heading": "第一步：打包后端 JAR",
+          "level": 4,
+          "line": 172
+        },
+        {
+          "heading": "第二步：生成内嵌 JRE",
+          "level": 4,
+          "line": 181
+        },
+        {
+          "heading": "第三步：打包 Electron 安装包",
+          "level": 4,
+          "line": 192
+        },
+        {
+          "heading": "4.3 安装包内容结构",
+          "level": 3,
+          "line": 202
+        },
+        {
+          "heading": "4.4 运行机制",
+          "level": 3,
+          "line": 217
+        },
+        {
+          "heading": "4.5 用户数据位置",
+          "level": 3,
+          "line": 234
+        },
+        {
+          "heading": "五、常见问题",
+          "level": 2,
+          "line": 247
+        },
+        {
+          "heading": "Q1: 后端启动报错 `端口 18080 被占用`",
+          "level": 3,
+          "line": 249
+        },
+        {
+          "heading": "Q2: 前端 `npm install` 慢",
+          "level": 3,
+          "line": 257
+        },
+        {
+          "heading": "Q3: Electron 下载慢",
+          "level": 3,
+          "line": 263
+        },
+        {
+          "heading": "Q4: 打包时 `electron-builder` 下载 winCodeSign / nsis 慢",
+          "level": 3,
+          "line": 269
+        },
+        {
+          "heading": "Q5: 打包后双击 EXE 提示\"后端启动失败\"",
+          "level": 3,
+          "line": 275
+        },
+        {
+          "heading": "Q6: 生成的证书中文显示为方块",
+          "level": 3,
+          "line": 280
+        },
+        {
+          "heading": "Q7: 开发模式下如何清除数据重新开始",
+          "level": 3,
+          "line": 283
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 27
+      }
+    },
+    {
+      "path": "LICENSE-GUIDE.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 203,
+      "nonEmptyLines": 145,
+      "sections": [
+        {
+          "heading": "授权管理操作手册",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "概述",
+          "level": 2,
+          "line": 3
+        },
+        {
+          "heading": "防盗原理",
+          "level": 3,
+          "line": 7
+        },
+        {
+          "heading": "一、首次部署：配置 RSA 密钥",
+          "level": 2,
+          "line": 17
+        },
+        {
+          "heading": "步骤 1：启动后端服务",
+          "level": 3,
+          "line": 19
+        },
+        {
+          "heading": "步骤 2：获取公钥",
+          "level": 3,
+          "line": 26
+        },
+        {
+          "heading": "步骤 3：嵌入公钥到客户端",
+          "level": 3,
+          "line": 44
+        },
+        {
+          "heading": "二、生成授权码（卖给客户前操作）",
+          "level": 2,
+          "line": 58
+        },
+        {
+          "heading": "请求",
+          "level": 3,
+          "line": 60
+        },
+        {
+          "heading": "参数说明",
+          "level": 3,
+          "line": 67
+        },
+        {
+          "heading": "示例",
+          "level": 3,
+          "line": 74
+        },
+        {
+          "heading": "返回示例",
+          "level": 3,
+          "line": 86
+        },
+        {
+          "heading": "三、客户激活流程",
+          "level": 2,
+          "line": 105
+        },
+        {
+          "heading": "四、查看所有授权",
+          "level": 2,
+          "line": 116
+        },
+        {
+          "heading": "状态说明",
+          "level": 3,
+          "line": 122
+        },
+        {
+          "heading": "五、禁用授权（客户违规时）",
+          "level": 2,
+          "line": 132
+        },
+        {
+          "heading": "六、解绑机器（客户换电脑时）",
+          "level": 2,
+          "line": 142
+        },
+        {
+          "heading": "七、常见场景",
+          "level": 2,
+          "line": 152
+        },
+        {
+          "heading": "八、安全说明",
+          "level": 2,
+          "line": 164
+        },
+        {
+          "heading": "九、离线验证流程图",
+          "level": 2,
+          "line": 176
+        },
+        {
+          "heading": "十、授权码格式",
+          "level": 2,
+          "line": 201
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 21
+      }
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "fileCategory": "docs",
+      "totalLines": 151,
+      "nonEmptyLines": 135,
+      "sections": [
+        {
+          "heading": "证书批量生成工具 (Cert-Batch)",
+          "level": 1,
+          "line": 1
+        },
+        {
+          "heading": "功能概述",
+          "level": 2,
+          "line": 5
+        },
+        {
+          "heading": "1. 模板管理",
+          "level": 3,
+          "line": 7
+        },
+        {
+          "heading": "2. 批量生成证书",
+          "level": 3,
+          "line": 20
+        },
+        {
+          "heading": "技术架构",
+          "level": 2,
+          "line": 31
+        },
+        {
+          "heading": "前端技术栈",
+          "level": 3,
+          "line": 54
+        },
+        {
+          "heading": "后端技术栈",
+          "level": 3,
+          "line": 63
+        },
+        {
+          "heading": "数据存储",
+          "level": 3,
+          "line": 72
+        },
+        {
+          "heading": "项目结构",
+          "level": 2,
+          "line": 76
+        },
+        {
+          "heading": "工作流程",
+          "level": 2,
+          "line": 122
+        },
+        {
+          "heading": "模板维护流程",
+          "level": 3,
+          "line": 124
+        },
+        {
+          "heading": "批量生成流程",
+          "level": 3,
+          "line": 134
+        },
+        {
+          "heading": "打包部署",
+          "level": 2,
+          "line": 142
+        },
+        {
+          "heading": "环境要求",
+          "level": 2,
+          "line": 149
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 14
+      }
+    },
+    {
+      "path": "scripts/build-all.bat",
+      "language": "batch",
+      "fileCategory": "script",
+      "totalLines": 90,
+      "nonEmptyLines": 82,
+      "metrics": {}
+    },
+    {
+      "path": "scripts/prepare-jre.bat",
+      "language": "batch",
+      "fileCategory": "script",
+      "totalLines": 50,
+      "nonEmptyLines": 42,
+      "metrics": {}
+    }
+  ]
+}

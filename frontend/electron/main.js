@@ -12,7 +12,7 @@ const BACKEND_PORT = 18080
 
 // ===== RSA 公钥（从服务器 license/public-key 获取后替换到这里） =====
 // 首次部署后端后，访问 GET /api/license/public-key 获取公钥，粘贴到下面
-const LICENSE_PUBLIC_KEY = `PLACEHOLDER_REPLACE_WITH_YOUR_PUBLIC_KEY`
+const LICENSE_PUBLIC_KEY = `MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyPZKD9ddHEpEOp0F29p5wDoi0bpM+RIF8L50weEIIAsJOvNuEMXf4MCjBE9GTWkWMTBbcovU5gLaxGR9VJlReoAHBfVnA2DbnnwzT9YNskewiBAzXfJ2pFNVl7WDAfnX8gzWyNpC84l7kLyL9g4KMQNdlfbRwNeocS47eqiHuMcufuWDXGg7NX3OPkrmYlPRCuCkkQMgLhqWdNq/LUe2yUR3aH2Oh4kzQTcFeymDCW4J2dHmW0zSIVF75jLBZBleJf96alVvCfhbglu404VWTrO1hH3zj5GHi9bSZhNYPb827xybu/PeiJARz1fBEjoLL5irO2F8MwhyhGd7Tbbv6QIDAQAB`
 
 /**
  * 获取本机唯一标识（基于主板 UUID + 硬盘序列号）

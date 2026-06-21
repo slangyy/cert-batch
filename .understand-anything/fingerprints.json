@@ -1,0 +1,2689 @@
+{
+  "version": "1.0.0",
+  "gitCommitHash": "2fc39524fd77998cb059a11c1deed6a0f77803ba",
+  "generatedAt": "2026-06-21T06:18:07.497Z",
+  "files": {
+    "backend/pom.xml": {
+      "filePath": "backend/pom.xml",
+      "contentHash": "32d3162d362c1fa42d9ad14d769532e706df44950cc8f59c0834285a049ae04e",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 93,
+      "hasStructuralAnalysis": false
+    },
+    "backend/src/main/java/com/certbatch/CertBatchApplication.java": {
+      "filePath": "backend/src/main/java/com/certbatch/CertBatchApplication.java",
+      "contentHash": "0c56c0faf1bdd24034bdf334395b74f4dcda080c9028ae0b8ba1165182fcff96",
+      "functions": [
+        {
+          "name": "main",
+          "params": [
+            "args"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [
+        {
+          "name": "CertBatchApplication",
+          "methods": [
+            "main"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 9
+        }
+      ],
+      "imports": [
+        {
+          "source": "org.springframework.boot.SpringApplication",
+          "specifiers": [
+            "SpringApplication"
+          ]
+        },
+        {
+          "source": "org.springframework.boot.autoconfigure.SpringBootApplication",
+          "specifiers": [
+            "SpringBootApplication"
+          ]
+        }
+      ],
+      "exports": [
+        "main",
+        "CertBatchApplication"
+      ],
+      "totalLines": 15,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/common/R.java": {
+      "filePath": "backend/src/main/java/com/certbatch/common/R.java",
+      "contentHash": "fe03dc4ebfa7989f3176f9170901e7303c2a95261798845d14d5ab757229730c",
+      "functions": [
+        {
+          "name": "ok",
+          "params": [
+            "data"
+          ],
+          "returnType": "R<T>",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "ok",
+          "params": [],
+          "returnType": "R<T>",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "fail",
+          "params": [
+            "msg"
+          ],
+          "returnType": "R<T>",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [
+        {
+          "name": "R",
+          "methods": [
+            "ok",
+            "ok",
+            "fail"
+          ],
+          "properties": [
+            "code",
+            "msg",
+            "data"
+          ],
+          "exported": true,
+          "lineCount": 26
+        }
+      ],
+      "imports": [
+        {
+          "source": "lombok.Data",
+          "specifiers": [
+            "Data"
+          ]
+        }
+      ],
+      "exports": [
+        "ok",
+        "ok",
+        "fail",
+        "R"
+      ],
+      "totalLines": 31,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java": {
+      "filePath": "backend/src/main/java/com/certbatch/config/DatabaseInitializer.java",
+      "contentHash": "cd5c97dec22389385930f5bd1bdae8e69c6e68526264d7bf70c1cb3a091a8731",
+      "functions": [
+        {
+          "name": "DatabaseInitializer",
+          "params": [
+            "dataSource"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "run",
+          "params": [],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 53
+        }
+      ],
+      "classes": [
+        {
+          "name": "DatabaseInitializer",
+          "methods": [
+            "DatabaseInitializer",
+            "run"
+          ],
+          "properties": [
+            "dataSource"
+          ],
+          "exported": true,
+          "lineCount": 63
+        }
+      ],
+      "imports": [
+        {
+          "source": "org.springframework.beans.factory.annotation.Value",
+          "specifiers": [
+            "Value"
+          ]
+        },
+        {
+          "source": "org.springframework.boot.CommandLineRunner",
+          "specifiers": [
+            "CommandLineRunner"
+          ]
+        },
+        {
+          "source": "org.springframework.stereotype.Component",
+          "specifiers": [
+            "Component"
+          ]
+        },
+        {
+          "source": "javax.sql.DataSource",
+          "specifiers": [
+            "DataSource"
+          ]
+        },
+        {
+          "source": "java.sql.Connection",
+          "specifiers": [
+            "Connection"
+          ]
+        },
+        {
+          "source": "java.sql.Statement",
+          "specifiers": [
+            "Statement"
+          ]
+        }
+      ],
+      "exports": [
+        "DatabaseInitializer",
+        "run",
+        "DatabaseInitializer"
+      ],
+      "totalLines": 77,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/config/DataDirInitializer.java": {
+      "filePath": "backend/src/main/java/com/certbatch/config/DataDirInitializer.java",
+      "contentHash": "7bb246a3988618ef29d4abf8d24d2306209618aea78a45ba853afc710d3cf2fd",
+      "functions": [
+        {
+          "name": "setEnvironment",
+          "params": [
+            "environment"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "postProcessBeanFactory",
+          "params": [
+            "beanFactory"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "classes": [
+        {
+          "name": "DataDirInitializer",
+          "methods": [
+            "setEnvironment",
+            "postProcessBeanFactory"
+          ],
+          "properties": [
+            "environment"
+          ],
+          "exported": true,
+          "lineCount": 24
+        }
+      ],
+      "imports": [
+        {
+          "source": "org.springframework.beans.BeansException",
+          "specifiers": [
+            "BeansException"
+          ]
+        },
+        {
+          "source": "org.springframework.beans.factory.config.BeanFactoryPostProcessor",
+          "specifiers": [
+            "BeanFactoryPostProcessor"
+          ]
+        },
+        {
+          "source": "org.springframework.beans.factory.config.ConfigurableListableBeanFactory",
+          "specifiers": [
+            "ConfigurableListableBeanFactory"
+          ]
+        },
+        {
+          "source": "org.springframework.context.EnvironmentAware",
+          "specifiers": [
+            "EnvironmentAware"
+          ]
+        },
+        {
+          "source": "org.springframework.core.env.Environment",
+          "specifiers": [
+            "Environment"
+          ]
+        },
+        {
+          "source": "org.springframework.stereotype.Component",
+          "specifiers": [
+            "Component"
+          ]
+        },
+        {
+          "source": "java.nio.file.Files",
+          "specifiers": [
+            "Files"
+          ]
+        },
+        {
+          "source": "java.nio.file.Path",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "java.nio.file.Paths",
+          "specifiers": [
+            "Paths"
+          ]
+        }
+      ],
+      "exports": [
+        "setEnvironment",
+        "postProcessBeanFactory",
+        "DataDirInitializer"
+      ],
+      "totalLines": 41,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java": {
+      "filePath": "backend/src/main/java/com/certbatch/config/LicenseInterceptor.java",
+      "contentHash": "1cbecb4621a53422dac3705e7b1cb0bc77661fd7885ee08dc5d2f8d0624c03a5",
+      "functions": [
+        {
+          "name": "preHandle",
+          "params": [
+            "request",
+            "response",
+            "handler"
+          ],
+          "returnType": "boolean",
+          "exported": true,
+          "lineCount": 32
+        }
+      ],
+      "classes": [
+        {
+          "name": "LicenseInterceptor",
+          "methods": [
+            "preHandle"
+          ],
+          "properties": [
+            "licenseService",
+            "objectMapper",
+            "licenseCheck"
+          ],
+          "exported": true,
+          "lineCount": 44
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.certbatch.common.R",
+          "specifiers": [
+            "R"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.License",
+          "specifiers": [
+            "License"
+          ]
+        },
+        {
+          "source": "com.certbatch.service.LicenseService",
+          "specifiers": [
+            "LicenseService"
+          ]
+        },
+        {
+          "source": "com.fasterxml.jackson.databind.ObjectMapper",
+          "specifiers": [
+            "ObjectMapper"
+          ]
+        },
+        {
+          "source": "jakarta.servlet.http.HttpServletRequest",
+          "specifiers": [
+            "HttpServletRequest"
+          ]
+        },
+        {
+          "source": "jakarta.servlet.http.HttpServletResponse",
+          "specifiers": [
+            "HttpServletResponse"
+          ]
+        },
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "lombok.extern.slf4j.Slf4j",
+          "specifiers": [
+            "Slf4j"
+          ]
+        },
+        {
+          "source": "org.springframework.beans.factory.annotation.Value",
+          "specifiers": [
+            "Value"
+          ]
+        },
+        {
+          "source": "org.springframework.stereotype.Component",
+          "specifiers": [
+            "Component"
+          ]
+        },
+        {
+          "source": "org.springframework.web.servlet.HandlerInterceptor",
+          "specifiers": [
+            "HandlerInterceptor"
+          ]
+        }
+      ],
+      "exports": [
+        "preHandle",
+        "LicenseInterceptor"
+      ],
+      "totalLines": 63,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java": {
+      "filePath": "backend/src/main/java/com/certbatch/config/MyBatisPlusMetaHandler.java",
+      "contentHash": "47ee3fe88756a11e6497739cd6f730b7176bf0d340b8cad06d726b185b806de9",
+      "functions": [
+        {
+          "name": "insertFill",
+          "params": [
+            "metaObject"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "updateFill",
+          "params": [
+            "metaObject"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [
+        {
+          "name": "MyBatisPlusMetaHandler",
+          "methods": [
+            "insertFill",
+            "updateFill"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 14
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.core.handlers.MetaObjectHandler",
+          "specifiers": [
+            "MetaObjectHandler"
+          ]
+        },
+        {
+          "source": "org.apache.ibatis.reflection.MetaObject",
+          "specifiers": [
+            "MetaObject"
+          ]
+        },
+        {
+          "source": "org.springframework.stereotype.Component",
+          "specifiers": [
+            "Component"
+          ]
+        },
+        {
+          "source": "java.time.LocalDateTime",
+          "specifiers": [
+            "LocalDateTime"
+          ]
+        }
+      ],
+      "exports": [
+        "insertFill",
+        "updateFill",
+        "MyBatisPlusMetaHandler"
+      ],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/config/WebConfig.java": {
+      "filePath": "backend/src/main/java/com/certbatch/config/WebConfig.java",
+      "contentHash": "df6e80a86041830ab1c240bb8a0d8623a5d48d4c98ceb290597433f7224af9ea",
+      "functions": [
+        {
+          "name": "addCorsMappings",
+          "params": [
+            "registry"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "addInterceptors",
+          "params": [
+            "registry"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 6
+        }
+      ],
+      "classes": [
+        {
+          "name": "WebConfig",
+          "methods": [
+            "addCorsMappings",
+            "addInterceptors"
+          ],
+          "properties": [
+            "licenseInterceptor"
+          ],
+          "exported": true,
+          "lineCount": 23
+        }
+      ],
+      "imports": [
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "org.springframework.context.annotation.Configuration",
+          "specifiers": [
+            "Configuration"
+          ]
+        },
+        {
+          "source": "org.springframework.web.servlet.config.annotation.CorsRegistry",
+          "specifiers": [
+            "CorsRegistry"
+          ]
+        },
+        {
+          "source": "org.springframework.web.servlet.config.annotation.InterceptorRegistry",
+          "specifiers": [
+            "InterceptorRegistry"
+          ]
+        },
+        {
+          "source": "org.springframework.web.servlet.config.annotation.WebMvcConfigurer",
+          "specifiers": [
+            "WebMvcConfigurer"
+          ]
+        }
+      ],
+      "exports": [
+        "addCorsMappings",
+        "addInterceptors",
+        "WebConfig"
+      ],
+      "totalLines": 32,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/controller/CertificateController.java": {
+      "filePath": "backend/src/main/java/com/certbatch/controller/CertificateController.java",
+      "contentHash": "9e7de80877561b3d1bb29489f20035bc42df12362ade9eae865ea10648af944a",
+      "functions": [
+        {
+          "name": "parseExcel",
+          "params": [
+            "file"
+          ],
+          "returnType": "R<Map<String, Object>>",
+          "exported": true,
+          "lineCount": 9
+        },
+        {
+          "name": "batchGenerateSse",
+          "params": [
+            "request"
+          ],
+          "returnType": "SseEmitter",
+          "exported": true,
+          "lineCount": 44
+        },
+        {
+          "name": "preview",
+          "params": [
+            "request"
+          ],
+          "returnType": "ResponseEntity<byte[]>",
+          "exported": true,
+          "lineCount": 18
+        }
+      ],
+      "classes": [
+        {
+          "name": "CertificateController",
+          "methods": [
+            "parseExcel",
+            "batchGenerateSse",
+            "preview"
+          ],
+          "properties": [
+            "certificateService",
+            "templateService",
+            "objectMapper",
+            "sseExecutor"
+          ],
+          "exported": true,
+          "lineCount": 94
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.certbatch.common.R",
+          "specifiers": [
+            "R"
+          ]
+        },
+        {
+          "source": "com.certbatch.service.CertificateService",
+          "specifiers": [
+            "CertificateService"
+          ]
+        },
+        {
+          "source": "com.certbatch.service.TemplateService",
+          "specifiers": [
+            "TemplateService"
+          ]
+        },
+        {
+          "source": "com.fasterxml.jackson.databind.ObjectMapper",
+          "specifiers": [
+            "ObjectMapper"
+          ]
+        },
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "org.springframework.http.MediaType",
+          "specifiers": [
+            "MediaType"
+          ]
+        },
+        {
+          "source": "org.springframework.http.ResponseEntity",
+          "specifiers": [
+            "ResponseEntity"
+          ]
+        },
+        {
+          "source": "org.springframework.web.bind.annotation",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "org.springframework.web.multipart.MultipartFile",
+          "specifiers": [
+            "MultipartFile"
+          ]
+        },
+        {
+          "source": "org.springframework.web.servlet.mvc.method.annotation.SseEmitter",
+          "specifiers": [
+            "SseEmitter"
+          ]
+        },
+        {
+          "source": "javax.imageio.ImageIO",
+          "specifiers": [
+            "ImageIO"
+          ]
+        },
+        {
+          "source": "java.awt.image.BufferedImage",
+          "specifiers": [
+            "BufferedImage"
+          ]
+        },
+        {
+          "source": "java.io.ByteArrayOutputStream",
+          "specifiers": [
+            "ByteArrayOutputStream"
+          ]
+        },
+        {
+          "source": "java.util.List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "java.util.Map",
+          "specifiers": [
+            "Map"
+          ]
+        },
+        {
+          "source": "java.util.concurrent.ExecutorService",
+          "specifiers": [
+            "ExecutorService"
+          ]
+        },
+        {
+          "source": "java.util.concurrent.Executors",
+          "specifiers": [
+            "Executors"
+          ]
+        }
+      ],
+      "exports": [
+        "parseExcel",
+        "batchGenerateSse",
+        "preview",
+        "CertificateController"
+      ],
+      "totalLines": 116,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/controller/LicenseController.java": {
+      "filePath": "backend/src/main/java/com/certbatch/controller/LicenseController.java",
+      "contentHash": "3988e88400d27ae1c6b397e926af0f3d1f479f2e3e9c81e005849bb895bca925",
+      "functions": [
+        {
+          "name": "activate",
+          "params": [
+            "params"
+          ],
+          "returnType": "R<License>",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "validate",
+          "params": [
+            "params"
+          ],
+          "returnType": "R<License>",
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "generate",
+          "params": [
+            "params"
+          ],
+          "returnType": "R<License>",
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "list",
+          "params": [],
+          "returnType": "R<List<License>>",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "disable",
+          "params": [
+            "id"
+          ],
+          "returnType": "R<Void>",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "unbind",
+          "params": [
+            "id"
+          ],
+          "returnType": "R<Void>",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "publicKey",
+          "params": [],
+          "returnType": "R<String>",
+          "exported": true,
+          "lineCount": 4
+        }
+      ],
+      "classes": [
+        {
+          "name": "LicenseController",
+          "methods": [
+            "activate",
+            "validate",
+            "generate",
+            "list",
+            "disable",
+            "unbind",
+            "publicKey"
+          ],
+          "properties": [
+            "licenseService"
+          ],
+          "exported": true,
+          "lineCount": 70
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.certbatch.common.R",
+          "specifiers": [
+            "R"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.License",
+          "specifiers": [
+            "License"
+          ]
+        },
+        {
+          "source": "com.certbatch.service.LicenseService",
+          "specifiers": [
+            "LicenseService"
+          ]
+        },
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "org.springframework.web.bind.annotation",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "java.util.List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "java.util.Map",
+          "specifiers": [
+            "Map"
+          ]
+        }
+      ],
+      "exports": [
+        "activate",
+        "validate",
+        "generate",
+        "list",
+        "disable",
+        "unbind",
+        "publicKey",
+        "LicenseController"
+      ],
+      "totalLines": 82,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/controller/TemplateController.java": {
+      "filePath": "backend/src/main/java/com/certbatch/controller/TemplateController.java",
+      "contentHash": "9184b3d148277675446160e004b158813c0421bd0a0157fe971551edf63d61de",
+      "functions": [
+        {
+          "name": "list",
+          "params": [],
+          "returnType": "R<List<Template>>",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "detail",
+          "params": [
+            "id"
+          ],
+          "returnType": "R<Template>",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "create",
+          "params": [
+            "name",
+            "image"
+          ],
+          "returnType": "R<Template>",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "updateName",
+          "params": [
+            "id",
+            "name"
+          ],
+          "returnType": "R<Void>",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "delete",
+          "params": [
+            "id"
+          ],
+          "returnType": "R<Void>",
+          "exported": true,
+          "lineCount": 5
+        },
+        {
+          "name": "getImage",
+          "params": [
+            "id"
+          ],
+          "returnType": "ResponseEntity<Resource>",
+          "exported": true,
+          "lineCount": 13
+        },
+        {
+          "name": "getPlaceholders",
+          "params": [
+            "id"
+          ],
+          "returnType": "R<List<Placeholder>>",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "savePlaceholders",
+          "params": [
+            "id",
+            "placeholders"
+          ],
+          "returnType": "R<Void>",
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [
+        {
+          "name": "TemplateController",
+          "methods": [
+            "list",
+            "detail",
+            "create",
+            "updateName",
+            "delete",
+            "getImage",
+            "getPlaceholders",
+            "savePlaceholders"
+          ],
+          "properties": [
+            "templateService"
+          ],
+          "exported": true,
+          "lineCount": 89
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.certbatch.common.R",
+          "specifiers": [
+            "R"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.Placeholder",
+          "specifiers": [
+            "Placeholder"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.Template",
+          "specifiers": [
+            "Template"
+          ]
+        },
+        {
+          "source": "com.certbatch.service.TemplateService",
+          "specifiers": [
+            "TemplateService"
+          ]
+        },
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "org.springframework.core.io.FileSystemResource",
+          "specifiers": [
+            "FileSystemResource"
+          ]
+        },
+        {
+          "source": "org.springframework.core.io.Resource",
+          "specifiers": [
+            "Resource"
+          ]
+        },
+        {
+          "source": "org.springframework.http.MediaType",
+          "specifiers": [
+            "MediaType"
+          ]
+        },
+        {
+          "source": "org.springframework.http.ResponseEntity",
+          "specifiers": [
+            "ResponseEntity"
+          ]
+        },
+        {
+          "source": "org.springframework.web.bind.annotation",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "org.springframework.web.multipart.MultipartFile",
+          "specifiers": [
+            "MultipartFile"
+          ]
+        },
+        {
+          "source": "java.nio.file.Path",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "java.util.List",
+          "specifiers": [
+            "List"
+          ]
+        }
+      ],
+      "exports": [
+        "list",
+        "detail",
+        "create",
+        "updateName",
+        "delete",
+        "getImage",
+        "getPlaceholders",
+        "savePlaceholders",
+        "TemplateController"
+      ],
+      "totalLines": 107,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/entity/License.java": {
+      "filePath": "backend/src/main/java/com/certbatch/entity/License.java",
+      "contentHash": "8d424220be3bf1a15af1afb1558a5a67ba710674d725d4f4aafd430e1046545f",
+      "functions": [],
+      "classes": [
+        {
+          "name": "License",
+          "methods": [],
+          "properties": [
+            "id",
+            "licenseKey",
+            "machineId",
+            "status",
+            "customer",
+            "expireAt",
+            "activatedAt",
+            "token",
+            "licenseSignature",
+            "createTime"
+          ],
+          "exported": true,
+          "lineCount": 36
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.annotation",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "lombok.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "java.time.LocalDateTime",
+          "specifiers": [
+            "LocalDateTime"
+          ]
+        }
+      ],
+      "exports": [
+        "License"
+      ],
+      "totalLines": 47,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/entity/Placeholder.java": {
+      "filePath": "backend/src/main/java/com/certbatch/entity/Placeholder.java",
+      "contentHash": "39b9c4ada4ee5226cc09f8d9a11a5b17d3bf62b759a7395c7d1067047dd466f8",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Placeholder",
+          "methods": [],
+          "properties": [
+            "id",
+            "templateId",
+            "name",
+            "posX",
+            "posY",
+            "fontName",
+            "fontSize",
+            "fontColor",
+            "alignment"
+          ],
+          "exported": true,
+          "lineCount": 31
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.annotation",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "lombok.Data",
+          "specifiers": [
+            "Data"
+          ]
+        }
+      ],
+      "exports": [
+        "Placeholder"
+      ],
+      "totalLines": 40,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/entity/Template.java": {
+      "filePath": "backend/src/main/java/com/certbatch/entity/Template.java",
+      "contentHash": "17331a9c293e9604607d0ffb032f01503fe16b53374a2854e42bdc47acb130be",
+      "functions": [],
+      "classes": [
+        {
+          "name": "Template",
+          "methods": [],
+          "properties": [
+            "id",
+            "name",
+            "imageFileName",
+            "imageWidth",
+            "imageHeight",
+            "createTime",
+            "updateTime"
+          ],
+          "exported": true,
+          "lineCount": 27
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.annotation",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "lombok.Data",
+          "specifiers": [
+            "Data"
+          ]
+        },
+        {
+          "source": "java.time.LocalDateTime",
+          "specifiers": [
+            "LocalDateTime"
+          ]
+        }
+      ],
+      "exports": [
+        "Template"
+      ],
+      "totalLines": 38,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java": {
+      "filePath": "backend/src/main/java/com/certbatch/mapper/LicenseMapper.java",
+      "contentHash": "7350e3a039e1524cbea571edd5ae439a44232d2425f60b52c488ef9893c99fea",
+      "functions": [],
+      "classes": [
+        {
+          "name": "LicenseMapper",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.core.mapper.BaseMapper",
+          "specifiers": [
+            "BaseMapper"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.License",
+          "specifiers": [
+            "License"
+          ]
+        },
+        {
+          "source": "org.apache.ibatis.annotations.Mapper",
+          "specifiers": [
+            "Mapper"
+          ]
+        }
+      ],
+      "exports": [
+        "LicenseMapper"
+      ],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java": {
+      "filePath": "backend/src/main/java/com/certbatch/mapper/PlaceholderMapper.java",
+      "contentHash": "93876325392a134fac61ed64e9bb9f46d68e67f4e20913ad0053915b51bf4aac",
+      "functions": [],
+      "classes": [
+        {
+          "name": "PlaceholderMapper",
+          "methods": [
+            "selectByTemplateId",
+            "deleteByTemplateId"
+          ],
+          "properties": [],
+          "exported": true,
+          "lineCount": 13
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.core.mapper.BaseMapper",
+          "specifiers": [
+            "BaseMapper"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.Placeholder",
+          "specifiers": [
+            "Placeholder"
+          ]
+        },
+        {
+          "source": "org.apache.ibatis.annotations.Mapper",
+          "specifiers": [
+            "Mapper"
+          ]
+        },
+        {
+          "source": "java.util.List",
+          "specifiers": [
+            "List"
+          ]
+        }
+      ],
+      "exports": [
+        "PlaceholderMapper"
+      ],
+      "totalLines": 22,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java": {
+      "filePath": "backend/src/main/java/com/certbatch/mapper/TemplateMapper.java",
+      "contentHash": "11820b5136e4999db41e907b75e217eb7576ee5668abac53d348f47bc5cbae01",
+      "functions": [],
+      "classes": [
+        {
+          "name": "TemplateMapper",
+          "methods": [],
+          "properties": [],
+          "exported": true,
+          "lineCount": 3
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.core.mapper.BaseMapper",
+          "specifiers": [
+            "BaseMapper"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.Template",
+          "specifiers": [
+            "Template"
+          ]
+        },
+        {
+          "source": "org.apache.ibatis.annotations.Mapper",
+          "specifiers": [
+            "Mapper"
+          ]
+        }
+      ],
+      "exports": [
+        "TemplateMapper"
+      ],
+      "totalLines": 10,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/service/CertificateService.java": {
+      "filePath": "backend/src/main/java/com/certbatch/service/CertificateService.java",
+      "contentHash": "38a92282cc73a616a485b1eb3667fcdcdcda5b7b297c101aa103b4ea200dc2e3",
+      "functions": [
+        {
+          "name": "parseExcel",
+          "params": [
+            "inputStream"
+          ],
+          "returnType": "Map<String, Object>",
+          "exported": true,
+          "lineCount": 46
+        },
+        {
+          "name": "batchGenerate",
+          "params": [
+            "templateId",
+            "rows",
+            "outputDir",
+            "format",
+            "fileNameField",
+            "progressCallback"
+          ],
+          "returnType": "Map<String, Object>",
+          "exported": true,
+          "lineCount": 68
+        },
+        {
+          "name": "batchGenerate",
+          "params": [
+            "templateId",
+            "rows",
+            "outputDir",
+            "format",
+            "fileNameField"
+          ],
+          "returnType": "Map<String, Object>",
+          "exported": true,
+          "lineCount": 4
+        },
+        {
+          "name": "renderCertificate",
+          "params": [
+            "templateImage",
+            "placeholders",
+            "data"
+          ],
+          "returnType": "BufferedImage",
+          "exported": true,
+          "lineCount": 54
+        },
+        {
+          "name": "previewCertificate",
+          "params": [
+            "templateId",
+            "data"
+          ],
+          "returnType": "BufferedImage",
+          "exported": true,
+          "lineCount": 12
+        },
+        {
+          "name": "imageToPdf",
+          "params": [
+            "image",
+            "pdfPath"
+          ],
+          "returnType": "void",
+          "exported": false,
+          "lineCount": 21
+        },
+        {
+          "name": "parseColor",
+          "params": [
+            "colorStr"
+          ],
+          "returnType": "Color",
+          "exported": false,
+          "lineCount": 13
+        },
+        {
+          "name": "getFileName",
+          "params": [
+            "rowData",
+            "fileNameField",
+            "index"
+          ],
+          "returnType": "String",
+          "exported": false,
+          "lineCount": 10
+        }
+      ],
+      "classes": [
+        {
+          "name": "CertificateService",
+          "methods": [
+            "parseExcel",
+            "batchGenerate",
+            "batchGenerate",
+            "renderCertificate",
+            "previewCertificate",
+            "imageToPdf",
+            "parseColor",
+            "getFileName"
+          ],
+          "properties": [
+            "templateService",
+            "dataDir"
+          ],
+          "exported": true,
+          "lineCount": 270
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.certbatch.entity.Placeholder",
+          "specifiers": [
+            "Placeholder"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.Template",
+          "specifiers": [
+            "Template"
+          ]
+        },
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "lombok.extern.slf4j.Slf4j",
+          "specifiers": [
+            "Slf4j"
+          ]
+        },
+        {
+          "source": "org.apache.pdfbox.pdmodel.PDDocument",
+          "specifiers": [
+            "PDDocument"
+          ]
+        },
+        {
+          "source": "org.apache.pdfbox.pdmodel.PDPage",
+          "specifiers": [
+            "PDPage"
+          ]
+        },
+        {
+          "source": "org.apache.pdfbox.pdmodel.PDPageContentStream",
+          "specifiers": [
+            "PDPageContentStream"
+          ]
+        },
+        {
+          "source": "org.apache.pdfbox.pdmodel.common.PDRectangle",
+          "specifiers": [
+            "PDRectangle"
+          ]
+        },
+        {
+          "source": "org.apache.pdfbox.pdmodel.graphics.image.PDImageXObject",
+          "specifiers": [
+            "PDImageXObject"
+          ]
+        },
+        {
+          "source": "org.apache.poi.ss.usermodel",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "org.springframework.beans.factory.annotation.Value",
+          "specifiers": [
+            "Value"
+          ]
+        },
+        {
+          "source": "org.springframework.stereotype.Service",
+          "specifiers": [
+            "Service"
+          ]
+        },
+        {
+          "source": "javax.imageio.ImageIO",
+          "specifiers": [
+            "ImageIO"
+          ]
+        },
+        {
+          "source": "java.awt.Color",
+          "specifiers": [
+            "Color"
+          ]
+        },
+        {
+          "source": "java.awt.Font",
+          "specifiers": [
+            "Font"
+          ]
+        },
+        {
+          "source": "java.awt.FontMetrics",
+          "specifiers": [
+            "FontMetrics"
+          ]
+        },
+        {
+          "source": "java.awt.Graphics2D",
+          "specifiers": [
+            "Graphics2D"
+          ]
+        },
+        {
+          "source": "java.awt.RenderingHints",
+          "specifiers": [
+            "RenderingHints"
+          ]
+        },
+        {
+          "source": "java.awt.image.BufferedImage",
+          "specifiers": [
+            "BufferedImage"
+          ]
+        },
+        {
+          "source": "java.io",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "java.nio.file.Files",
+          "specifiers": [
+            "Files"
+          ]
+        },
+        {
+          "source": "java.nio.file.Path",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "java.nio.file.Paths",
+          "specifiers": [
+            "Paths"
+          ]
+        },
+        {
+          "source": "java.util",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "java.util.function.Consumer",
+          "specifiers": [
+            "Consumer"
+          ]
+        }
+      ],
+      "exports": [
+        "parseExcel",
+        "batchGenerate",
+        "batchGenerate",
+        "renderCertificate",
+        "previewCertificate",
+        "CertificateService"
+      ],
+      "totalLines": 300,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/service/LicenseService.java": {
+      "filePath": "backend/src/main/java/com/certbatch/service/LicenseService.java",
+      "contentHash": "06117d300531f93c7dbb163855cb9540162f9430b5b200933c399b69efcf19dd",
+      "functions": [
+        {
+          "name": "getKeyPair",
+          "params": [],
+          "returnType": "KeyPair",
+          "exported": false,
+          "lineCount": 39
+        },
+        {
+          "name": "list",
+          "params": [],
+          "returnType": "List<License>",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "activate",
+          "params": [
+            "licenseKey",
+            "machineId"
+          ],
+          "returnType": "R<License>",
+          "exported": true,
+          "lineCount": 45
+        },
+        {
+          "name": "validate",
+          "params": [
+            "token",
+            "machineId"
+          ],
+          "returnType": "R<License>",
+          "exported": true,
+          "lineCount": 29
+        },
+        {
+          "name": "generateLicense",
+          "params": [
+            "customer",
+            "days"
+          ],
+          "returnType": "License",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "disable",
+          "params": [
+            "licenseId"
+          ],
+          "returnType": "R<Void>",
+          "exported": true,
+          "lineCount": 10
+        },
+        {
+          "name": "unbind",
+          "params": [
+            "licenseId"
+          ],
+          "returnType": "R<Void>",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "getPublicKeyBase64",
+          "params": [],
+          "returnType": "String",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "buildSignedData",
+          "params": [
+            "machineId",
+            "licenseKey",
+            "expireAt"
+          ],
+          "returnType": "String",
+          "exported": false,
+          "lineCount": 5
+        },
+        {
+          "name": "sign",
+          "params": [
+            "data"
+          ],
+          "returnType": "String",
+          "exported": false,
+          "lineCount": 6
+        },
+        {
+          "name": "generateLicenseKey",
+          "params": [],
+          "returnType": "String",
+          "exported": false,
+          "lineCount": 17
+        }
+      ],
+      "classes": [
+        {
+          "name": "LicenseService",
+          "methods": [
+            "getKeyPair",
+            "list",
+            "activate",
+            "validate",
+            "generateLicense",
+            "disable",
+            "unbind",
+            "getPublicKeyBase64",
+            "buildSignedData",
+            "sign",
+            "generateLicenseKey"
+          ],
+          "properties": [
+            "licenseMapper",
+            "dataDir",
+            "keyPair"
+          ],
+          "exported": true,
+          "lineCount": 237
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper",
+          "specifiers": [
+            "LambdaQueryWrapper"
+          ]
+        },
+        {
+          "source": "com.certbatch.common.R",
+          "specifiers": [
+            "R"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.License",
+          "specifiers": [
+            "License"
+          ]
+        },
+        {
+          "source": "com.certbatch.mapper.LicenseMapper",
+          "specifiers": [
+            "LicenseMapper"
+          ]
+        },
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "lombok.extern.slf4j.Slf4j",
+          "specifiers": [
+            "Slf4j"
+          ]
+        },
+        {
+          "source": "org.springframework.beans.factory.annotation.Value",
+          "specifiers": [
+            "Value"
+          ]
+        },
+        {
+          "source": "org.springframework.stereotype.Service",
+          "specifiers": [
+            "Service"
+          ]
+        },
+        {
+          "source": "java.nio.charset.StandardCharsets",
+          "specifiers": [
+            "StandardCharsets"
+          ]
+        },
+        {
+          "source": "java.nio.file.Files",
+          "specifiers": [
+            "Files"
+          ]
+        },
+        {
+          "source": "java.nio.file.Path",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "java.nio.file.Paths",
+          "specifiers": [
+            "Paths"
+          ]
+        },
+        {
+          "source": "java.security",
+          "specifiers": [
+            "*"
+          ]
+        },
+        {
+          "source": "java.security.spec.PKCS8EncodedKeySpec",
+          "specifiers": [
+            "PKCS8EncodedKeySpec"
+          ]
+        },
+        {
+          "source": "java.security.spec.X509EncodedKeySpec",
+          "specifiers": [
+            "X509EncodedKeySpec"
+          ]
+        },
+        {
+          "source": "java.time.LocalDateTime",
+          "specifiers": [
+            "LocalDateTime"
+          ]
+        },
+        {
+          "source": "java.time.format.DateTimeFormatter",
+          "specifiers": [
+            "DateTimeFormatter"
+          ]
+        },
+        {
+          "source": "java.util.Base64",
+          "specifiers": [
+            "Base64"
+          ]
+        },
+        {
+          "source": "java.util.List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "java.util.UUID",
+          "specifiers": [
+            "UUID"
+          ]
+        }
+      ],
+      "exports": [
+        "list",
+        "activate",
+        "validate",
+        "generateLicense",
+        "disable",
+        "unbind",
+        "getPublicKeyBase64",
+        "LicenseService"
+      ],
+      "totalLines": 262,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/java/com/certbatch/service/TemplateService.java": {
+      "filePath": "backend/src/main/java/com/certbatch/service/TemplateService.java",
+      "contentHash": "320422e40e34fb2756d9ffbcad4153ddaed5d7937ac16e5c02432618c7a69770",
+      "functions": [
+        {
+          "name": "getImageDir",
+          "params": [],
+          "returnType": "Path",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "createTemplate",
+          "params": [
+            "name",
+            "imageFile"
+          ],
+          "returnType": "Template",
+          "exported": true,
+          "lineCount": 28
+        },
+        {
+          "name": "getTemplateDetail",
+          "params": [
+            "id"
+          ],
+          "returnType": "Template",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getPlaceholders",
+          "params": [
+            "templateId"
+          ],
+          "returnType": "List<Placeholder>",
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "savePlaceholders",
+          "params": [
+            "templateId",
+            "placeholders"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 11
+        },
+        {
+          "name": "deleteTemplate",
+          "params": [
+            "id"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 16
+        },
+        {
+          "name": "updateTemplateName",
+          "params": [
+            "id",
+            "name"
+          ],
+          "returnType": "void",
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "getImagePath",
+          "params": [
+            "templateId"
+          ],
+          "returnType": "Path",
+          "exported": true,
+          "lineCount": 7
+        }
+      ],
+      "classes": [
+        {
+          "name": "TemplateService",
+          "methods": [
+            "getImageDir",
+            "createTemplate",
+            "getTemplateDetail",
+            "getPlaceholders",
+            "savePlaceholders",
+            "deleteTemplate",
+            "updateTemplateName",
+            "getImagePath"
+          ],
+          "properties": [
+            "placeholderMapper",
+            "dataDir"
+          ],
+          "exported": true,
+          "lineCount": 128
+        }
+      ],
+      "imports": [
+        {
+          "source": "com.baomidou.mybatisplus.extension.service.impl.ServiceImpl",
+          "specifiers": [
+            "ServiceImpl"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.Placeholder",
+          "specifiers": [
+            "Placeholder"
+          ]
+        },
+        {
+          "source": "com.certbatch.entity.Template",
+          "specifiers": [
+            "Template"
+          ]
+        },
+        {
+          "source": "com.certbatch.mapper.PlaceholderMapper",
+          "specifiers": [
+            "PlaceholderMapper"
+          ]
+        },
+        {
+          "source": "com.certbatch.mapper.TemplateMapper",
+          "specifiers": [
+            "TemplateMapper"
+          ]
+        },
+        {
+          "source": "lombok.RequiredArgsConstructor",
+          "specifiers": [
+            "RequiredArgsConstructor"
+          ]
+        },
+        {
+          "source": "org.springframework.beans.factory.annotation.Value",
+          "specifiers": [
+            "Value"
+          ]
+        },
+        {
+          "source": "org.springframework.stereotype.Service",
+          "specifiers": [
+            "Service"
+          ]
+        },
+        {
+          "source": "org.springframework.transaction.annotation.Transactional",
+          "specifiers": [
+            "Transactional"
+          ]
+        },
+        {
+          "source": "org.springframework.web.multipart.MultipartFile",
+          "specifiers": [
+            "MultipartFile"
+          ]
+        },
+        {
+          "source": "javax.imageio.ImageIO",
+          "specifiers": [
+            "ImageIO"
+          ]
+        },
+        {
+          "source": "java.awt.image.BufferedImage",
+          "specifiers": [
+            "BufferedImage"
+          ]
+        },
+        {
+          "source": "java.io.IOException",
+          "specifiers": [
+            "IOException"
+          ]
+        },
+        {
+          "source": "java.nio.file.Files",
+          "specifiers": [
+            "Files"
+          ]
+        },
+        {
+          "source": "java.nio.file.Path",
+          "specifiers": [
+            "Path"
+          ]
+        },
+        {
+          "source": "java.nio.file.Paths",
+          "specifiers": [
+            "Paths"
+          ]
+        },
+        {
+          "source": "java.time.LocalDateTime",
+          "specifiers": [
+            "LocalDateTime"
+          ]
+        },
+        {
+          "source": "java.util.List",
+          "specifiers": [
+            "List"
+          ]
+        },
+        {
+          "source": "java.util.UUID",
+          "specifiers": [
+            "UUID"
+          ]
+        }
+      ],
+      "exports": [
+        "getImageDir",
+        "createTemplate",
+        "getTemplateDetail",
+        "getPlaceholders",
+        "savePlaceholders",
+        "deleteTemplate",
+        "updateTemplateName",
+        "getImagePath",
+        "TemplateService"
+      ],
+      "totalLines": 152,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/resources/application.yml": {
+      "filePath": "backend/src/main/resources/application.yml",
+      "contentHash": "0ab0b7026a6767b5a9d44b20ee8eea2a5f5da38ec94bec145620ee19c88ce5a3",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 24,
+      "hasStructuralAnalysis": true
+    },
+    "backend/src/main/resources/start.sh": {
+      "filePath": "backend/src/main/resources/start.sh",
+      "contentHash": "4dc23eef402e7865b5ceb1d37511dd6d728a4f218dd32f12571739401773cbbc",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 2,
+      "hasStructuralAnalysis": true
+    },
+    "docs/证书生成及系统服务协议.md": {
+      "filePath": "docs/证书生成及系统服务协议.md",
+      "contentHash": "99c348843cb50d1a87c243fcc27030da6ebcfa2a7057e1e52686806e349544a6",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 255,
+      "hasStructuralAnalysis": true
+    },
+    "docs/generate_contract_docx.py": {
+      "filePath": "docs/generate_contract_docx.py",
+      "contentHash": "3a962c06e12b50e74ecabacfcddc30927222e1aa17213035d4bdcf193011f4bd",
+      "functions": [
+        {
+          "name": "set_cn_font",
+          "params": [
+            "run",
+            "font",
+            "size",
+            "bold",
+            "color"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "add_title",
+          "params": [
+            "doc",
+            "text"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "add_heading",
+          "params": [
+            "doc",
+            "text"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "add_para",
+          "params": [
+            "doc",
+            "segments",
+            "align",
+            "size",
+            "indent"
+          ],
+          "exported": true,
+          "lineCount": 14
+        },
+        {
+          "name": "add_divider",
+          "params": [
+            "doc"
+          ],
+          "exported": true,
+          "lineCount": 6
+        },
+        {
+          "name": "add_grid_table",
+          "params": [
+            "doc",
+            "headers",
+            "rows_data",
+            "widths"
+          ],
+          "exported": true,
+          "lineCount": 15
+        },
+        {
+          "name": "build_attachments",
+          "params": [
+            "doc"
+          ],
+          "exported": true,
+          "lineCount": 85
+        },
+        {
+          "name": "build",
+          "params": [],
+          "exported": true,
+          "lineCount": 257
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "docx",
+          "specifiers": [
+            "Document"
+          ]
+        },
+        {
+          "source": "docx.shared",
+          "specifiers": [
+            "Pt",
+            "RGBColor"
+          ]
+        },
+        {
+          "source": "docx.enum.text",
+          "specifiers": [
+            "WD_ALIGN_PARAGRAPH"
+          ]
+        },
+        {
+          "source": "docx.enum.table",
+          "specifiers": [
+            "WD_TABLE_ALIGNMENT"
+          ]
+        },
+        {
+          "source": "docx.oxml.ns",
+          "specifiers": [
+            "qn"
+          ]
+        },
+        {
+          "source": "os",
+          "specifiers": [
+            "os"
+          ]
+        }
+      ],
+      "exports": [
+        "set_cn_font",
+        "add_title",
+        "add_heading",
+        "add_para",
+        "add_divider",
+        "add_grid_table",
+        "build_attachments",
+        "build"
+      ],
+      "totalLines": 433,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/electron/main.js": {
+      "filePath": "frontend/electron/main.js",
+      "contentHash": "88d519173196dbbd416d63af5e24aa41fe4eb398ada3d5ff6dd74711f4086278",
+      "functions": [
+        {
+          "name": "getMachineId",
+          "params": [],
+          "exported": false,
+          "lineCount": 28
+        },
+        {
+          "name": "waitForBackend",
+          "params": [
+            "port"
+          ],
+          "exported": false,
+          "lineCount": 37
+        },
+        {
+          "name": "findJavaPath",
+          "params": [],
+          "exported": false,
+          "lineCount": 9
+        },
+        {
+          "name": "getBackendLogPath",
+          "params": [],
+          "exported": false,
+          "lineCount": 3
+        },
+        {
+          "name": "startBackend",
+          "params": [],
+          "exported": false,
+          "lineCount": 118
+        },
+        {
+          "name": "verifyLicenseLocal",
+          "params": [],
+          "exported": false,
+          "lineCount": 60
+        },
+        {
+          "name": "createWindow",
+          "params": [],
+          "exported": false,
+          "lineCount": 26
+        }
+      ],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 434,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/electron/preload.js": {
+      "filePath": "frontend/electron/preload.js",
+      "contentHash": "38181f455d9b9a0824ec484d7b7e52fa35a5ccc30149e122a6dabdfa48d90997",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/index.html": {
+      "filePath": "frontend/index.html",
+      "contentHash": "d958bb24cb914d25e7544991c63a7aabdb5a54bbacd1971487d186d257df5c6c",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 13,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/package.json": {
+      "filePath": "frontend/package.json",
+      "contentHash": "48a9848a8c905438f27601b3bc5e432c6bb8fea7679ffc64d794e64941647421",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 61,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/api/index.js": {
+      "filePath": "frontend/src/api/index.js",
+      "contentHash": "ce55a064bb77b0dcac1a40f315f5668e49ca977055f05e77b25c3d3b368c23fb",
+      "functions": [
+        {
+          "name": "activateLicense",
+          "params": [
+            "licenseKey",
+            "machineId"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "validateLicenseOnline",
+          "params": [
+            "token",
+            "machineId"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "waitForBackend",
+          "params": [],
+          "exported": true,
+          "lineCount": 18
+        },
+        {
+          "name": "getTemplateList",
+          "params": [],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getTemplateDetail",
+          "params": [
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "createTemplate",
+          "params": [
+            "name",
+            "imageFile"
+          ],
+          "exported": true,
+          "lineCount": 8
+        },
+        {
+          "name": "updateTemplateName",
+          "params": [
+            "id",
+            "name"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "deleteTemplate",
+          "params": [
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getTemplateImageUrl",
+          "params": [
+            "id"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "getPlaceholders",
+          "params": [
+            "templateId"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "savePlaceholders",
+          "params": [
+            "templateId",
+            "placeholders"
+          ],
+          "exported": true,
+          "lineCount": 3
+        },
+        {
+          "name": "parseExcel",
+          "params": [
+            "file"
+          ],
+          "exported": true,
+          "lineCount": 7
+        },
+        {
+          "name": "batchGenerateSSE",
+          "params": [
+            "params",
+            "onProgress",
+            "onComplete",
+            "onError"
+          ],
+          "exported": true,
+          "lineCount": 70
+        },
+        {
+          "name": "previewCertificate",
+          "params": [
+            "templateId",
+            "data"
+          ],
+          "exported": true,
+          "lineCount": 5
+        }
+      ],
+      "classes": [],
+      "imports": [
+        {
+          "source": "axios",
+          "specifiers": [
+            "axios"
+          ]
+        }
+      ],
+      "exports": [
+        "activateLicense",
+        "validateLicenseOnline",
+        "waitForBackend",
+        "getTemplateList",
+        "getTemplateDetail",
+        "createTemplate",
+        "updateTemplateName",
+        "deleteTemplate",
+        "getTemplateImageUrl",
+        "getPlaceholders",
+        "savePlaceholders",
+        "parseExcel",
+        "batchGenerateSSE",
+        "previewCertificate"
+      ],
+      "totalLines": 189,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/App.vue": {
+      "filePath": "frontend/src/App.vue",
+      "contentHash": "e752f74ad046debe95770dcc41c4219e6020a3149709c9e4e8bcd699eb46d8b9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 204,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/main.js": {
+      "filePath": "frontend/src/main.js",
+      "contentHash": "408308d86caebb3471984a6995dfb9ebd5f1a26f1b896c6f32f98da1991d97cf",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vue",
+          "specifiers": [
+            "createApp"
+          ]
+        },
+        {
+          "source": "element-plus",
+          "specifiers": [
+            "ElementPlus"
+          ]
+        },
+        {
+          "source": "element-plus/dist/index.css",
+          "specifiers": []
+        },
+        {
+          "source": "element-plus/dist/locale/zh-cn.mjs",
+          "specifiers": [
+            "zhCn"
+          ]
+        },
+        {
+          "source": "@element-plus/icons-vue",
+          "specifiers": [
+            "* as ElementPlusIconsVue"
+          ]
+        },
+        {
+          "source": "vue-konva",
+          "specifiers": [
+            "VueKonva"
+          ]
+        },
+        {
+          "source": "./App.vue",
+          "specifiers": [
+            "App"
+          ]
+        },
+        {
+          "source": "./router",
+          "specifiers": [
+            "router"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 21,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/router/index.js": {
+      "filePath": "frontend/src/router/index.js",
+      "contentHash": "254e1c236cb4a5c83aa97ff0943bc82d9444bc943f1b77bf905ac6eca22254df",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vue-router",
+          "specifiers": [
+            "createRouter",
+            "createWebHashHistory"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 37,
+      "hasStructuralAnalysis": true
+    },
+    "frontend/src/views/ActivateView.vue": {
+      "filePath": "frontend/src/views/ActivateView.vue",
+      "contentHash": "f0b979efc0e0a0ffbc4fd8473506bf222ce2e21eb398508a7b71e589768da5fa",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 170,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/views/BatchGenerate.vue": {
+      "filePath": "frontend/src/views/BatchGenerate.vue",
+      "contentHash": "be6fd6d3d3d6b429e7a6b86bbcf7181e254456446970f377a19a78fed82cf485",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 545,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/views/TemplateEditor.vue": {
+      "filePath": "frontend/src/views/TemplateEditor.vue",
+      "contentHash": "bd0bccdb2c5d06a2518ff55936e0582497d65e53d4baf85200f8e891344bd857",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 527,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/src/views/TemplateManage.vue": {
+      "filePath": "frontend/src/views/TemplateManage.vue",
+      "contentHash": "aa60ad18cdf81705a880a7e8df8d9e7e70ddc3b282215e3766d36dad2c7ebbe4",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 250,
+      "hasStructuralAnalysis": false
+    },
+    "frontend/vite.config.js": {
+      "filePath": "frontend/vite.config.js",
+      "contentHash": "c8b9e432c998deb55c357d444c5684e0369bfbf315e808f6905ae958bb505416",
+      "functions": [],
+      "classes": [],
+      "imports": [
+        {
+          "source": "vite",
+          "specifiers": [
+            "defineConfig"
+          ]
+        },
+        {
+          "source": "@vitejs/plugin-vue",
+          "specifiers": [
+            "vue"
+          ]
+        },
+        {
+          "source": "path",
+          "specifiers": [
+            "resolve"
+          ]
+        }
+      ],
+      "exports": [],
+      "totalLines": 23,
+      "hasStructuralAnalysis": true
+    },
+    "GUIDE.md": {
+      "filePath": "GUIDE.md",
+      "contentHash": "7d273b680e6e1d28e0d0b1d38b0813da8b8ca0a85182bc59be532e2b6f4887cd",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 285,
+      "hasStructuralAnalysis": true
+    },
+    "LICENSE-GUIDE.md": {
+      "filePath": "LICENSE-GUIDE.md",
+      "contentHash": "903ddb77e8aa334bad5a1906cf0c09be1b22dd72db1b1f4ff2778dbe36d5ea23",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 204,
+      "hasStructuralAnalysis": true
+    },
+    "README.md": {
+      "filePath": "README.md",
+      "contentHash": "10bf0980f40d2e4f84416dc3246e385d9530ceec1ff8833d09edbbb7d8d43df2",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 152,
+      "hasStructuralAnalysis": true
+    },
+    "scripts/build-all.bat": {
+      "filePath": "scripts/build-all.bat",
+      "contentHash": "92f730127c023181e0cf950a0dc6489ea44e03df2bd3e73e455cb38777df77e7",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 91,
+      "hasStructuralAnalysis": false
+    },
+    "scripts/prepare-jre.bat": {
+      "filePath": "scripts/prepare-jre.bat",
+      "contentHash": "7e37bf551358cd41cd9e3716fa9cd950c9f987ccf274ae4ef014814981c07ed9",
+      "functions": [],
+      "classes": [],
+      "imports": [],
+      "exports": [],
+      "totalLines": 51,
+      "hasStructuralAnalysis": false
+    }
+  }
+}
