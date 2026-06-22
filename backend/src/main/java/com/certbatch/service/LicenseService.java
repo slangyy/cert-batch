@@ -113,15 +113,16 @@ public class LicenseService {
         }
 
         // 激活
+        LocalDateTime activatedAt = LocalDateTime.now();
         license.setStatus(1);
         license.setMachineId(machineId);
-        license.setActivatedAt(LocalDateTime.now());
+        license.setActivatedAt(activatedAt);
         license.setToken(UUID.randomUUID().toString().replace("-", ""));
         licenseMapper.updateById(license);
 
         // 生成签名
         try {
-            String signedData = buildSignedData(machineId, licenseKey.trim(), license.getExpireAt());
+            String signedData = buildSignedData(machineId, licenseKey.trim(), license.getExpireAt(), activatedAt);
             String signature = sign(signedData);
             license.setLicenseSignature(signature); // 附加签名到返回数据
         } catch (Exception e) {
@@ -222,9 +223,9 @@ public class LicenseService {
     /**
      * 构建待签名字符串: machineId|licenseKey|expireAt|issuedAt
      */
-    private String buildSignedData(String machineId, String licenseKey, LocalDateTime expireAt) {
+    private String buildSignedData(String machineId, String licenseKey, LocalDateTime expireAt, LocalDateTime issuedAt) {
         String expire = expireAt != null ? expireAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME) : "permanent";
-        String issued = LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
+        String issued = issuedAt.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME);
         return machineId + "|" + licenseKey + "|" + expire + "|" + issued;
     }
 

@@ -54,6 +54,17 @@ const activating = ref(false)
 const errorMsg = ref('')
 const machineId = ref('')
 
+const normalizeLocalDateTime = (value) => {
+  if (!Array.isArray(value)) {
+    return value
+  }
+  const [year, month, day, hour = 0, minute = 0, second = 0, nano = 0] = value
+  const pad = (n, len = 2) => String(n).padStart(len, '0')
+  let fraction = String(nano).padStart(9, '0').replace(/0+$/, '')
+  fraction = fraction ? `.${fraction}` : ''
+  return `${year}-${pad(month)}-${pad(day)}T${pad(hour)}:${pad(minute)}:${pad(second)}${fraction}`
+}
+
 onMounted(async () => {
   if (window.electronAPI?.getMachineId) {
     machineId.value = await window.electronAPI.getMachineId()
@@ -82,15 +93,22 @@ const handleActivate = async () => {
         machineId: machineId.value,
         licenseKey: key,
         token: res.data.token,
-        expireAt: res.data.expireAt,
-        issuedAt: res.data.activatedAt,
+        expireAt: normalizeLocalDateTime(res.data.expireAt),
+        issuedAt: normalizeLocalDateTime(res.data.activatedAt),
         signature: res.data.licenseSignature
       }
       if (window.electronAPI?.saveLicense) {
         await window.electronAPI.saveLicense(licenseData)
       }
+      if (window.electronAPI?.verifyLicenseLocal) {
+        const verifyResult = await window.electronAPI.verifyLicenseLocal()
+        if (!verifyResult.valid) {
+          errorMsg.value = '激活成功，但本地授权校验失败：' + (verifyResult.reason || '未知原因')
+          return
+        }
+      }
       ElMessage.success('激活成功！')
-      window.electronAPI?.onLicenseActivated()
+      await window.electronAPI?.onLicenseActivated()
     } else {
       errorMsg.value = res.msg || '激活失败'
     }

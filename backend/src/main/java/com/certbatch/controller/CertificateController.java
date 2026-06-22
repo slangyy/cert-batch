@@ -26,6 +26,8 @@ import java.util.concurrent.Executors;
 @RequiredArgsConstructor
 public class CertificateController {
 
+    private static final long BATCH_GENERATE_TIMEOUT_MS = 60 * 60 * 1000L; // 1小时
+
     private final CertificateService certificateService;
     private final TemplateService templateService;
     private final ObjectMapper objectMapper;
@@ -50,7 +52,7 @@ public class CertificateController {
      */
     @PostMapping(value = "/batch-generate", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter batchGenerateSse(@RequestBody Map<String, Object> request) {
-        SseEmitter emitter = new SseEmitter(300000L); // 5分钟超时
+        SseEmitter emitter = new SseEmitter(BATCH_GENERATE_TIMEOUT_MS);
 
         sseExecutor.execute(() -> {
             try {
@@ -104,7 +106,7 @@ public class CertificateController {
                                            @RequestParam("outputDir") String outputDir,
                                            @RequestParam("format") String format,
                                            @RequestParam(value = "fileNameField", required = false) String fileNameField) {
-        SseEmitter emitter = new SseEmitter(300000L); // 5分钟超时
+        SseEmitter emitter = new SseEmitter(BATCH_GENERATE_TIMEOUT_MS);
         Path tempFile;
         try {
             tempFile = Files.createTempFile("cert_batch_", ".xlsx");

@@ -201,10 +201,16 @@ export function batchGenerateFileSSE(params, onProgress, onComplete, onError) {
       const decoder = new TextDecoder()
       let buffer = ''
       let eventName = ''
+      let completed = false
 
       function read() {
         reader.read().then(({ done, value }) => {
-          if (done) return
+          if (done) {
+            if (!completed) {
+              onError?.('生成连接已断开，请检查输出目录和后端日志')
+            }
+            return
+          }
           buffer += decoder.decode(value, { stream: true })
           const lines = buffer.split('\n')
           buffer = lines.pop() || ''
@@ -223,14 +229,18 @@ export function batchGenerateFileSSE(params, onProgress, onComplete, onError) {
                 if (eventName === 'progress' || parsed.current !== undefined) {
                   onProgress?.(parsed)
                 } else if (eventName === 'complete') {
+                  completed = true
                   onComplete?.(parsed)
                 } else if (eventName === 'error' || parsed.code !== undefined) {
+                  completed = true
                   onError?.(parsed.msg || '生成失败')
                 }
               } catch (e) { /* ignore */ }
             }
           }
           read()
+        }).catch(err => {
+          onError?.(err.message || '生成连接异常')
         })
       }
       read()
