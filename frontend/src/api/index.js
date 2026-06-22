@@ -178,6 +178,68 @@ export function batchGenerateSSE(params, onProgress, onComplete, onError) {
     })
 }
 
+/** 批量生成证书（上传Excel文件，SSE 流式进度） */
+export function batchGenerateFileSSE(params, onProgress, onComplete, onError) {
+  const formData = new FormData()
+  formData.append('templateId', params.templateId)
+  formData.append('file', params.file)
+  formData.append('outputDir', params.outputDir)
+  formData.append('format', params.format)
+  if (params.fileNameField) {
+    formData.append('fileNameField', params.fileNameField)
+  }
+
+  fetch(`${LOCAL_BASE}/api/certificate/batch-generate-file`, {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+      let eventName = ''
+
+      function read() {
+        reader.read().then(({ done, value }) => {
+          if (done) return
+          buffer += decoder.decode(value, { stream: true })
+          const lines = buffer.split('\n')
+          buffer = lines.pop() || ''
+
+          for (const line of lines) {
+            const trimmed = line.trim()
+            if (trimmed.startsWith('event:')) {
+              eventName = trimmed.slice(6).trim()
+              continue
+            }
+            if (trimmed.startsWith('data:')) {
+              const data = trimmed.slice(5).trim()
+              if (!data) continue
+              try {
+                const parsed = JSON.parse(data)
+                if (eventName === 'progress' || parsed.current !== undefined) {
+                  onProgress?.(parsed)
+                } else if (eventName === 'complete') {
+                  onComplete?.(parsed)
+                } else if (eventName === 'error' || parsed.code !== undefined) {
+                  onError?.(parsed.msg || '生成失败')
+                }
+              } catch (e) { /* ignore */ }
+            }
+          }
+          read()
+        })
+      }
+      read()
+    })
+    .catch(err => {
+      onError?.(err.message || '网络错误')
+    })
+}
+
 /** 预览证书 */
 export function previewCertificate(templateId, data) {
   return LOCAL_API.post('/certificate/preview', { templateId, data }, {

@@ -61,12 +61,12 @@
       <!-- 数据预览 -->
       <div v-if="excelData.headers.length > 0" class="data-preview">
         <div class="preview-header">
-          <span>数据预览（共 {{ excelData.rows.length }} 条）</span>
+          <span>数据预览（共 {{ excelData.totalRows }} 条）</span>
         </div>
         <el-table :data="excelData.rows.slice(0, 10)" border size="small" max-height="300" style="width: 100%">
           <el-table-column v-for="header in excelData.headers" :key="header" :prop="header" :label="header" min-width="120" />
         </el-table>
-        <div v-if="excelData.rows.length > 10" class="preview-tip">仅显示前10条数据</div>
+        <div v-if="excelData.totalRows > 10" class="preview-tip">仅显示前10条数据</div>
 
         <!-- 映射检查 -->
         <div class="mapping-check">
@@ -87,7 +87,7 @@
 
       <div class="step-actions">
         <el-button @click="goStep(0)">上一步</el-button>
-        <el-button type="primary" :disabled="excelData.rows.length === 0" @click="goStep(2)">下一步</el-button>
+        <el-button type="primary" :disabled="excelData.totalRows === 0" @click="goStep(2)">下一步</el-button>
       </div>
     </div>
 
@@ -97,7 +97,7 @@
 
       <el-descriptions :column="1" border class="confirm-info">
         <el-descriptions-item label="证书模板">{{ selectedTemplateName }}</el-descriptions-item>
-        <el-descriptions-item label="数据条数">{{ excelData.rows.length }} 条</el-descriptions-item>
+        <el-descriptions-item label="数据条数">{{ excelData.totalRows }} 条</el-descriptions-item>
         <el-descriptions-item label="输出格式">
           <el-radio-group v-model="outputFormat">
             <el-radio value="png">PNG 图片</el-radio>
@@ -180,7 +180,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getTemplateList, getTemplateImageUrl, getPlaceholders, parseExcel, batchGenerateSSE } from '@/api'
+import { getTemplateList, getTemplateImageUrl, getPlaceholders, parseExcel, batchGenerateFileSSE } from '@/api'
 
 const currentStep = ref(0)
 const loadingTemplates = ref(false)
@@ -189,7 +189,8 @@ const selectedTemplateId = ref(null)
 const templatePlaceholders = ref([])
 
 const excelFileList = ref([])
-const excelData = ref({ headers: [], rows: [] })
+const excelRawFile = ref(null)
+const excelData = ref({ headers: [], rows: [], totalRows: 0 })
 
 const outputFormat = ref('png')
 const fileNameField = ref('')
@@ -252,42 +253,53 @@ const goStep = async (step) => {
 
 const handleExcelChange = async (file) => {
   excelFileList.value = [file]
+  excelRawFile.value = file.raw
   try {
     const { data: res } = await parseExcel(file.raw)
     if (res.code === 200) {
-      excelData.value = res.data
-      ElMessage.success(`解析成功，共 ${res.data.rows.length} 条数据`)
+      excelData.value = {
+        headers: res.data.headers || [],
+        rows: res.data.rows || res.data.previewRows || [],
+        totalRows: res.data.totalRows || 0
+      }
+      ElMessage.success(`解析成功，共 ${excelData.value.totalRows} 条数据`)
     } else {
       ElMessage.error(res.msg || '解析失败')
-      excelData.value = { headers: [], rows: [] }
+      excelRawFile.value = null
+      excelData.value = { headers: [], rows: [], totalRows: 0 }
     }
   } catch (e) {
     ElMessage.error('解析Excel失败')
-    excelData.value = { headers: [], rows: [] }
+    excelRawFile.value = null
+    excelData.value = { headers: [], rows: [], totalRows: 0 }
   }
 }
 
 const handleExcelRemove = () => {
   excelFileList.value = []
-  excelData.value = { headers: [], rows: [] }
+  excelRawFile.value = null
+  excelData.value = { headers: [], rows: [], totalRows: 0 }
 }
 
 const handleGenerate = () => {
   if (!outputDir.value.trim()) {
     return ElMessage.warning('请输入输出目录')
   }
+  if (!excelRawFile.value) {
+    return ElMessage.warning('请先上传Excel文件')
+  }
 
   generating.value = true
   progressPercent.value = 0
   progressCurrent.value = 0
-  progressTotal.value = excelData.value.rows.length
+  progressTotal.value = excelData.value.totalRows
   progressSuccess.value = 0
   progressFail.value = 0
 
-  batchGenerateSSE(
+  batchGenerateFileSSE(
     {
       templateId: selectedTemplateId.value,
-      rows: excelData.value.rows,
+      file: excelRawFile.value,
       outputDir: outputDir.value.trim(),
       format: outputFormat.value,
       fileNameField: fileNameField.value || null
@@ -325,7 +337,8 @@ const resetAll = () => {
   currentStep.value = 0
   selectedTemplateId.value = null
   excelFileList.value = []
-  excelData.value = { headers: [], rows: [] }
+  excelRawFile.value = null
+  excelData.value = { headers: [], rows: [], totalRows: 0 }
   outputFormat.value = 'png'
   fileNameField.value = ''
   outputDir.value = ''

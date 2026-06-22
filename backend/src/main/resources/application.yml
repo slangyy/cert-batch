@@ -21,3 +21,5 @@ mybatis-plus:
 app:
   data-dir: ./cert-batch-data
   license-check: true
+  batch:
+    thread-pool-size: ${APP_BATCH_THREAD_POOL_SIZE:0}

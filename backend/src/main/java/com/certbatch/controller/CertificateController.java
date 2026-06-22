@@ -14,6 +14,8 @@ import org.springframework.web.servlet.mvc.method.annotation.SseEmitter;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutorService;
@@ -92,6 +94,61 @@ public class CertificateController {
     }
 
     /**
+     * 批量生成证书（上传Excel文件，SSE 流式返回进度）
+     */
+    @PostMapping(value = "/batch-generate-file",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter batchGenerateFileSse(@RequestParam("templateId") Long templateId,
+                                           @RequestParam("file") MultipartFile file,
+                                           @RequestParam("outputDir") String outputDir,
+                                           @RequestParam("format") String format,
+                                           @RequestParam(value = "fileNameField", required = false) String fileNameField) {
+        SseEmitter emitter = new SseEmitter(300000L); // 5分钟超时
+        Path tempFile;
+        try {
+            tempFile = Files.createTempFile("cert_batch_", ".xlsx");
+            file.transferTo(tempFile);
+        } catch (Exception e) {
+            sendError(emitter, "读取Excel文件失败: " + e.getMessage(), e);
+            return emitter;
+        }
+
+        sseExecutor.execute(() -> {
+            try {
+                Map<String, Object> result;
+                try (var inputStream = Files.newInputStream(tempFile)) {
+                    result = certificateService.batchGenerateFromExcel(
+                            templateId, inputStream, outputDir, format, fileNameField,
+                            progress -> {
+                                try {
+                                    emitter.send(SseEmitter.event()
+                                            .name("progress")
+                                            .data(objectMapper.writeValueAsString(progress)));
+                                } catch (Exception ignored) {
+                                }
+                            }
+                    );
+                }
+
+                emitter.send(SseEmitter.event()
+                        .name("complete")
+                        .data(objectMapper.writeValueAsString(result)));
+                emitter.complete();
+            } catch (Exception e) {
+                sendError(emitter, "批量生成失败: " + e.getMessage(), e);
+            } finally {
+                try {
+                    Files.deleteIfExists(tempFile);
+                } catch (Exception ignored) {
+                }
+            }
+        });
+
+        return emitter;
+    }
+
+    /**
      * 预览证书效果
      */
     @PostMapping("/preview")
@@ -111,5 +168,16 @@ public class CertificateController {
         } catch (Exception e) {
             return ResponseEntity.internalServerError().build();
         }
+    }
+
+    private void sendError(SseEmitter emitter, String message, Exception e) {
+        try {
+            R<Object> error = R.fail(message);
+            emitter.send(SseEmitter.event()
+                    .name("error")
+                    .data(objectMapper.writeValueAsString(error)));
+        } catch (Exception ignored) {
+        }
+        emitter.completeWithError(e);
     }
 }
