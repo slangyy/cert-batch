@@ -250,6 +250,77 @@ export function batchGenerateFileSSE(params, onProgress, onComplete, onError) {
     })
 }
 
+/** 生成小程序上传 ZIP 包（上传数据Excel和list.xlsx模板，SSE 流式进度） */
+export function batchGenerateMiniProgramZipSSE(params, onProgress, onComplete, onError) {
+  const formData = new FormData()
+  formData.append('templateId', params.templateId)
+  formData.append('dataFile', params.dataFile)
+  formData.append('listTemplateFile', params.listTemplateFile)
+  formData.append('outputDir', params.outputDir)
+  formData.append('guidColumn', params.guidColumn)
+  formData.append('certificateFolderName', params.certificateFolderName)
+
+  fetch(`${LOCAL_BASE}/api/certificate/mini-program-zip`, {
+    method: 'POST',
+    body: formData
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`)
+      }
+      const reader = response.body.getReader()
+      const decoder = new TextDecoder()
+      let buffer = ''
+      let eventName = ''
+      let completed = false
+
+      function read() {
+        reader.read().then(({ done, value }) => {
+          if (done) {
+            if (!completed) {
+              onError?.('生成连接已断开，请检查输出目录和后端日志')
+            }
+            return
+          }
+          buffer += decoder.decode(value, { stream: true })
+          const lines = buffer.split('\n')
+          buffer = lines.pop() || ''
+
+          for (const line of lines) {
+            const trimmed = line.trim()
+            if (trimmed.startsWith('event:')) {
+              eventName = trimmed.slice(6).trim()
+              continue
+            }
+            if (trimmed.startsWith('data:')) {
+              const data = trimmed.slice(5).trim()
+              if (!data) continue
+              try {
+                const parsed = JSON.parse(data)
+                if (eventName === 'progress' || parsed.current !== undefined) {
+                  onProgress?.(parsed)
+                } else if (eventName === 'complete') {
+                  completed = true
+                  onComplete?.(parsed)
+                } else if (eventName === 'error' || parsed.code !== undefined) {
+                  completed = true
+                  onError?.(parsed.msg || '生成失败')
+                }
+              } catch (e) { /* ignore */ }
+            }
+          }
+          read()
+        }).catch(err => {
+          onError?.(err.message || '生成连接异常')
+        })
+      }
+      read()
+    })
+    .catch(err => {
+      onError?.(err.message || '网络错误')
+    })
+}
+
 /** 预览证书 */
 export function previewCertificate(templateId, data) {
   return LOCAL_API.post('/certificate/preview', { templateId, data }, {

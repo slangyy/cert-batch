@@ -96,14 +96,23 @@
       <div class="step-title">确认生成信息</div>
 
       <el-descriptions :column="1" border class="confirm-info">
+        <el-descriptions-item label="生成模式">
+          <el-radio-group v-model="generateMode">
+            <el-radio value="normal">普通生成</el-radio>
+            <el-radio value="miniProgram">生成上传小程序模板</el-radio>
+          </el-radio-group>
+        </el-descriptions-item>
         <el-descriptions-item label="证书模板">{{ selectedTemplateName }}</el-descriptions-item>
         <el-descriptions-item label="数据条数">{{ excelData.totalRows }} 条</el-descriptions-item>
         <el-descriptions-item label="输出格式">
+          <template v-if="generateMode === 'normal'">
           <el-radio-group v-model="outputFormat">
             <el-radio value="png">PNG 图片</el-radio>
             <el-radio value="pdf">PDF 文件</el-radio>
             <el-radio value="both">PNG + PDF</el-radio>
           </el-radio-group>
+          </template>
+          <span v-else>固定输出 PNG，并打包为小程序上传 ZIP</span>
         </el-descriptions-item>
         <el-descriptions-item label="文件命名字段">
           <el-select v-model="fileNameField" placeholder="选择命名字段" clearable>
@@ -112,6 +121,22 @@
           <span class="field-tip">留空则使用序号命名</span>
         </el-descriptions-item>
         <el-descriptions-item label="输出目录">
+          <div v-if="generateMode === 'miniProgram'" class="mini-program-options">
+            <el-upload
+              :auto-upload="false"
+              accept=".xlsx,.xls"
+              :limit="1"
+              :on-change="handleListTemplateChange"
+              :on-remove="handleListTemplateRemove"
+              :file-list="listTemplateFileList"
+            >
+              <el-button>上传 list.xlsx 模板</el-button>
+            </el-upload>
+            <el-select v-model="miniProgramGuidColumn" placeholder="选择GUID写入列" class="mini-program-control">
+              <el-option v-for="h in listTemplateData.headers" :key="h" :label="h" :value="h" />
+            </el-select>
+            <el-input v-model="certificateFolderName" placeholder="证书图片文件夹名称" class="mini-program-control" />
+          </div>
           <div class="output-dir-row">
             <el-input v-model="outputDir" placeholder="请输入输出目录路径" />
             <el-button @click="selectOutputDir">浏览</el-button>
@@ -167,6 +192,17 @@
               style="margin-bottom: 8px;"
             />
           </div>
+          <div v-if="generateResult.zipFiles && generateResult.zipFiles.length > 0" class="zip-list">
+            <el-alert
+              v-for="file in generateResult.zipFiles"
+              :key="file.path"
+              :title="`${file.name} (${formatFileSize(file.size)})`"
+              type="success"
+              :closable="false"
+              show-icon
+              style="margin-bottom: 8px;"
+            />
+          </div>
           <div class="result-actions">
             <el-button type="primary" @click="openOutputDir">打开输出目录</el-button>
             <el-button @click="resetAll">继续生成</el-button>
@@ -180,7 +216,7 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getTemplateList, getTemplateImageUrl, getPlaceholders, parseExcel, batchGenerateFileSSE } from '@/api'
+import { getTemplateList, getTemplateImageUrl, getPlaceholders, parseExcel, batchGenerateFileSSE, batchGenerateMiniProgramZipSSE } from '@/api'
 
 const currentStep = ref(0)
 const loadingTemplates = ref(false)
@@ -191,6 +227,13 @@ const templatePlaceholders = ref([])
 const excelFileList = ref([])
 const excelRawFile = ref(null)
 const excelData = ref({ headers: [], rows: [], totalRows: 0 })
+
+const generateMode = ref('normal')
+const listTemplateFileList = ref([])
+const listTemplateRawFile = ref(null)
+const listTemplateData = ref({ headers: [], rows: [], totalRows: 0 })
+const miniProgramGuidColumn = ref('')
+const certificateFolderName = ref('社会实践活动证书')
 
 const outputFormat = ref('png')
 const fileNameField = ref('')
@@ -281,6 +324,39 @@ const handleExcelRemove = () => {
   excelData.value = { headers: [], rows: [], totalRows: 0 }
 }
 
+const handleListTemplateChange = async (file) => {
+  listTemplateFileList.value = [file]
+  listTemplateRawFile.value = file.raw
+  miniProgramGuidColumn.value = ''
+  try {
+    const { data: res } = await parseExcel(file.raw)
+    if (res.code === 200) {
+      listTemplateData.value = {
+        headers: res.data.headers || [],
+        rows: res.data.rows || res.data.previewRows || [],
+        totalRows: res.data.totalRows || 0
+      }
+      if (listTemplateData.value.headers.length > 0) {
+        miniProgramGuidColumn.value = listTemplateData.value.headers[0]
+      }
+      ElMessage.success('list.xlsx模板解析成功')
+    } else {
+      ElMessage.error(res.msg || 'list.xlsx模板解析失败')
+      handleListTemplateRemove()
+    }
+  } catch (e) {
+    ElMessage.error('list.xlsx模板解析失败')
+    handleListTemplateRemove()
+  }
+}
+
+const handleListTemplateRemove = () => {
+  listTemplateFileList.value = []
+  listTemplateRawFile.value = null
+  listTemplateData.value = { headers: [], rows: [], totalRows: 0 }
+  miniProgramGuidColumn.value = ''
+}
+
 const handleGenerate = () => {
   if (!outputDir.value.trim()) {
     return ElMessage.warning('请输入输出目录')
@@ -289,12 +365,55 @@ const handleGenerate = () => {
     return ElMessage.warning('请先上传Excel文件')
   }
 
+  if (generateMode.value === 'miniProgram') {
+    if (!listTemplateRawFile.value) {
+      return ElMessage.warning('请上传list.xlsx模板')
+    }
+    if (!miniProgramGuidColumn.value) {
+      return ElMessage.warning('请选择GUID写入列')
+    }
+    if (!certificateFolderName.value.trim()) {
+      return ElMessage.warning('请输入证书图片文件夹名称')
+    }
+  }
+
   generating.value = true
   progressPercent.value = 0
   progressCurrent.value = 0
   progressTotal.value = excelData.value.totalRows
   progressSuccess.value = 0
   progressFail.value = 0
+
+  if (generateMode.value === 'miniProgram') {
+    batchGenerateMiniProgramZipSSE(
+      {
+        templateId: selectedTemplateId.value,
+        dataFile: excelRawFile.value,
+        listTemplateFile: listTemplateRawFile.value,
+        outputDir: outputDir.value.trim(),
+        guidColumn: miniProgramGuidColumn.value,
+        certificateFolderName: certificateFolderName.value.trim()
+      },
+      (progress) => {
+        progressCurrent.value = progress.current
+        progressTotal.value = progress.total
+        progressSuccess.value = progress.success
+        progressFail.value = progress.fail
+        progressPercent.value = progress.percent
+      },
+      (result) => {
+        generating.value = false
+        generateResult.value = result
+        progressPercent.value = 100
+        currentStep.value = 3
+      },
+      (msg) => {
+        generating.value = false
+        ElMessage.error('生成失败: ' + msg)
+      }
+    )
+    return
+  }
 
   batchGenerateFileSSE(
     {
@@ -327,6 +446,17 @@ const handleGenerate = () => {
   )
 }
 
+const formatFileSize = (size) => {
+  const bytes = Number(size || 0)
+  if (bytes >= 1024 * 1024) {
+    return `${(bytes / 1024 / 1024).toFixed(2)} MB`
+  }
+  if (bytes >= 1024) {
+    return `${(bytes / 1024).toFixed(2)} KB`
+  }
+  return `${bytes} B`
+}
+
 const openOutputDir = async () => {
   if (window.electronAPI?.openPath) {
     await window.electronAPI.openPath(outputDir.value)
@@ -339,6 +469,12 @@ const resetAll = () => {
   excelFileList.value = []
   excelRawFile.value = null
   excelData.value = { headers: [], rows: [], totalRows: 0 }
+  generateMode.value = 'normal'
+  listTemplateFileList.value = []
+  listTemplateRawFile.value = null
+  listTemplateData.value = { headers: [], rows: [], totalRows: 0 }
+  miniProgramGuidColumn.value = ''
+  certificateFolderName.value = '社会实践活动证书'
   outputFormat.value = 'png'
   fileNameField.value = ''
   outputDir.value = ''
@@ -493,6 +629,17 @@ onMounted(() => {
   margin-left: 8px;
 }
 
+.mini-program-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.mini-program-control {
+  max-width: 360px;
+}
+
 .step-actions {
   margin-top: 24px;
   display: flex;
@@ -510,6 +657,12 @@ onMounted(() => {
   display: flex;
   gap: 12px;
   justify-content: center;
+}
+
+.zip-list {
+  max-width: 700px;
+  margin: 0 auto 16px;
+  text-align: left;
 }
 
 /* 进度相关 */

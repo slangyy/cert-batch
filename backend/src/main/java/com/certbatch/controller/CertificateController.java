@@ -153,6 +153,65 @@ public class CertificateController {
     /**
      * 预览证书效果
      */
+    @PostMapping(value = "/mini-program-zip",
+            consumes = MediaType.MULTIPART_FORM_DATA_VALUE,
+            produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    public SseEmitter miniProgramZipSse(@RequestParam("templateId") Long templateId,
+                                        @RequestParam("dataFile") MultipartFile dataFile,
+                                        @RequestParam("listTemplateFile") MultipartFile listTemplateFile,
+                                        @RequestParam("outputDir") String outputDir,
+                                        @RequestParam("guidColumn") String guidColumn,
+                                        @RequestParam("certificateFolderName") String certificateFolderName) {
+        SseEmitter emitter = new SseEmitter(BATCH_GENERATE_TIMEOUT_MS);
+        Path tempDataFile;
+        Path tempListTemplateFile;
+        try {
+            tempDataFile = Files.createTempFile("cert_batch_data_", ".xlsx");
+            tempListTemplateFile = Files.createTempFile("cert_batch_list_template_", ".xlsx");
+            dataFile.transferTo(tempDataFile);
+            listTemplateFile.transferTo(tempListTemplateFile);
+        } catch (Exception e) {
+            sendError(emitter, "Read Excel file failed: " + e.getMessage(), e);
+            return emitter;
+        }
+
+        sseExecutor.execute(() -> {
+            try {
+                Map<String, Object> result;
+                try (var dataInputStream = Files.newInputStream(tempDataFile);
+                     var listTemplateInputStream = Files.newInputStream(tempListTemplateFile)) {
+                    result = certificateService.batchGenerateMiniProgramZipFromExcel(
+                            templateId, dataInputStream, listTemplateInputStream, outputDir, guidColumn,
+                            certificateFolderName,
+                            progress -> {
+                                try {
+                                    emitter.send(SseEmitter.event()
+                                            .name("progress")
+                                            .data(objectMapper.writeValueAsString(progress)));
+                                } catch (Exception ignored) {
+                                }
+                            }
+                    );
+                }
+
+                emitter.send(SseEmitter.event()
+                        .name("complete")
+                        .data(objectMapper.writeValueAsString(result)));
+                emitter.complete();
+            } catch (Exception e) {
+                sendError(emitter, "Generate mini-program upload ZIP failed: " + e.getMessage(), e);
+            } finally {
+                try {
+                    Files.deleteIfExists(tempDataFile);
+                    Files.deleteIfExists(tempListTemplateFile);
+                } catch (Exception ignored) {
+                }
+            }
+        });
+
+        return emitter;
+    }
+
     @PostMapping("/preview")
     public ResponseEntity<byte[]> preview(@RequestBody Map<String, Object> request) {
         try {
