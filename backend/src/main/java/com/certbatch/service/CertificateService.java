@@ -20,25 +20,31 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import javax.imageio.IIOImage;
 import javax.imageio.ImageIO;
+import javax.imageio.ImageWriteParam;
+import javax.imageio.ImageWriter;
+import javax.imageio.stream.ImageOutputStream;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
+import java.awt.image.Raster;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
@@ -70,8 +76,7 @@ public class CertificateService {
     private static final long MINI_PROGRAM_ZIP_MAX_BYTES = 500L * 1024L * 1024L;
     private static final long MINI_PROGRAM_ZIP_RESERVE_BYTES = 2L * 1024L * 1024L;
     private static final long MINI_PROGRAM_ZIP_ENTRY_OVERHEAD_BYTES = 4096L;
-    private static final String MINI_PROGRAM_RESOURCE_ROOT = "backend/src/main/resources/";
-    private static final String MINI_PROGRAM_LIST_ENTRY = MINI_PROGRAM_RESOURCE_ROOT + "list.xlsx";
+    private static final String MINI_PROGRAM_LIST_ENTRY = "list.xlsx";
 
     private final TemplateService templateService;
 
@@ -255,10 +260,9 @@ public class CertificateService {
             throw new IllegalArgumentException("Column not found in list.xlsx: " + guidColumn);
         }
 
-        Path workDir = Files.createTempDirectory(outPath, ".mini_program_work_");
         BatchCounters counters = new BatchCounters();
-        List<MiniProgramRecord> records = new ArrayList<>();
-        List<Path> zipFiles = new ArrayList<>();
+        MiniProgramZipPackageWriter zipWriter = new MiniProgramZipPackageWriter(
+                outPath, listTemplateBytes, listHeaders, guidColumn.trim(), normalizedFolderName);
 
         try (Workbook dataWorkbook = WorkbookFactory.create(dataInputStream)) {
             Sheet dataSheet = getFirstSheet(dataWorkbook);
@@ -276,48 +280,37 @@ public class CertificateService {
 
                 int rowNumber = ++submitted;
                 String guid = UUID.randomUUID().toString();
-                Path pngPath = workDir.resolve(guid + ".png");
+                byte[] pngBytes;
                 try {
                     BufferedImage certImage = renderPreparedCertificate(templateImage, renderPlaceholders, rowData);
-                    ImageIO.write(certImage, "png", pngPath.toFile());
-                    long pngSize = Files.size(pngPath);
-                    if (pngSize + MINI_PROGRAM_ZIP_RESERVE_BYTES > MINI_PROGRAM_ZIP_MAX_BYTES) {
-                        Files.deleteIfExists(pngPath);
+                    pngBytes = encodePng(certImage);
+                    long recordEstimate = estimateMiniProgramRecordBytes(pngBytes.length);
+                    if (recordEstimate > miniProgramPackageLimit()) {
                         throw new IOException("A single certificate image is too large to package");
                     }
-                    records.add(new MiniProgramRecord(rowNumber, rowData, guid, pngPath, pngSize));
-                    counters.success++;
                 } catch (Exception e) {
                     counters.fail++;
                     if (counters.errors.size() < MAX_ERROR_MESSAGES) {
                         counters.errors.add("Row " + rowNumber + " failed: " + e.getMessage());
                     }
                     log.error("Generate mini-program certificate failed, row {}: {}", rowNumber, e.getMessage(), e);
+                    reporter.force(counters.success, counters.fail);
+                    continue;
                 }
+
+                zipWriter.write(new MiniProgramRecord(rowNumber, rowData, guid), pngBytes);
+                counters.success++;
                 reporter.force(counters.success, counters.fail);
             }
 
-            List<List<MiniProgramRecord>> packages = splitMiniProgramPackages(records);
-            int nextSequence = 1;
-            for (List<MiniProgramRecord> packageRecords : packages) {
-                SequencePath sequencePath = nextMiniProgramZipPath(outPath, nextSequence);
-                nextSequence = sequencePath.sequence + 1;
-                writeMiniProgramZip(sequencePath.path, packageRecords, listTemplateBytes, listHeaders,
-                        guidColumn.trim(), normalizedFolderName);
-                long actualSize = Files.size(sequencePath.path);
-                if (actualSize > MINI_PROGRAM_ZIP_MAX_BYTES) {
-                    Files.deleteIfExists(sequencePath.path);
-                    throw new IOException("ZIP package exceeds 500M: " + sequencePath.path.getFileName());
-                }
-                zipFiles.add(sequencePath.path);
-            }
+            zipWriter.finish();
         } finally {
-            deleteDirectoryQuietly(workDir);
+            zipWriter.closeIncompleteQuietly();
         }
 
-        Map<String, Object> result = buildResult(records.size() + counters.fail, counters);
+        Map<String, Object> result = buildResult(counters.success + counters.fail, counters);
         List<Map<String, Object>> zipFileResults = new ArrayList<>();
-        for (Path zipFile : zipFiles) {
+        for (Path zipFile : zipWriter.getZipFiles()) {
             Map<String, Object> fileInfo = new LinkedHashMap<>();
             fileInfo.put("path", zipFile.toString());
             fileInfo.put("name", zipFile.getFileName().toString());
@@ -408,7 +401,7 @@ public class CertificateService {
 
                 if ("png".equals(format) || "both".equals(format)) {
                     Path pngPath = outPath.resolve(baseName + ".png");
-                    ImageIO.write(certImage, "png", pngPath.toFile());
+                    writeOptimizedPng(certImage, pngPath);
                 }
 
                 if ("pdf".equals(format) || "both".equals(format)) {
@@ -726,58 +719,94 @@ public class CertificateService {
         return normalized;
     }
 
-    private List<List<MiniProgramRecord>> splitMiniProgramPackages(List<MiniProgramRecord> records) throws IOException {
-        List<List<MiniProgramRecord>> packages = new ArrayList<>();
-        List<MiniProgramRecord> current = new ArrayList<>();
-        long currentEstimate = MINI_PROGRAM_ZIP_RESERVE_BYTES;
-        long packageLimit = MINI_PROGRAM_ZIP_MAX_BYTES - MINI_PROGRAM_ZIP_RESERVE_BYTES;
-
-        for (MiniProgramRecord record : records) {
-            long recordEstimate = record.pngSize + MINI_PROGRAM_ZIP_ENTRY_OVERHEAD_BYTES;
-            if (recordEstimate > packageLimit) {
-                throw new IOException("A single certificate image is too large to package: " + record.guid);
-            }
-            if (!current.isEmpty() && currentEstimate + recordEstimate > packageLimit) {
-                packages.add(current);
-                current = new ArrayList<>();
-                currentEstimate = MINI_PROGRAM_ZIP_RESERVE_BYTES;
-            }
-            current.add(record);
-            currentEstimate += recordEstimate;
-        }
-
-        if (!current.isEmpty()) {
-            packages.add(current);
-        }
-        return packages;
-    }
-
-    private void writeMiniProgramZip(Path zipPath, List<MiniProgramRecord> records, byte[] listTemplateBytes,
-                                     List<String> listHeaders, String guidColumn, String certificateFolderName) throws IOException {
-        byte[] listWorkbookBytes = buildMiniProgramListWorkbook(listTemplateBytes, records, listHeaders, guidColumn);
-        String imageDirEntry = MINI_PROGRAM_RESOURCE_ROOT + certificateFolderName + "/";
-        try (ZipOutputStream zos = new ZipOutputStream(Files.newOutputStream(zipPath), StandardCharsets.UTF_8)) {
-            addDirectoryEntry(zos, MINI_PROGRAM_RESOURCE_ROOT);
-            addDirectoryEntry(zos, imageDirEntry);
-
-            ZipEntry listEntry = new ZipEntry(MINI_PROGRAM_LIST_ENTRY);
-            zos.putNextEntry(listEntry);
-            zos.write(listWorkbookBytes);
-            zos.closeEntry();
-
-            for (MiniProgramRecord record : records) {
-                ZipEntry imageEntry = new ZipEntry(imageDirEntry + record.guid + ".png");
-                zos.putNextEntry(imageEntry);
-                Files.copy(record.pngPath, zos);
-                zos.closeEntry();
-            }
-        }
-    }
-
     private void addDirectoryEntry(ZipOutputStream zos, String entryName) throws IOException {
         ZipEntry entry = new ZipEntry(entryName);
         zos.putNextEntry(entry);
         zos.closeEntry();
+    }
+
+    private byte[] encodePng(BufferedImage image) throws IOException {
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream();
+             ImageOutputStream imageOut = ImageIO.createImageOutputStream(out)) {
+            if (imageOut == null) {
+                throw new IOException("Cannot create PNG output stream");
+            }
+            writePng(image, imageOut);
+            return out.toByteArray();
+        }
+    }
+
+    private void writeOptimizedPng(BufferedImage image, Path pngPath) throws IOException {
+        try (OutputStream fileOut = Files.newOutputStream(pngPath);
+             ImageOutputStream imageOut = ImageIO.createImageOutputStream(fileOut)) {
+            if (imageOut == null) {
+                throw new IOException("Cannot create PNG output stream");
+            }
+            writePng(image, imageOut);
+        }
+    }
+
+    private void writePng(BufferedImage image, ImageOutputStream imageOut) throws IOException {
+        BufferedImage pngImage = stripAlphaIfOpaque(image);
+        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("png");
+        if (!writers.hasNext()) {
+            throw new IOException("No PNG writer is available");
+        }
+
+        ImageWriter writer = writers.next();
+        try {
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            if (param.canWriteCompressed()) {
+                param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                param.setCompressionQuality(0.0f);
+            }
+            writer.setOutput(imageOut);
+            writer.write(null, new IIOImage(pngImage, null, null), param);
+            imageOut.flush();
+        } finally {
+            writer.dispose();
+        }
+    }
+
+    private BufferedImage stripAlphaIfOpaque(BufferedImage image) {
+        if (!image.getColorModel().hasAlpha() || !isFullyOpaque(image)) {
+            return image;
+        }
+
+        BufferedImage rgbImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = rgbImage.createGraphics();
+        try {
+            g2d.drawImage(image, 0, 0, null);
+        } finally {
+            g2d.dispose();
+        }
+        return rgbImage;
+    }
+
+    private boolean isFullyOpaque(BufferedImage image) {
+        Raster alphaRaster = image.getAlphaRaster();
+        if (alphaRaster == null) {
+            return true;
+        }
+
+        int width = image.getWidth();
+        int height = image.getHeight();
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                if (alphaRaster.getSample(x, y, 0) != 255) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    private long miniProgramPackageLimit() {
+        return MINI_PROGRAM_ZIP_MAX_BYTES - MINI_PROGRAM_ZIP_RESERVE_BYTES;
+    }
+
+    private long estimateMiniProgramRecordBytes(long pngSize) {
+        return pngSize + MINI_PROGRAM_ZIP_ENTRY_OVERHEAD_BYTES;
     }
 
     private byte[] buildMiniProgramListWorkbook(byte[] templateBytes, List<MiniProgramRecord> records,
@@ -843,20 +872,125 @@ public class CertificateService {
         }
     }
 
-    private void deleteDirectoryQuietly(Path directory) {
-        if (directory == null || !Files.exists(directory)) {
-            return;
+    private final class MiniProgramZipPackageWriter {
+        private final Path outputDir;
+        private final byte[] listTemplateBytes;
+        private final List<String> listHeaders;
+        private final String guidColumn;
+        private final String imageDirEntry;
+        private final List<Path> zipFiles = new ArrayList<>();
+        private final List<MiniProgramRecord> currentRecords = new ArrayList<>();
+        private long currentEstimate = MINI_PROGRAM_ZIP_RESERVE_BYTES;
+        private int nextSequence = 1;
+        private ZipOutputStream zos;
+        private Path currentZipPath;
+
+        private MiniProgramZipPackageWriter(Path outputDir, byte[] listTemplateBytes, List<String> listHeaders,
+                                            String guidColumn, String certificateFolderName) {
+            this.outputDir = outputDir;
+            this.listTemplateBytes = listTemplateBytes;
+            this.listHeaders = listHeaders;
+            this.guidColumn = guidColumn;
+            this.imageDirEntry = certificateFolderName + "/";
         }
-        try {
-            try (var stream = Files.walk(directory)) {
-                stream.sorted(Comparator.reverseOrder()).forEach(path -> {
+
+        private void write(MiniProgramRecord record, byte[] pngBytes) throws IOException {
+            long recordEstimate = estimateMiniProgramRecordBytes(pngBytes.length);
+            if (!currentRecords.isEmpty() && currentEstimate + recordEstimate > miniProgramPackageLimit()) {
+                finishCurrentPackage();
+            }
+
+            ensureOpenPackage();
+            ZipEntry imageEntry = new ZipEntry(imageDirEntry + record.guid + ".png");
+            zos.putNextEntry(imageEntry);
+            zos.write(pngBytes);
+            zos.closeEntry();
+
+            currentRecords.add(record);
+            currentEstimate += recordEstimate;
+        }
+
+        private void finish() throws IOException {
+            finishCurrentPackage();
+        }
+
+        private List<Path> getZipFiles() {
+            return zipFiles;
+        }
+
+        private void ensureOpenPackage() throws IOException {
+            if (zos != null) {
+                return;
+            }
+            SequencePath sequencePath = nextMiniProgramZipPath(outputDir, nextSequence);
+            nextSequence = sequencePath.sequence + 1;
+            currentZipPath = sequencePath.path;
+            try {
+                zos = new ZipOutputStream(Files.newOutputStream(currentZipPath), StandardCharsets.UTF_8);
+                addDirectoryEntry(zos, imageDirEntry);
+            } catch (IOException e) {
+                closeIncompleteQuietly();
+                throw e;
+            }
+        }
+
+        private void finishCurrentPackage() throws IOException {
+            if (zos == null) {
+                return;
+            }
+
+            Path completedZipPath = currentZipPath;
+            boolean completed = false;
+            try {
+                byte[] listWorkbookBytes = buildMiniProgramListWorkbook(
+                        listTemplateBytes, currentRecords, listHeaders, guidColumn);
+                ZipEntry listEntry = new ZipEntry(MINI_PROGRAM_LIST_ENTRY);
+                zos.putNextEntry(listEntry);
+                zos.write(listWorkbookBytes);
+                zos.closeEntry();
+                completed = true;
+            } finally {
+                try {
+                    zos.close();
+                } finally {
+                    zos = null;
+                    currentZipPath = null;
+                    currentRecords.clear();
+                    currentEstimate = MINI_PROGRAM_ZIP_RESERVE_BYTES;
+                    if (!completed) {
+                        Files.deleteIfExists(completedZipPath);
+                    }
+                }
+            }
+
+            long actualSize = Files.size(completedZipPath);
+            if (actualSize > MINI_PROGRAM_ZIP_MAX_BYTES) {
+                Files.deleteIfExists(completedZipPath);
+                throw new IOException("ZIP package exceeds 500M: " + completedZipPath.getFileName());
+            }
+            zipFiles.add(completedZipPath);
+        }
+
+        private void closeIncompleteQuietly() {
+            if (zos == null) {
+                return;
+            }
+            Path incompleteZipPath = currentZipPath;
+            try {
+                zos.close();
+            } catch (IOException ignored) {
+            } finally {
+                zos = null;
+                currentZipPath = null;
+                currentRecords.clear();
+                currentEstimate = MINI_PROGRAM_ZIP_RESERVE_BYTES;
+                if (incompleteZipPath != null) {
                     try {
-                        Files.deleteIfExists(path);
+                        Files.deleteIfExists(incompleteZipPath);
                     } catch (IOException ignored) {
                     }
-                });
+                }
             }
-        } catch (IOException ignored) {
         }
     }
 
@@ -864,15 +998,11 @@ public class CertificateService {
         private final int rowNumber;
         private final Map<String, String> rowData;
         private final String guid;
-        private final Path pngPath;
-        private final long pngSize;
 
-        private MiniProgramRecord(int rowNumber, Map<String, String> rowData, String guid, Path pngPath, long pngSize) {
+        private MiniProgramRecord(int rowNumber, Map<String, String> rowData, String guid) {
             this.rowNumber = rowNumber;
             this.rowData = rowData;
             this.guid = guid;
-            this.pngPath = pngPath;
-            this.pngSize = pngSize;
         }
     }
 

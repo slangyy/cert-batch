@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="560" viewBox="0 0 980 560">
+  <defs>
+    <style>
+      .text{font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;fill:#303133}.title{font-size:26px;font-weight:700}.mid{font-size:21px;font-weight:600}.small{font-size:17px}.muted{fill:#606266}.line{stroke:#409eff;stroke-width:3;fill:none;marker-end:url(#arrow)}.panel{fill:#fff;stroke:#dcdfe6;stroke-width:2}.toolbar{fill:#f5f7fa;stroke:#e4e7ed;stroke-width:2}.canvas{fill:#eef0f3;stroke:#c0c4cc;stroke-width:2}.cert{fill:#fffdf6;stroke:#d4b36a;stroke-width:3}.field{fill:#ecf5ff;stroke:#409eff;stroke-width:2;stroke-dasharray:8 5}.prop{fill:#f8fbff;stroke:#b3d8ff;stroke-width:2}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#409eff"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="980" height="560" rx="18" fill="#f5f7fa"/>
+  <rect class="panel" x="36" y="34" width="908" height="492" rx="12"/>
+  <rect class="toolbar" x="36" y="34" width="908" height="58" rx="12"/>
+  <text class="text title" x="66" y="72">模板编辑器：把 Excel 列放到证书图片上</text>
+  <rect class="toolbar" x="66" y="114" width="620" height="50" rx="8"/>
+  <text class="text small" x="88" y="145">添加占位符</text>
+  <text class="text small muted" x="218" y="145">放大</text>
+  <text class="text small muted" x="286" y="145">缩小</text>
+  <text class="text small muted" x="354" y="145">适应</text>
+  <rect class="canvas" x="66" y="178" width="620" height="305" rx="8"/>
+  <rect class="cert" x="160" y="215" width="432" height="230" rx="6"/>
+  <text class="text title" x="308" y="270">结业证书</text>
+  <rect class="field" x="266" y="306" width="128" height="40" rx="6"/>
+  <text class="text mid" x="295" y="333">姓名</text>
+  <rect class="field" x="210" y="366" width="232" height="40" rx="6"/>
+  <text class="text mid" x="246" y="393">课程名称</text>
+  <text class="text small muted" x="215" y="468">在画布中拖动占位符，调整到实际打印位置</text>
+  <rect class="panel" x="720" y="114" width="190" height="369" rx="8"/>
+  <text class="text mid" x="742" y="150">属性配置</text>
+  <rect class="prop" x="742" y="174" width="146" height="34" rx="6"/>
+  <text class="text small" x="758" y="197">名称：姓名</text>
+  <rect class="prop" x="742" y="222" width="146" height="34" rx="6"/>
+  <text class="text small" x="758" y="245">X / Y 坐标</text>
+  <rect class="prop" x="742" y="270" width="146" height="34" rx="6"/>
+  <text class="text small" x="758" y="293">字体 / 字号</text>
+  <rect class="prop" x="742" y="318" width="146" height="34" rx="6"/>
+  <text class="text small" x="758" y="341">颜色 / 对齐</text>
+  <text class="text small muted" x="742" y="390">名称必须与 Excel</text>
+  <text class="text small muted" x="742" y="418">表头完全一致。</text>
+  <path class="line" d="M394 326 C520 326 594 252 724 238"/>
+</svg>

@@ -1,3 +1,7 @@
 # jre/
 dist/
 docs/*
+!docs/
+!docs/用户操作手册.md
+!docs/manual-assets/
+!docs/manual-assets/*.svg

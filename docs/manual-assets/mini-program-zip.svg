@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="500" viewBox="0 0 980 500">
+  <defs>
+    <style>
+      .text{font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;fill:#303133}.title{font-size:26px;font-weight:700}.mid{font-size:21px;font-weight:600}.small{font-size:17px}.muted{fill:#606266}.box{fill:#fff;stroke:#409eff;stroke-width:3}.file{fill:#f0f9eb;stroke:#67c23a;stroke-width:2}.folder{fill:#fff7e6;stroke:#e6a23c;stroke-width:2}.arrow{stroke:#409eff;stroke-width:4;fill:none;marker-end:url(#arrow)}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#409eff"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="980" height="500" rx="18" fill="#f5f7fa"/>
+  <text class="text title" x="46" y="58">小程序上传 ZIP 生成逻辑</text>
+  <rect class="box" x="58" y="100" width="210" height="116" rx="12"/>
+  <text class="text mid" x="100" y="146">学生数据 Excel</text>
+  <text class="text small muted" x="94" y="184">每行生成一张证书</text>
+  <rect class="box" x="58" y="250" width="210" height="116" rx="12"/>
+  <text class="text mid" x="108" y="296">list.xlsx 模板</text>
+  <text class="text small muted" x="84" y="334">指定 GUID 写入列</text>
+  <path class="arrow" d="M282 158 L410 220"/>
+  <path class="arrow" d="M282 308 L410 246"/>
+  <rect class="box" x="422" y="164" width="190" height="130" rx="12"/>
+  <text class="text mid" x="470" y="212">系统生成</text>
+  <text class="text small muted" x="454" y="250">PNG 证书 + GUID</text>
+  <path class="arrow" d="M624 230 L718 230"/>
+  <rect class="box" x="730" y="112" width="200" height="300" rx="12"/>
+  <text class="text mid" x="776" y="152">ZIP 根目录</text>
+  <rect class="file" x="758" y="184" width="144" height="44" rx="7"/>
+  <text class="text small" x="788" y="212">list.xlsx</text>
+  <rect class="folder" x="758" y="248" width="144" height="44" rx="7"/>
+  <text class="text small" x="778" y="276">证书文件夹</text>
+  <rect class="file" x="782" y="310" width="120" height="34" rx="6"/>
+  <text class="text small" x="798" y="333">guid-1.png</text>
+  <rect class="file" x="782" y="356" width="120" height="34" rx="6"/>
+  <text class="text small" x="798" y="379">guid-2.png</text>
+  <text class="text small muted" x="58" y="438">说明：ZIP 自动按约 500M 分包；包内不包含 backend/src/main/resources 这类源码目录。</text>
+</svg>

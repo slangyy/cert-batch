@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="980" height="420" viewBox="0 0 980 420">
+  <defs>
+    <style>
+      .text{font-family:"Microsoft YaHei","PingFang SC",Arial,sans-serif;fill:#303133}.title{font-size:26px;font-weight:700}.mid{font-size:21px;font-weight:600}.small{font-size:17px}.muted{fill:#606266}.box{fill:#fff;stroke:#409eff;stroke-width:3}.sub{fill:#f5f7fa;stroke:#dcdfe6;stroke-width:2}.arrow{stroke:#409eff;stroke-width:4;fill:none;marker-end:url(#arrow)}
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#409eff"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="980" height="420" rx="18" fill="#f5f7fa"/>
+  <text class="text title" x="40" y="56">批量生成四步走</text>
+  <rect class="box" x="52" y="104" width="180" height="125" rx="12"/>
+  <text class="text mid" x="92" y="148">1 选择模板</text>
+  <text class="text small muted" x="82" y="188">选择已维护好的</text>
+  <text class="text small muted" x="94" y="214">证书模板</text>
+  <path class="arrow" d="M244 166 L304 166"/>
+  <rect class="box" x="318" y="104" width="180" height="125" rx="12"/>
+  <text class="text mid" x="358" y="148">2 上传数据</text>
+  <text class="text small muted" x="346" y="188">上传 Excel，查看</text>
+  <text class="text small muted" x="360" y="214">映射检查</text>
+  <path class="arrow" d="M510 166 L570 166"/>
+  <rect class="box" x="584" y="104" width="180" height="125" rx="12"/>
+  <text class="text mid" x="624" y="148">3 确认生成</text>
+  <text class="text small muted" x="612" y="188">选择模式、格式、</text>
+  <text class="text small muted" x="638" y="214">输出目录</text>
+  <path class="arrow" d="M776 166 L836 166"/>
+  <rect class="box" x="850" y="104" width="90" height="125" rx="12"/>
+  <text class="text mid" x="874" y="148">4</text>
+  <text class="text mid" x="866" y="180">完成</text>
+  <text class="text small muted" x="866" y="214">查看</text>
+  <rect class="sub" x="52" y="278" width="888" height="72" rx="10"/>
+  <text class="text mid" x="80" y="322">关键检查点：Excel 第一行列名要与模板占位符名称一致；未匹配的字段不会正确写到证书上。</text>
+</svg>
