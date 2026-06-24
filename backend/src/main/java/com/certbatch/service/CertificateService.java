@@ -60,6 +60,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.function.Consumer;
 import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 import java.nio.charset.StandardCharsets;
 
@@ -190,8 +191,13 @@ public class CertificateService {
             if (rows != null) {
                 for (int i = 0; i < rows.size(); i++) {
                     Map<String, String> rowData = rows.get(i);
-                    String baseName = uniqueBaseName(outPath, getFileName(rowData, fileNameField, i + 1),
-                            normalizedFormat, usedBaseNames);
+                    String requestedBaseName = sanitizeFileName(getFileName(rowData, fileNameField, i + 1));
+                    if (completeOutputExists(outPath, requestedBaseName, normalizedFormat)) {
+                        recordSkippedExistingOutput(counters, reporter);
+                        submitted++;
+                        continue;
+                    }
+                    String baseName = uniqueBaseName(outPath, requestedBaseName, normalizedFormat, usedBaseNames);
                     completionService.submit(generateTask(templateImage, renderPlaceholders, rowData, outPath,
                             normalizedFormat, baseName, i + 1));
                     submitted++;
@@ -261,8 +267,10 @@ public class CertificateService {
         }
 
         BatchCounters counters = new BatchCounters();
+        MiniProgramResumeState resumeState = loadMiniProgramResumeState(outPath, listHeaders, guidColumn.trim());
         MiniProgramZipPackageWriter zipWriter = new MiniProgramZipPackageWriter(
-                outPath, listTemplateBytes, listHeaders, guidColumn.trim(), normalizedFolderName);
+                outPath, listTemplateBytes, listHeaders, guidColumn.trim(), normalizedFolderName,
+                resumeState.existingZipFiles);
 
         try (Workbook dataWorkbook = WorkbookFactory.create(dataInputStream)) {
             Sheet dataSheet = getFirstSheet(dataWorkbook);
@@ -279,6 +287,14 @@ public class CertificateService {
                 }
 
                 int rowNumber = ++submitted;
+                String rowSignature = miniProgramRowSignature(rowData, listHeaders, guidColumn.trim());
+                if (resumeState.consume(rowSignature)) {
+                    counters.success++;
+                    counters.skipped++;
+                    reporter.force(counters.success, counters.fail);
+                    continue;
+                }
+
                 String guid = UUID.randomUUID().toString();
                 byte[] pngBytes;
                 try {
@@ -369,8 +385,13 @@ public class CertificateService {
                 if (rowData == null) {
                     continue;
                 }
-                String baseName = uniqueBaseName(outPath, getFileName(rowData, fileNameField, submitted + 1),
-                        format, usedBaseNames);
+                String requestedBaseName = sanitizeFileName(getFileName(rowData, fileNameField, submitted + 1));
+                if (completeOutputExists(outPath, requestedBaseName, format)) {
+                    recordSkippedExistingOutput(counters, reporter);
+                    submitted++;
+                    continue;
+                }
+                String baseName = uniqueBaseName(outPath, requestedBaseName, format, usedBaseNames);
                 completionService.submit(generateTask(templateImage, placeholders, rowData, outPath,
                         format, baseName, submitted + 1));
                 submitted++;
@@ -440,11 +461,19 @@ public class CertificateService {
         }
     }
 
+    private void recordSkippedExistingOutput(BatchCounters counters, ProgressReporter reporter) {
+        counters.completed++;
+        counters.success++;
+        counters.skipped++;
+        reporter.report(counters.completed, counters.success, counters.fail, true);
+    }
+
     private Map<String, Object> buildResult(int total, BatchCounters counters) {
         Map<String, Object> result = new LinkedHashMap<>();
         result.put("total", total);
         result.put("success", counters.success);
         result.put("fail", counters.fail);
+        result.put("skipped", counters.skipped);
         result.put("errors", counters.errors);
         if (counters.fail > counters.errors.size()) {
             result.put("errorOmitted", counters.fail - counters.errors.size());
@@ -698,6 +727,20 @@ public class CertificateService {
         return false;
     }
 
+    private boolean completeOutputExists(Path outPath, String baseName, String format) {
+        if ("png".equals(format)) {
+            return Files.exists(outPath.resolve(baseName + ".png"));
+        }
+        if ("pdf".equals(format)) {
+            return Files.exists(outPath.resolve(baseName + ".pdf"));
+        }
+        if ("both".equals(format)) {
+            return Files.exists(outPath.resolve(baseName + ".png"))
+                    && Files.exists(outPath.resolve(baseName + ".pdf"));
+        }
+        return false;
+    }
+
     private List<String> readWorkbookHeaders(byte[] workbookBytes) throws IOException {
         try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(workbookBytes))) {
             return readHeaders(getFirstSheet(workbook), new DataFormatter());
@@ -861,6 +904,96 @@ public class CertificateService {
         }
     }
 
+    private MiniProgramResumeState loadMiniProgramResumeState(Path outputDir, List<String> listHeaders,
+                                                              String guidColumn) {
+        MiniProgramResumeState state = new MiniProgramResumeState();
+        boolean hasComparableColumn = listHeaders.stream().anyMatch(header -> !header.equals(guidColumn));
+        if (!hasComparableColumn) {
+            return state;
+        }
+
+        List<Path> zipFiles = new ArrayList<>();
+        try (var stream = Files.list(outputDir)) {
+            stream
+                    .filter(path -> Files.isRegularFile(path)
+                            && path.getFileName().toString().startsWith("小程序上传包_")
+                            && path.getFileName().toString().endsWith(".zip"))
+                    .sorted()
+                    .forEach(zipFiles::add);
+        } catch (IOException e) {
+            log.warn("Scan existing mini-program ZIP packages failed: {}", e.getMessage());
+            return state;
+        }
+
+        for (Path zipFile : zipFiles) {
+            try {
+                int recordCount = loadMiniProgramZipRecords(zipFile, listHeaders, guidColumn, state.remainingBySignature);
+                if (recordCount > 0) {
+                    state.existingZipFiles.add(zipFile);
+                }
+            } catch (Exception e) {
+                log.warn("Ignore unreadable mini-program ZIP package {}: {}", zipFile.getFileName(), e.getMessage());
+            }
+        }
+        return state;
+    }
+
+    private int loadMiniProgramZipRecords(Path zipFile, List<String> listHeaders, String guidColumn,
+                                          Map<String, Integer> remainingBySignature) throws IOException {
+        try (ZipInputStream zis = new ZipInputStream(Files.newInputStream(zipFile), StandardCharsets.UTF_8)) {
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry()) != null) {
+                if (!MINI_PROGRAM_LIST_ENTRY.equals(entry.getName())) {
+                    continue;
+                }
+
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                zis.transferTo(out);
+                return loadMiniProgramListRecords(out.toByteArray(), listHeaders, guidColumn, remainingBySignature);
+            }
+        }
+        return 0;
+    }
+
+    private int loadMiniProgramListRecords(byte[] workbookBytes, List<String> expectedHeaders, String guidColumn,
+                                           Map<String, Integer> remainingBySignature) throws IOException {
+        try (Workbook workbook = WorkbookFactory.create(new ByteArrayInputStream(workbookBytes))) {
+            Sheet sheet = getFirstSheet(workbook);
+            DataFormatter formatter = new DataFormatter();
+            List<String> headers = readHeaders(sheet, formatter);
+            if (!headers.equals(expectedHeaders)) {
+                return 0;
+            }
+
+            int loaded = 0;
+            for (int i = 1; i <= sheet.getLastRowNum(); i++) {
+                Map<String, String> rowData = readRow(sheet.getRow(i), headers, formatter);
+                if (rowData == null) {
+                    continue;
+                }
+                String signature = miniProgramRowSignature(rowData, expectedHeaders, guidColumn);
+                remainingBySignature.merge(signature, 1, Integer::sum);
+                loaded++;
+            }
+            return loaded;
+        }
+    }
+
+    private String miniProgramRowSignature(Map<String, String> rowData, List<String> listHeaders, String guidColumn) {
+        StringBuilder signature = new StringBuilder();
+        for (String header : listHeaders) {
+            if (header.equals(guidColumn)) {
+                continue;
+            }
+            signature.append(header.length()).append(':').append(header)
+                    .append('=');
+            String value = rowData.getOrDefault(header, "");
+            signature.append(value.length()).append(':').append(value)
+                    .append(';');
+        }
+        return signature.toString();
+    }
+
     private SequencePath nextMiniProgramZipPath(Path outputDir, int startSequence) {
         int sequence = Math.max(1, startSequence);
         while (true) {
@@ -886,12 +1019,14 @@ public class CertificateService {
         private Path currentZipPath;
 
         private MiniProgramZipPackageWriter(Path outputDir, byte[] listTemplateBytes, List<String> listHeaders,
-                                            String guidColumn, String certificateFolderName) {
+                                            String guidColumn, String certificateFolderName,
+                                            List<Path> existingZipFiles) {
             this.outputDir = outputDir;
             this.listTemplateBytes = listTemplateBytes;
             this.listHeaders = listHeaders;
             this.guidColumn = guidColumn;
             this.imageDirEntry = certificateFolderName + "/";
+            this.zipFiles.addAll(existingZipFiles);
         }
 
         private void write(MiniProgramRecord record, byte[] pngBytes) throws IOException {
@@ -1016,6 +1151,24 @@ public class CertificateService {
         }
     }
 
+    private static final class MiniProgramResumeState {
+        private final Map<String, Integer> remainingBySignature = new HashMap<>();
+        private final List<Path> existingZipFiles = new ArrayList<>();
+
+        private boolean consume(String signature) {
+            Integer remaining = remainingBySignature.get(signature);
+            if (remaining == null || remaining <= 0) {
+                return false;
+            }
+            if (remaining == 1) {
+                remainingBySignature.remove(signature);
+            } else {
+                remainingBySignature.put(signature, remaining - 1);
+            }
+            return true;
+        }
+    }
+
     private static final class RenderPlaceholder {
         private final String name;
         private final double posX;
@@ -1038,6 +1191,7 @@ public class CertificateService {
         private int completed;
         private int success;
         private int fail;
+        private int skipped;
         private final List<String> errors = new ArrayList<>();
     }
 

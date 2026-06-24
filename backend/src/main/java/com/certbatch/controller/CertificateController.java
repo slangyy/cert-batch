@@ -26,7 +26,7 @@ import java.util.concurrent.Executors;
 @RequiredArgsConstructor
 public class CertificateController {
 
-    private static final long BATCH_GENERATE_TIMEOUT_MS = 60 * 60 * 1000L; // 1小时
+    private static final long BATCH_GENERATE_TIMEOUT_MS = 24 * 60 * 60 * 1000L; // 24小时
 
     private final CertificateService certificateService;
     private final TemplateService templateService;

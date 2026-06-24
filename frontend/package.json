@@ -44,7 +44,8 @@
     },
     "nsis": {
       "oneClick": false,
-      "allowToChangeInstallationDirectory": true
+      "allowToChangeInstallationDirectory": true,
+      "include": "build/installer.nsh"
     },
     "extraResources": [
       {
@@ -54,6 +55,10 @@
       {
         "from": "../jre",
         "to": "jre"
+      },
+      {
+        "from": "build/desktop-icon.ico",
+        "to": "desktop-icon.ico"
       }
     ]
   }
