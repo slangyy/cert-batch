@@ -39,7 +39,7 @@
     ],
     "win": {
       "target": "nsis",
-      "icon": "public/icon.png",
+      "icon": "electron/桌面图标.png",
       "signAndEditExecutable": false
     },
     "nsis": {
