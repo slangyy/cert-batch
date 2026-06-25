@@ -77,6 +77,11 @@ public class CertificateService {
     private static final long MINI_PROGRAM_ZIP_MAX_BYTES = 500L * 1024L * 1024L;
     private static final long MINI_PROGRAM_ZIP_RESERVE_BYTES = 2L * 1024L * 1024L;
     private static final long MINI_PROGRAM_ZIP_ENTRY_OVERHEAD_BYTES = 4096L;
+    private static final long TARGET_IMAGE_BYTES = 1000L * 1024L;
+    private static final float MAX_JPEG_QUALITY = 0.92f;
+    private static final float MIN_JPEG_QUALITY = 0.45f;
+    private static final int MAX_IMAGE_RESIZE_ATTEMPTS = 12;
+    private static final int MIN_IMAGE_DIMENSION = 320;
     private static final String MINI_PROGRAM_LIST_ENTRY = "list.xlsx";
 
     private final TemplateService templateService;
@@ -296,11 +301,11 @@ public class CertificateService {
                 }
 
                 String guid = UUID.randomUUID().toString();
-                byte[] pngBytes;
+                byte[] imageBytes;
                 try {
                     BufferedImage certImage = renderPreparedCertificate(templateImage, renderPlaceholders, rowData);
-                    pngBytes = encodePng(certImage);
-                    long recordEstimate = estimateMiniProgramRecordBytes(pngBytes.length);
+                    imageBytes = encodeJpeg(certImage);
+                    long recordEstimate = estimateMiniProgramRecordBytes(imageBytes.length);
                     if (recordEstimate > miniProgramPackageLimit()) {
                         throw new IOException("A single certificate image is too large to package");
                     }
@@ -314,7 +319,7 @@ public class CertificateService {
                     continue;
                 }
 
-                zipWriter.write(new MiniProgramRecord(rowNumber, rowData, guid), pngBytes);
+                zipWriter.write(new MiniProgramRecord(rowNumber, rowData, guid), imageBytes);
                 counters.success++;
                 reporter.force(counters.success, counters.fail);
             }
@@ -420,9 +425,14 @@ public class CertificateService {
             try {
                 BufferedImage certImage = renderPreparedCertificate(templateImage, placeholders, rowData);
 
-                if ("png".equals(format) || "both".equals(format)) {
+                if ("png".equals(format)) {
                     Path pngPath = outPath.resolve(baseName + ".png");
                     writeOptimizedPng(certImage, pngPath);
+                }
+
+                if ("jpg".equals(format) || "both".equals(format)) {
+                    Path jpgPath = outPath.resolve(baseName + ".jpg");
+                    writeCompressedJpeg(certImage, jpgPath);
                 }
 
                 if ("pdf".equals(format) || "both".equals(format)) {
@@ -628,8 +638,12 @@ public class CertificateService {
     }
 
     private String normalizeFormat(String format) {
-        String normalized = format == null ? "png" : format.toLowerCase(Locale.ROOT).trim();
-        if (!"png".equals(normalized) && !"pdf".equals(normalized) && !"both".equals(normalized)) {
+        String normalized = format == null ? "jpg" : format.toLowerCase(Locale.ROOT).trim();
+        if ("jpeg".equals(normalized)) {
+            normalized = "jpg";
+        }
+        if (!"png".equals(normalized) && !"jpg".equals(normalized)
+                && !"pdf".equals(normalized) && !"both".equals(normalized)) {
             throw new IllegalArgumentException("不支持的输出格式: " + format);
         }
         return normalized;
@@ -721,6 +735,11 @@ public class CertificateService {
                 return true;
             }
         }
+        if ("jpg".equals(format) || "both".equals(format)) {
+            if (Files.exists(outPath.resolve(baseName + ".jpg"))) {
+                return true;
+            }
+        }
         if ("pdf".equals(format) || "both".equals(format)) {
             return Files.exists(outPath.resolve(baseName + ".pdf"));
         }
@@ -731,11 +750,14 @@ public class CertificateService {
         if ("png".equals(format)) {
             return Files.exists(outPath.resolve(baseName + ".png"));
         }
+        if ("jpg".equals(format)) {
+            return Files.exists(outPath.resolve(baseName + ".jpg"));
+        }
         if ("pdf".equals(format)) {
             return Files.exists(outPath.resolve(baseName + ".pdf"));
         }
         if ("both".equals(format)) {
-            return Files.exists(outPath.resolve(baseName + ".png"))
+            return Files.exists(outPath.resolve(baseName + ".jpg"))
                     && Files.exists(outPath.resolve(baseName + ".pdf"));
         }
         return false;
@@ -779,6 +801,84 @@ public class CertificateService {
         }
     }
 
+    private byte[] encodeJpeg(BufferedImage image) throws IOException {
+        BufferedImage current = toRgbImage(image);
+        byte[] best = encodeJpegBytes(current, MAX_JPEG_QUALITY);
+        if (best.length <= TARGET_IMAGE_BYTES) {
+            return best;
+        }
+
+        for (int attempt = 0; attempt < MAX_IMAGE_RESIZE_ATTEMPTS; attempt++) {
+            best = bestJpegForCurrentSize(current);
+            if (best.length <= TARGET_IMAGE_BYTES) {
+                return best;
+            }
+
+            double scale = Math.sqrt((double) TARGET_IMAGE_BYTES / best.length) * 0.96d;
+            scale = Math.max(0.40d, Math.min(0.90d, scale));
+            int nextWidth = Math.max(MIN_IMAGE_DIMENSION, (int) Math.floor(current.getWidth() * scale));
+            int nextHeight = Math.max(MIN_IMAGE_DIMENSION, (int) Math.floor(current.getHeight() * scale));
+            if (nextWidth >= current.getWidth() && nextHeight >= current.getHeight()) {
+                break;
+            }
+            current = resizeImage(current, nextWidth, nextHeight);
+        }
+
+        return bestJpegForCurrentSize(current);
+    }
+
+    private byte[] bestJpegForCurrentSize(BufferedImage image) throws IOException {
+        byte[] fallback = encodeJpegBytes(image, MIN_JPEG_QUALITY);
+        if (fallback.length > TARGET_IMAGE_BYTES) {
+            return fallback;
+        }
+
+        byte[] best = fallback;
+        float low = MIN_JPEG_QUALITY;
+        float high = MAX_JPEG_QUALITY;
+        for (int i = 0; i < 8; i++) {
+            float quality = (low + high) / 2.0f;
+            byte[] candidate = encodeJpegBytes(image, quality);
+            if (candidate.length <= TARGET_IMAGE_BYTES) {
+                best = candidate;
+                low = quality;
+            } else {
+                high = quality;
+            }
+        }
+        return best;
+    }
+
+    private byte[] encodeJpegBytes(BufferedImage image, float quality) throws IOException {
+        Iterator<ImageWriter> writers = ImageIO.getImageWritersByFormatName("jpg");
+        if (!writers.hasNext()) {
+            throw new IOException("No JPEG writer is available");
+        }
+
+        ImageWriter writer = writers.next();
+        try (ByteArrayOutputStream out = new ByteArrayOutputStream();
+             ImageOutputStream imageOut = ImageIO.createImageOutputStream(out)) {
+            if (imageOut == null) {
+                throw new IOException("Cannot create JPEG output stream");
+            }
+            ImageWriteParam param = writer.getDefaultWriteParam();
+            if (param.canWriteCompressed()) {
+                param.setCompressionMode(ImageWriteParam.MODE_EXPLICIT);
+                param.setCompressionQuality(Math.max(0.0f, Math.min(1.0f, quality)));
+            }
+            writer.setOutput(imageOut);
+            writer.write(null, new IIOImage(image, null, null), param);
+            imageOut.flush();
+            return out.toByteArray();
+        } finally {
+            writer.dispose();
+        }
+    }
+
+    private void writeCompressedJpeg(BufferedImage image, Path jpgPath) throws IOException {
+        Files.write(jpgPath, encodeJpeg(image));
+    }
+
     private void writeOptimizedPng(BufferedImage image, Path pngPath) throws IOException {
         try (OutputStream fileOut = Files.newOutputStream(pngPath);
              ImageOutputStream imageOut = ImageIO.createImageOutputStream(fileOut)) {
@@ -809,6 +909,39 @@ public class CertificateService {
         } finally {
             writer.dispose();
         }
+    }
+
+    private BufferedImage resizeImage(BufferedImage source, int width, int height) {
+        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = resized.createGraphics();
+        try {
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+            g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+            g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(0, 0, width, height);
+            g2d.drawImage(source, 0, 0, width, height, null);
+        } finally {
+            g2d.dispose();
+        }
+        return resized;
+    }
+
+    private BufferedImage toRgbImage(BufferedImage image) {
+        if (image.getType() == BufferedImage.TYPE_INT_RGB) {
+            return image;
+        }
+
+        BufferedImage rgbImage = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g2d = rgbImage.createGraphics();
+        try {
+            g2d.setColor(Color.WHITE);
+            g2d.fillRect(0, 0, image.getWidth(), image.getHeight());
+            g2d.drawImage(image, 0, 0, null);
+        } finally {
+            g2d.dispose();
+        }
+        return rgbImage;
     }
 
     private BufferedImage stripAlphaIfOpaque(BufferedImage image) {
@@ -1029,16 +1162,16 @@ public class CertificateService {
             this.zipFiles.addAll(existingZipFiles);
         }
 
-        private void write(MiniProgramRecord record, byte[] pngBytes) throws IOException {
-            long recordEstimate = estimateMiniProgramRecordBytes(pngBytes.length);
+        private void write(MiniProgramRecord record, byte[] imageBytes) throws IOException {
+            long recordEstimate = estimateMiniProgramRecordBytes(imageBytes.length);
             if (!currentRecords.isEmpty() && currentEstimate + recordEstimate > miniProgramPackageLimit()) {
                 finishCurrentPackage();
             }
 
             ensureOpenPackage();
-            ZipEntry imageEntry = new ZipEntry(imageDirEntry + record.guid + ".png");
+            ZipEntry imageEntry = new ZipEntry(imageDirEntry + record.guid + ".jpg");
             zos.putNextEntry(imageEntry);
-            zos.write(pngBytes);
+            zos.write(imageBytes);
             zos.closeEntry();
 
             currentRecords.add(record);

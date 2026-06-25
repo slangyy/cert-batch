@@ -5,11 +5,10 @@
     <el-steps :active="currentStep" finish-status="success" class="steps">
       <el-step title="选择模板" />
       <el-step title="上传数据" />
-      <el-step title="确认生成" />
-      <el-step title="完成" />
+      <el-step title="配置批次" />
+      <el-step title="批次队列" />
     </el-steps>
 
-    <!-- Step 1: 选择模板 -->
     <div v-show="currentStep === 0" class="step-content">
       <div class="step-title">请选择证书模板</div>
       <div v-loading="loadingTemplates" class="template-select-list">
@@ -32,13 +31,12 @@
         </el-row>
       </div>
       <div class="step-actions">
-        <el-button type="primary" :disabled="!selectedTemplateId" @click="goStep(1)">下一步</el-button>
+        <el-button type="primary" :disabled="!selectedTemplateId || queueRunning" @click="goStep(1)">下一步</el-button>
       </div>
     </div>
 
-    <!-- Step 2: 上传Excel -->
     <div v-show="currentStep === 1" class="step-content">
-      <div class="step-title">上传学生数据 Excel 文件</div>
+      <div class="step-title">上传本批次 Excel 数据</div>
       <el-upload
         drag
         :auto-upload="false"
@@ -52,23 +50,19 @@
         <el-icon class="el-icon--upload"><UploadFilled /></el-icon>
         <div class="el-upload__text">拖拽文件到此处，或 <em>点击上传</em></div>
         <template #tip>
-          <div class="el-upload__tip">
-            支持 .xlsx 格式，第一行为列名（需与模板占位符名称一致）
-          </div>
+          <div class="el-upload__tip">支持 .xlsx/.xls，第一行为列名，需与模板占位符名称一致</div>
         </template>
       </el-upload>
 
-      <!-- 数据预览 -->
       <div v-if="excelData.headers.length > 0" class="data-preview">
         <div class="preview-header">
-          <span>数据预览（共 {{ excelData.totalRows }} 条）</span>
+          <span>数据预览，共 {{ excelData.totalRows }} 条</span>
         </div>
         <el-table :data="excelData.rows.slice(0, 10)" border size="small" max-height="300" style="width: 100%">
           <el-table-column v-for="header in excelData.headers" :key="header" :prop="header" :label="header" min-width="120" />
         </el-table>
-        <div v-if="excelData.totalRows > 10" class="preview-tip">仅显示前10条数据</div>
+        <div v-if="excelData.totalRows > 10" class="preview-tip">仅显示前 10 条数据</div>
 
-        <!-- 映射检查 -->
         <div class="mapping-check">
           <div class="mapping-title">占位符映射检查</div>
           <el-table :data="mappingStatus" border size="small" style="width: 100%">
@@ -80,22 +74,24 @@
                 </el-tag>
               </template>
             </el-table-column>
-            <el-table-column prop="excelColumn" label="对应Excel列" />
+            <el-table-column prop="excelColumn" label="对应 Excel 列" />
           </el-table>
         </div>
       </div>
 
       <div class="step-actions">
-        <el-button @click="goStep(0)">上一步</el-button>
-        <el-button type="primary" :disabled="excelData.totalRows === 0" @click="goStep(2)">下一步</el-button>
+        <el-button :disabled="queueRunning" @click="goStep(0)">上一步</el-button>
+        <el-button type="primary" :disabled="excelData.totalRows === 0 || queueRunning" @click="goStep(2)">下一步</el-button>
       </div>
     </div>
 
-    <!-- Step 3: 确认生成 -->
     <div v-show="currentStep === 2" class="step-content">
-      <div class="step-title">确认生成信息</div>
+      <div class="step-title">配置当前批次</div>
 
       <el-descriptions :column="1" border class="confirm-info">
+        <el-descriptions-item label="批次名称">
+          <el-input v-model="batchName" placeholder="用于创建输出子目录" />
+        </el-descriptions-item>
         <el-descriptions-item label="生成模式">
           <el-radio-group v-model="generateMode">
             <el-radio value="normal">普通生成</el-radio>
@@ -106,13 +102,14 @@
         <el-descriptions-item label="数据条数">{{ excelData.totalRows }} 条</el-descriptions-item>
         <el-descriptions-item label="输出格式">
           <template v-if="generateMode === 'normal'">
-          <el-radio-group v-model="outputFormat">
-            <el-radio value="png">PNG 图片</el-radio>
-            <el-radio value="pdf">PDF 文件</el-radio>
-            <el-radio value="both">PNG + PDF</el-radio>
-          </el-radio-group>
+            <el-radio-group v-model="outputFormat">
+              <el-radio value="jpg">JPG 图片</el-radio>
+              <el-radio value="png">PNG 图片</el-radio>
+              <el-radio value="pdf">PDF 文件</el-radio>
+              <el-radio value="both">JPG + PDF</el-radio>
+            </el-radio-group>
           </template>
-          <span v-else>固定输出 PNG，并打包为小程序上传 ZIP</span>
+          <span v-else>固定输出 JPG，并打包为小程序上传 ZIP</span>
         </el-descriptions-item>
         <el-descriptions-item label="文件命名字段">
           <el-select v-model="fileNameField" placeholder="选择命名字段" clearable>
@@ -132,83 +129,91 @@
             >
               <el-button>上传 list.xlsx 模板</el-button>
             </el-upload>
-            <el-select v-model="miniProgramGuidColumn" placeholder="选择GUID写入列" class="mini-program-control">
+            <el-select v-model="miniProgramGuidColumn" placeholder="选择 GUID 写入列" class="mini-program-control">
               <el-option v-for="h in listTemplateData.headers" :key="h" :label="h" :value="h" />
             </el-select>
             <el-input v-model="certificateFolderName" placeholder="证书图片文件夹名称" class="mini-program-control" />
           </div>
           <div class="output-dir-row">
-            <el-input v-model="outputDir" placeholder="请输入输出目录路径" />
+            <el-input v-model="outputDir" placeholder="请选择本批次基础输出目录" />
             <el-button @click="selectOutputDir">浏览</el-button>
           </div>
+          <div class="final-dir">最终输出目录：{{ currentFinalOutputDir || '-' }}</div>
         </el-descriptions-item>
       </el-descriptions>
 
-      <!-- 生成进度 -->
-      <div v-if="generating" class="generate-progress">
-        <div class="progress-header">
-          <el-icon class="progress-spin" :size="20" color="#409EFF"><Loading /></el-icon>
-          <span class="progress-title">正在使用AI大模型生成中...</span>
-        </div>
-        <el-progress
-          :percentage="progressPercent"
-          :stroke-width="20"
-          :text-inside="true"
-          status="success"
-          style="margin: 16px 0;"
-        />
-        <div class="progress-detail">
-          <span>已处理 {{ progressCurrent }} / {{ progressTotal }} 条</span>
-          <span>成功 {{ progressSuccess }} 条</span>
-          <span v-if="progressFail > 0" class="fail-count">失败 {{ progressFail }} 条</span>
-        </div>
-      </div>
-
       <div class="step-actions">
-        <el-button @click="goStep(1)" :disabled="generating">上一步</el-button>
-        <el-button type="primary" :loading="generating" @click="handleGenerate">
-          <el-icon><Printer /></el-icon>
-          {{ generating ? '生成中...' : '开始生成' }}
+        <el-button :disabled="queueRunning" @click="goStep(1)">上一步</el-button>
+        <el-button :disabled="queueRunning" @click="addCurrentBatch">加入批次</el-button>
+        <el-button type="primary" :loading="queueRunning" @click="addCurrentBatchAndStart">
+          加入并开始全部生成
         </el-button>
       </div>
     </div>
 
-    <!-- Step 4: 完成 -->
     <div v-show="currentStep === 3" class="step-content">
-      <el-result
-        :icon="generateResult.fail > 0 ? 'warning' : 'success'"
-        :title="generateResult.fail > 0 ? '生成完成（部分失败）' : '生成完成'"
-        :sub-title="`共 ${generateResult.total} 条，成功 ${generateResult.success} 条，失败 ${generateResult.fail} 条`"
-      >
-        <template #extra>
-          <div v-if="generateResult.errors && generateResult.errors.length > 0" class="error-list">
-            <el-alert
-              v-for="(err, i) in generateResult.errors"
-              :key="i"
-              :title="err"
-              type="error"
-              :closable="false"
-              show-icon
-              style="margin-bottom: 8px;"
-            />
+      <div class="step-title">批次队列</div>
+      <el-empty v-if="batchQueue.length === 0" description="暂无批次，请先添加批次" />
+    </div>
+
+    <div v-if="batchQueue.length > 0" class="queue-panel">
+      <div class="queue-header">
+        <div>
+          <div class="queue-title">待生成批次</div>
+          <div class="queue-summary">
+            共 {{ batchQueue.length }} 批，成功 {{ queueSummary.success }} 批，失败 {{ queueSummary.failed }} 批
           </div>
-          <div v-if="generateResult.zipFiles && generateResult.zipFiles.length > 0" class="zip-list">
-            <el-alert
-              v-for="file in generateResult.zipFiles"
-              :key="file.path"
-              :title="`${file.name} (${formatFileSize(file.size)})`"
-              type="success"
-              :closable="false"
-              show-icon
-              style="margin-bottom: 8px;"
-            />
-          </div>
-          <div class="result-actions">
-            <el-button type="primary" @click="openOutputDir">打开输出目录</el-button>
-            <el-button @click="resetAll">继续生成</el-button>
-          </div>
-        </template>
-      </el-result>
+        </div>
+        <div class="queue-actions">
+          <el-button :disabled="queueRunning" @click="prepareNewBatch">继续添加批次</el-button>
+          <el-button type="primary" :loading="queueRunning" :disabled="!hasRunnableBatch" @click="startBatchQueue">
+            开始全部生成
+          </el-button>
+        </div>
+      </div>
+
+      <el-table :data="batchQueue" border size="small" style="width: 100%">
+        <el-table-column prop="name" label="批次名称" min-width="140" />
+        <el-table-column prop="templateName" label="模板" min-width="130" />
+        <el-table-column label="模式" width="120">
+          <template #default="{ row }">{{ row.generateMode === 'miniProgram' ? '小程序 ZIP' : '普通生成' }}</template>
+        </el-table-column>
+        <el-table-column label="数据" width="90">
+          <template #default="{ row }">{{ row.dataSummary.totalRows }} 条</template>
+        </el-table-column>
+        <el-table-column prop="finalOutputDir" label="最终输出目录" min-width="260" show-overflow-tooltip />
+        <el-table-column label="状态" width="110">
+          <template #default="{ row }">
+            <el-tag :type="statusMeta(row.status).type" size="small">{{ statusMeta(row.status).text }}</el-tag>
+          </template>
+        </el-table-column>
+        <el-table-column label="进度" width="160">
+          <template #default="{ row }">
+            <el-progress :percentage="row.progress.percent" :stroke-width="10" />
+          </template>
+        </el-table-column>
+        <el-table-column label="操作" width="210" fixed="right">
+          <template #default="{ row }">
+            <el-button link type="primary" :disabled="row.status !== 'pending' || queueRunning" @click="editBatch(row)">编辑</el-button>
+            <el-button link type="danger" :disabled="row.status !== 'pending' || queueRunning" @click="removeBatch(row.id)">删除</el-button>
+            <el-button link type="primary" :disabled="row.status === 'pending'" @click="openBatchOutputDir(row)">打开目录</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+
+      <div v-if="queueFinished" class="queue-result">
+        <el-alert
+          :type="queueSummary.failed > 0 ? 'warning' : 'success'"
+          :title="`生成结束：成功 ${queueSummary.success} 批，失败 ${queueSummary.failed} 批`"
+          :closable="false"
+          show-icon
+        />
+        <div v-for="batch in finishedBatches" :key="batch.id" class="batch-result-line">
+          <span>{{ batch.name }}</span>
+          <span>{{ batch.status === 'success' ? '完成' : batch.error }}</span>
+          <span v-if="batch.result?.zipFiles?.length">ZIP：{{ batch.result.zipFiles.map(file => `${file.name} (${formatFileSize(file.size)})`).join('，') }}</span>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -216,7 +221,14 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage } from 'element-plus'
-import { getTemplateList, getTemplateImageUrl, getPlaceholders, parseExcel, batchGenerateFileSSE, batchGenerateMiniProgramZipSSE } from '@/api'
+import {
+  getTemplateList,
+  getTemplateImageUrl,
+  getPlaceholders,
+  parseExcel,
+  batchGenerateFileSSEPromise,
+  batchGenerateMiniProgramZipSSEPromise
+} from '@/api'
 
 const currentStep = ref(0)
 const loadingTemplates = ref(false)
@@ -224,6 +236,7 @@ const templates = ref([])
 const selectedTemplateId = ref(null)
 const templatePlaceholders = ref([])
 
+const batchName = ref('')
 const excelFileList = ref([])
 const excelRawFile = ref(null)
 const excelData = ref({ headers: [], rows: [], totalRows: 0 })
@@ -235,19 +248,14 @@ const listTemplateData = ref({ headers: [], rows: [], totalRows: 0 })
 const miniProgramGuidColumn = ref('')
 const certificateFolderName = ref('社会实践活动证书')
 
-const outputFormat = ref('png')
+const outputFormat = ref('jpg')
 const fileNameField = ref('')
 const outputDir = ref('')
-const generating = ref(false)
-const generateResult = ref({ total: 0, success: 0, fail: 0, errors: [] })
+const batchQueue = ref([])
+const queueRunning = ref(false)
+const queueFinished = ref(false)
 
-// 进度相关
-const progressPercent = ref(0)
-const progressCurrent = ref(0)
-const progressTotal = ref(0)
-const progressSuccess = ref(0)
-const progressFail = ref(0)
-
+const emptyProgress = () => ({ current: 0, total: 0, success: 0, fail: 0, percent: 0 })
 const getImageUrl = (id) => getTemplateImageUrl(id)
 
 const selectedTemplateName = computed(() => {
@@ -265,6 +273,18 @@ const mappingStatus = computed(() => {
     }
   })
 })
+
+const currentFinalOutputDir = computed(() => {
+  if (!outputDir.value.trim()) return ''
+  return buildFinalOutputDir(outputDir.value, batchName.value || defaultBatchName())
+})
+
+const hasRunnableBatch = computed(() => batchQueue.value.some(batch => batch.status === 'pending'))
+const finishedBatches = computed(() => batchQueue.value.filter(batch => batch.status === 'success' || batch.status === 'failed'))
+const queueSummary = computed(() => ({
+  success: batchQueue.value.filter(batch => batch.status === 'success').length,
+  failed: batchQueue.value.filter(batch => batch.status === 'failed').length
+}))
 
 const loadTemplates = async () => {
   loadingTemplates.value = true
@@ -297,6 +317,9 @@ const goStep = async (step) => {
 const handleExcelChange = async (file) => {
   excelFileList.value = [file]
   excelRawFile.value = file.raw
+  if (!batchName.value.trim()) {
+    batchName.value = fileBaseName(file.name)
+  }
   try {
     const { data: res } = await parseExcel(file.raw)
     if (res.code === 200) {
@@ -308,13 +331,11 @@ const handleExcelChange = async (file) => {
       ElMessage.success(`解析成功，共 ${excelData.value.totalRows} 条数据`)
     } else {
       ElMessage.error(res.msg || '解析失败')
-      excelRawFile.value = null
-      excelData.value = { headers: [], rows: [], totalRows: 0 }
+      handleExcelRemove()
     }
   } catch (e) {
-    ElMessage.error('解析Excel失败')
-    excelRawFile.value = null
-    excelData.value = { headers: [], rows: [], totalRows: 0 }
+    ElMessage.error('解析 Excel 失败')
+    handleExcelRemove()
   }
 }
 
@@ -339,13 +360,13 @@ const handleListTemplateChange = async (file) => {
       if (listTemplateData.value.headers.length > 0) {
         miniProgramGuidColumn.value = listTemplateData.value.headers[0]
       }
-      ElMessage.success('list.xlsx模板解析成功')
+      ElMessage.success('list.xlsx 模板解析成功')
     } else {
-      ElMessage.error(res.msg || 'list.xlsx模板解析失败')
+      ElMessage.error(res.msg || 'list.xlsx 模板解析失败')
       handleListTemplateRemove()
     }
   } catch (e) {
-    ElMessage.error('list.xlsx模板解析失败')
+    ElMessage.error('list.xlsx 模板解析失败')
     handleListTemplateRemove()
   }
 }
@@ -357,93 +378,284 @@ const handleListTemplateRemove = () => {
   miniProgramGuidColumn.value = ''
 }
 
-const handleGenerate = () => {
-  if (!outputDir.value.trim()) {
-    return ElMessage.warning('请输入输出目录')
+const validateCurrentBatch = () => {
+  if (!selectedTemplateId.value) {
+    ElMessage.warning('请选择证书模板')
+    currentStep.value = 0
+    return false
   }
   if (!excelRawFile.value) {
-    return ElMessage.warning('请先上传Excel文件')
+    ElMessage.warning('请先上传 Excel 文件')
+    currentStep.value = 1
+    return false
   }
-
+  if (!batchName.value.trim()) {
+    ElMessage.warning('请输入批次名称')
+    return false
+  }
+  if (!outputDir.value.trim()) {
+    ElMessage.warning('请选择本批次输出目录')
+    return false
+  }
   if (generateMode.value === 'miniProgram') {
     if (!listTemplateRawFile.value) {
-      return ElMessage.warning('请上传list.xlsx模板')
+      ElMessage.warning('请上传 list.xlsx 模板')
+      return false
     }
     if (!miniProgramGuidColumn.value) {
-      return ElMessage.warning('请选择GUID写入列')
+      ElMessage.warning('请选择 GUID 写入列')
+      return false
     }
     if (!certificateFolderName.value.trim()) {
-      return ElMessage.warning('请输入证书图片文件夹名称')
+      ElMessage.warning('请输入证书图片文件夹名称')
+      return false
     }
   }
+  return true
+}
 
-  generating.value = true
-  progressPercent.value = 0
-  progressCurrent.value = 0
-  progressTotal.value = excelData.value.totalRows
-  progressSuccess.value = 0
-  progressFail.value = 0
+const makeCurrentBatch = () => {
+  const name = sanitizeFileName(batchName.value)
+  const finalOutputDir = buildFinalOutputDir(outputDir.value, name)
+  return {
+    id: `${Date.now()}_${Math.random().toString(16).slice(2)}`,
+    name,
+    templateId: selectedTemplateId.value,
+    templateName: selectedTemplateName.value,
+    dataFile: excelRawFile.value,
+    dataFileList: [...excelFileList.value],
+    dataSummary: {
+      headers: [...excelData.value.headers],
+      rows: [...excelData.value.rows],
+      totalRows: excelData.value.totalRows
+    },
+    generateMode: generateMode.value,
+    format: outputFormat.value,
+    fileNameField: fileNameField.value || null,
+    baseOutputDir: outputDir.value.trim(),
+    finalOutputDir,
+    miniProgramConfig: {
+      listTemplateFile: listTemplateRawFile.value,
+      listTemplateFileList: [...listTemplateFileList.value],
+      listTemplateData: {
+        headers: [...listTemplateData.value.headers],
+        rows: [...listTemplateData.value.rows],
+        totalRows: listTemplateData.value.totalRows
+      },
+      guidColumn: miniProgramGuidColumn.value,
+      certificateFolderName: certificateFolderName.value.trim()
+    },
+    status: 'pending',
+    progress: { ...emptyProgress(), total: excelData.value.totalRows },
+    result: null,
+    error: ''
+  }
+}
 
-  if (generateMode.value === 'miniProgram') {
-    batchGenerateMiniProgramZipSSE(
-      {
-        templateId: selectedTemplateId.value,
-        dataFile: excelRawFile.value,
-        listTemplateFile: listTemplateRawFile.value,
-        outputDir: outputDir.value.trim(),
-        guidColumn: miniProgramGuidColumn.value,
-        certificateFolderName: certificateFolderName.value.trim()
-      },
-      (progress) => {
-        progressCurrent.value = progress.current
-        progressTotal.value = progress.total
-        progressSuccess.value = progress.success
-        progressFail.value = progress.fail
-        progressPercent.value = progress.percent
-      },
-      (result) => {
-        generating.value = false
-        generateResult.value = result
-        progressPercent.value = 100
-        currentStep.value = 3
-      },
-      (msg) => {
-        generating.value = false
-        ElMessage.error('生成失败: ' + msg)
-      }
-    )
+const addCurrentBatch = () => {
+  if (!validateCurrentBatch()) return false
+  const batch = makeCurrentBatch()
+  const duplicate = batchQueue.value.find(item => normalizePath(item.finalOutputDir) === normalizePath(batch.finalOutputDir))
+  if (duplicate) {
+    ElMessage.warning(`最终输出目录与批次“${duplicate.name}”重复，请修改批次名称或输出目录`)
+    return false
+  }
+  batchQueue.value.push(batch)
+  queueFinished.value = false
+  ElMessage.success(`已加入批次：${batch.name}`)
+  clearCurrentBatchForm()
+  currentStep.value = 3
+  return true
+}
+
+const addCurrentBatchAndStart = async () => {
+  const added = addCurrentBatch()
+  if (added) {
+    await startBatchQueue()
+  }
+}
+
+const prepareNewBatch = () => {
+  clearCurrentBatchForm()
+  currentStep.value = 0
+}
+
+const editBatch = async (batch) => {
+  if (batch.status !== 'pending' || queueRunning.value) return
+  batchQueue.value = batchQueue.value.filter(item => item.id !== batch.id)
+  selectedTemplateId.value = batch.templateId
+  templatePlaceholders.value = []
+  batchName.value = batch.name
+  excelRawFile.value = batch.dataFile
+  excelFileList.value = [...batch.dataFileList]
+  excelData.value = {
+    headers: [...batch.dataSummary.headers],
+    rows: [...batch.dataSummary.rows],
+    totalRows: batch.dataSummary.totalRows
+  }
+  generateMode.value = batch.generateMode
+  outputFormat.value = batch.format
+  fileNameField.value = batch.fileNameField || ''
+  outputDir.value = batch.baseOutputDir
+  listTemplateRawFile.value = batch.miniProgramConfig.listTemplateFile
+  listTemplateFileList.value = [...batch.miniProgramConfig.listTemplateFileList]
+  listTemplateData.value = {
+    headers: [...batch.miniProgramConfig.listTemplateData.headers],
+    rows: [...batch.miniProgramConfig.listTemplateData.rows],
+    totalRows: batch.miniProgramConfig.listTemplateData.totalRows
+  }
+  miniProgramGuidColumn.value = batch.miniProgramConfig.guidColumn
+  certificateFolderName.value = batch.miniProgramConfig.certificateFolderName || '社会实践活动证书'
+  await goStep(1)
+  currentStep.value = 2
+}
+
+const removeBatch = (id) => {
+  if (queueRunning.value) return
+  batchQueue.value = batchQueue.value.filter(batch => batch.id !== id || batch.status !== 'pending')
+}
+
+const startBatchQueue = async () => {
+  if (queueRunning.value) return
+  const runnable = batchQueue.value.filter(batch => batch.status === 'pending')
+  if (runnable.length === 0) {
+    ElMessage.warning('没有待生成批次')
     return
   }
+  if (!validateUniqueOutputDirs()) return
 
-  batchGenerateFileSSE(
-    {
-      templateId: selectedTemplateId.value,
-      file: excelRawFile.value,
-      outputDir: outputDir.value.trim(),
-      format: outputFormat.value,
-      fileNameField: fileNameField.value || null
-    },
-    // onProgress
-    (progress) => {
-      progressCurrent.value = progress.current
-      progressTotal.value = progress.total
-      progressSuccess.value = progress.success
-      progressFail.value = progress.fail
-      progressPercent.value = progress.percent
-    },
-    // onComplete
-    (result) => {
-      generating.value = false
-      generateResult.value = result
-      progressPercent.value = 100
-      currentStep.value = 3
-    },
-    // onError
-    (msg) => {
-      generating.value = false
-      ElMessage.error('生成失败: ' + msg)
+  queueRunning.value = true
+  queueFinished.value = false
+  currentStep.value = 3
+
+  for (const batch of batchQueue.value) {
+    if (batch.status !== 'pending') continue
+    batch.status = 'running'
+    batch.error = ''
+    batch.result = null
+    batch.progress = { ...emptyProgress(), total: batch.dataSummary.totalRows }
+    try {
+      const result = await runBatch(batch)
+      batch.result = result
+      batch.status = 'success'
+      batch.progress.percent = 100
+    } catch (error) {
+      batch.status = 'failed'
+      batch.error = error.message || '生成失败'
     }
+  }
+
+  queueRunning.value = false
+  queueFinished.value = true
+  if (queueSummary.value.failed > 0) {
+    ElMessage.warning(`生成结束，${queueSummary.value.failed} 个批次失败`)
+  } else {
+    ElMessage.success('全部批次生成完成')
+  }
+}
+
+const runBatch = (batch) => {
+  const onProgress = (progress) => {
+    batch.progress = {
+      current: progress.current || 0,
+      total: progress.total || batch.dataSummary.totalRows,
+      success: progress.success || 0,
+      fail: progress.fail || 0,
+      percent: progress.percent || 0
+    }
+  }
+
+  if (batch.generateMode === 'miniProgram') {
+    return batchGenerateMiniProgramZipSSEPromise(
+      {
+        templateId: batch.templateId,
+        dataFile: batch.dataFile,
+        listTemplateFile: batch.miniProgramConfig.listTemplateFile,
+        outputDir: batch.finalOutputDir,
+        guidColumn: batch.miniProgramConfig.guidColumn,
+        certificateFolderName: batch.miniProgramConfig.certificateFolderName
+      },
+      onProgress
+    )
+  }
+
+  return batchGenerateFileSSEPromise(
+    {
+      templateId: batch.templateId,
+      file: batch.dataFile,
+      outputDir: batch.finalOutputDir,
+      format: batch.format,
+      fileNameField: batch.fileNameField
+    },
+    onProgress
   )
+}
+
+const validateUniqueOutputDirs = () => {
+  const seen = new Map()
+  for (const batch of batchQueue.value) {
+    const normalized = normalizePath(batch.finalOutputDir)
+    if (seen.has(normalized)) {
+      ElMessage.error(`批次“${seen.get(normalized)}”和“${batch.name}”的最终输出目录重复`)
+      return false
+    }
+    seen.set(normalized, batch.name)
+  }
+  return true
+}
+
+const clearCurrentBatchForm = () => {
+  selectedTemplateId.value = null
+  templatePlaceholders.value = []
+  batchName.value = ''
+  excelFileList.value = []
+  excelRawFile.value = null
+  excelData.value = { headers: [], rows: [], totalRows: 0 }
+  generateMode.value = 'normal'
+  listTemplateFileList.value = []
+  listTemplateRawFile.value = null
+  listTemplateData.value = { headers: [], rows: [], totalRows: 0 }
+  miniProgramGuidColumn.value = ''
+  certificateFolderName.value = '社会实践活动证书'
+  outputFormat.value = 'jpg'
+  fileNameField.value = ''
+  outputDir.value = ''
+}
+
+const defaultBatchName = () => {
+  if (batchName.value.trim()) return batchName.value
+  const fileName = excelFileList.value[0]?.name || selectedTemplateName.value || `批次${batchQueue.value.length + 1}`
+  return fileBaseName(fileName)
+}
+
+const fileBaseName = (name) => {
+  return sanitizeFileName(String(name || '').replace(/\.[^.]+$/, ''))
+}
+
+const sanitizeFileName = (name) => {
+  const sanitized = String(name || '')
+    .replace(/[\\/:*?"<>|]/g, '_')
+    .replace(/[\s.]+$/g, '')
+    .trim()
+  return sanitized || `批次${batchQueue.value.length + 1}`
+}
+
+const buildFinalOutputDir = (baseDir, name) => {
+  const base = baseDir.trim().replace(/[\\/]+$/g, '')
+  const separator = base.includes('/') && !base.includes('\\') ? '/' : '\\'
+  return `${base}${separator}${sanitizeFileName(name)}`
+}
+
+const normalizePath = (path) => String(path || '').replace(/[\\/]+/g, '\\').replace(/\\+$/g, '').toLowerCase()
+
+const statusMeta = (status) => {
+  const map = {
+    pending: { text: '待生成', type: 'info' },
+    running: { text: '生成中', type: 'warning' },
+    success: { text: '已完成', type: 'success' },
+    failed: { text: '失败', type: 'danger' }
+  }
+  return map[status] || map.pending
 }
 
 const formatFileSize = (size) => {
@@ -457,33 +669,10 @@ const formatFileSize = (size) => {
   return `${bytes} B`
 }
 
-const openOutputDir = async () => {
+const openBatchOutputDir = async (batch) => {
   if (window.electronAPI?.openPath) {
-    await window.electronAPI.openPath(outputDir.value)
+    await window.electronAPI.openPath(batch.finalOutputDir)
   }
-}
-
-const resetAll = () => {
-  currentStep.value = 0
-  selectedTemplateId.value = null
-  excelFileList.value = []
-  excelRawFile.value = null
-  excelData.value = { headers: [], rows: [], totalRows: 0 }
-  generateMode.value = 'normal'
-  listTemplateFileList.value = []
-  listTemplateRawFile.value = null
-  listTemplateData.value = { headers: [], rows: [], totalRows: 0 }
-  miniProgramGuidColumn.value = ''
-  certificateFolderName.value = '社会实践活动证书'
-  outputFormat.value = 'png'
-  fileNameField.value = ''
-  outputDir.value = ''
-  generateResult.value = { total: 0, success: 0, fail: 0, errors: [] }
-  progressPercent.value = 0
-  progressCurrent.value = 0
-  progressTotal.value = 0
-  progressSuccess.value = 0
-  progressFail.value = 0
 }
 
 const selectOutputDir = async () => {
@@ -493,7 +682,7 @@ const selectOutputDir = async () => {
       outputDir.value = dir
     }
   } else {
-    ElMessage.info('请直接输入目录路径（Electron 环境下可使用浏览按钮）')
+    ElMessage.info('请直接输入目录路径，Electron 环境下可使用浏览按钮')
   }
 }
 
@@ -521,7 +710,7 @@ onMounted(() => {
 }
 
 .step-content {
-  min-height: 400px;
+  min-height: 320px;
 }
 
 .step-title {
@@ -587,7 +776,8 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.preview-header {
+.preview-header,
+.mapping-title {
   font-size: 14px;
   font-weight: 500;
   margin-bottom: 8px;
@@ -605,15 +795,8 @@ onMounted(() => {
   margin-top: 20px;
 }
 
-.mapping-title {
-  font-size: 14px;
-  font-weight: 500;
-  margin-bottom: 8px;
-  color: #303133;
-}
-
 .confirm-info {
-  max-width: 700px;
+  max-width: 760px;
   margin-bottom: 24px;
 }
 
@@ -621,6 +804,13 @@ onMounted(() => {
   display: flex;
   gap: 8px;
   align-items: center;
+}
+
+.final-dir {
+  margin-top: 8px;
+  font-size: 12px;
+  color: #606266;
+  word-break: break-all;
 }
 
 .field-tip {
@@ -643,68 +833,68 @@ onMounted(() => {
 .step-actions {
   margin-top: 24px;
   display: flex;
+  flex-wrap: wrap;
   gap: 12px;
 }
 
-.error-list {
-  max-width: 600px;
-  margin: 0 auto 16px;
-  text-align: left;
+.queue-panel {
+  margin-top: 28px;
+  border-top: 1px solid #ebeef5;
+  padding-top: 20px;
 }
 
-.result-actions {
-  margin-top: 16px;
+.queue-header {
   display: flex;
-  gap: 12px;
-  justify-content: center;
-}
-
-.zip-list {
-  max-width: 700px;
-  margin: 0 auto 16px;
-  text-align: left;
-}
-
-/* 进度相关 */
-.generate-progress {
-  max-width: 700px;
-  margin: 20px 0;
-  padding: 20px;
-  background: #f0f9eb;
-  border-radius: 8px;
-  border: 1px solid #e1f3d8;
-}
-
-.progress-header {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 4px;
-}
-
-.progress-title {
-  font-size: 15px;
-  font-weight: 500;
-  color: #409EFF;
-}
-
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
-
-.progress-spin {
-  animation: spin 1.5s linear infinite;
-}
-
-.progress-detail {
-  display: flex;
+  justify-content: space-between;
   gap: 16px;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.queue-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #303133;
+}
+
+.queue-summary {
+  margin-top: 4px;
   font-size: 13px;
   color: #606266;
 }
 
-.fail-count {
-  color: #F56C6C;
+.queue-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.queue-result {
+  margin-top: 16px;
+}
+
+.batch-result-line {
+  display: grid;
+  grid-template-columns: minmax(120px, 180px) minmax(120px, 1fr) minmax(180px, 2fr);
+  gap: 12px;
+  padding: 8px 0;
+  font-size: 13px;
+  color: #606266;
+  border-bottom: 1px solid #f2f3f5;
+}
+
+@media (max-width: 768px) {
+  .queue-header,
+  .output-dir-row {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .queue-actions {
+    flex-wrap: wrap;
+  }
+
+  .batch-result-line {
+    display: block;
+  }
 }
 </style>

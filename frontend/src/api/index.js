@@ -250,6 +250,18 @@ export function batchGenerateFileSSE(params, onProgress, onComplete, onError) {
     })
 }
 
+/** Promise 封装：批量生成证书（上传Excel文件，SSE 流式进度） */
+export function batchGenerateFileSSEPromise(params, onProgress) {
+  return new Promise((resolve, reject) => {
+    batchGenerateFileSSE(
+      params,
+      onProgress,
+      resolve,
+      (message) => reject(new Error(message || '生成失败'))
+    )
+  })
+}
+
 /** 生成小程序上传 ZIP 包（上传数据Excel和list.xlsx模板，SSE 流式进度） */
 export function batchGenerateMiniProgramZipSSE(params, onProgress, onComplete, onError) {
   const formData = new FormData()
@@ -319,6 +331,18 @@ export function batchGenerateMiniProgramZipSSE(params, onProgress, onComplete, o
     .catch(err => {
       onError?.(err.message || '网络错误')
     })
+}
+
+/** Promise 封装：生成小程序上传 ZIP 包 */
+export function batchGenerateMiniProgramZipSSEPromise(params, onProgress) {
+  return new Promise((resolve, reject) => {
+    batchGenerateMiniProgramZipSSE(
+      params,
+      onProgress,
+      resolve,
+      (message) => reject(new Error(message || '生成失败'))
+    )
+  })
 }
 
 /** 预览证书 */

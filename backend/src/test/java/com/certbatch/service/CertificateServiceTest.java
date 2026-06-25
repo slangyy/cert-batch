@@ -18,6 +18,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.mock;
@@ -108,6 +109,44 @@ class CertificateServiceTest {
         assertThat(rerunResult.get("success")).isEqualTo(2);
         assertThat(rerunResult.get("skipped")).isEqualTo(2);
         assertThat(outputDir.resolve("小程序上传包_2.zip")).doesNotExist();
+    }
+
+    @Test
+    void batchGenerateFromExcelCompressesJpgNearTargetSize() throws Exception {
+        Path templateImage = tempDir.resolve("large-template.png");
+        int width = 1800;
+        int height = 1400;
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Random random = new Random(42);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                image.setRGB(x, y, random.nextInt(0x1000000));
+            }
+        }
+        ImageIO.write(image, "png", templateImage.toFile());
+
+        Path outputDir = tempDir.resolve("compressed-output");
+        TemplateService templateService = mock(TemplateService.class);
+        Template template = new Template();
+        template.setId(1L);
+        when(templateService.getById(1L)).thenReturn(template);
+        when(templateService.getImagePath(1L)).thenReturn(templateImage);
+        when(templateService.getPlaceholders(1L)).thenReturn(java.util.List.of());
+
+        CertificateService service = new CertificateService(templateService);
+
+        service.batchGenerateFromExcel(
+                1L,
+                new ByteArrayInputStream(workbookWithName("Alice")),
+                outputDir.toString(),
+                "jpg",
+                "name",
+                progress -> {
+                });
+
+        Path generatedCertificate = outputDir.resolve("Alice.jpg");
+        assertThat(generatedCertificate).exists();
+        assertThat(Files.size(generatedCertificate)).isLessThanOrEqualTo(1000L * 1024L);
     }
 
     private byte[] workbookWithName(String name) throws Exception {
