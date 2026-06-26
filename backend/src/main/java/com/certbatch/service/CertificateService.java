@@ -36,7 +36,6 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
@@ -791,6 +790,30 @@ public class CertificateService {
     }
 
     private byte[] encodePng(BufferedImage image) throws IOException {
+        BufferedImage current = stripAlphaIfOpaque(image);
+        byte[] pngBytes = encodePngBytes(current);
+        if (pngBytes.length <= TARGET_IMAGE_BYTES) {
+            return pngBytes;
+        }
+
+        for (int attempt = 0; attempt < MAX_IMAGE_RESIZE_ATTEMPTS; attempt++) {
+            double scale = Math.sqrt((double) TARGET_IMAGE_BYTES / pngBytes.length) * 0.96d;
+            scale = Math.max(0.40d, Math.min(0.90d, scale));
+            int nextWidth = Math.max(MIN_IMAGE_DIMENSION, (int) Math.floor(current.getWidth() * scale));
+            int nextHeight = Math.max(MIN_IMAGE_DIMENSION, (int) Math.floor(current.getHeight() * scale));
+            if (nextWidth >= current.getWidth() && nextHeight >= current.getHeight()) {
+                break;
+            }
+            current = resizeImage(current, nextWidth, nextHeight);
+            pngBytes = encodePngBytes(current);
+            if (pngBytes.length <= TARGET_IMAGE_BYTES) {
+                break;
+            }
+        }
+        return pngBytes;
+    }
+
+    private byte[] encodePngBytes(BufferedImage image) throws IOException {
         try (ByteArrayOutputStream out = new ByteArrayOutputStream();
              ImageOutputStream imageOut = ImageIO.createImageOutputStream(out)) {
             if (imageOut == null) {
@@ -880,13 +903,7 @@ public class CertificateService {
     }
 
     private void writeOptimizedPng(BufferedImage image, Path pngPath) throws IOException {
-        try (OutputStream fileOut = Files.newOutputStream(pngPath);
-             ImageOutputStream imageOut = ImageIO.createImageOutputStream(fileOut)) {
-            if (imageOut == null) {
-                throw new IOException("Cannot create PNG output stream");
-            }
-            writePng(image, imageOut);
-        }
+        Files.write(pngPath, encodePng(image));
     }
 
     private void writePng(BufferedImage image, ImageOutputStream imageOut) throws IOException {
@@ -912,14 +929,18 @@ public class CertificateService {
     }
 
     private BufferedImage resizeImage(BufferedImage source, int width, int height) {
-        BufferedImage resized = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        boolean hasAlpha = source.getColorModel().hasAlpha();
+        int imageType = hasAlpha ? BufferedImage.TYPE_INT_ARGB : BufferedImage.TYPE_INT_RGB;
+        BufferedImage resized = new BufferedImage(width, height, imageType);
         Graphics2D g2d = resized.createGraphics();
         try {
             g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
             g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
             g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2d.setColor(Color.WHITE);
-            g2d.fillRect(0, 0, width, height);
+            if (!hasAlpha) {
+                g2d.setColor(Color.WHITE);
+                g2d.fillRect(0, 0, width, height);
+            }
             g2d.drawImage(source, 0, 0, width, height, null);
         } finally {
             g2d.dispose();

@@ -149,6 +149,44 @@ class CertificateServiceTest {
         assertThat(Files.size(generatedCertificate)).isLessThanOrEqualTo(1000L * 1024L);
     }
 
+    @Test
+    void batchGenerateFromExcelCompressesPngNearTargetSize() throws Exception {
+        Path templateImage = tempDir.resolve("large-png-template.png");
+        int width = 1400;
+        int height = 1000;
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Random random = new Random(84);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                image.setRGB(x, y, random.nextInt(0x1000000));
+            }
+        }
+        ImageIO.write(image, "png", templateImage.toFile());
+
+        Path outputDir = tempDir.resolve("compressed-png-output");
+        TemplateService templateService = mock(TemplateService.class);
+        Template template = new Template();
+        template.setId(1L);
+        when(templateService.getById(1L)).thenReturn(template);
+        when(templateService.getImagePath(1L)).thenReturn(templateImage);
+        when(templateService.getPlaceholders(1L)).thenReturn(java.util.List.of());
+
+        CertificateService service = new CertificateService(templateService);
+
+        service.batchGenerateFromExcel(
+                1L,
+                new ByteArrayInputStream(workbookWithName("Alice")),
+                outputDir.toString(),
+                "png",
+                "name",
+                progress -> {
+                });
+
+        Path generatedCertificate = outputDir.resolve("Alice.png");
+        assertThat(generatedCertificate).exists();
+        assertThat(Files.size(generatedCertificate)).isLessThanOrEqualTo(1000L * 1024L);
+    }
+
     private byte[] workbookWithName(String name) throws Exception {
         return workbookWithHeadersAndRows(List.of("name"), List.of(List.of(name)));
     }
